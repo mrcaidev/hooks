@@ -1,0 +1,67 @@
+{
+  "name": "@mrcaidev/react-hooks",
+  "version": "0.1.0",
+  "description": "React utility hooks",
+  "keywords": [
+    "react",
+    "hooks",
+    "typescript"
+  ],
+  "homepage": "https://github.com/mrcaidev/react-hooks",
+  "bugs": "https://github.com/mrcaidev/react-hooks/issues",
+  "license": "MIT",
+  "author": "Yuwang Cai <mrcaidev@gmail.com> (https://mrcai.space)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrcaidev/react-hooks"
+  },
+  "packageManager": "pnpm@7.5.0",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "browser": "dist/index.js",
+  "typings": "dist/react-hooks.d.ts",
+  "scripts": {
+    "build": "run-s build:esm build:api build:docs",
+    "build:esm": "tsc --project tsconfig.build.json",
+    "build:api": "mkdir -p etc && api-extractor run --local",
+    "build:docs": "api-documenter markdown -i temp -o docs",
+    "clean": "rimraf dist && rimraf temp && rimraf *.tsbuildinfo",
+    "dev": "tsc --project tsconfig.build.json --watch",
+    "format": "prettier src tests --write --cache",
+    "lint": "eslint src tests --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
+    "prepare": "husky install",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@microsoft/api-documenter": "^7.18.3",
+    "@microsoft/api-extractor": "^7.28.4",
+    "@testing-library/react": "^13.3.0",
+    "@types/jest": "^28.1.6",
+    "@types/react": "^18.0.15",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
+    "lint-staged": "^13.0.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^28.0.6",
+    "typescript": "^4.7.4"
+  }
+}
