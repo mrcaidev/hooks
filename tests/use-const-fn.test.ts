@@ -1,21 +1,19 @@
 import { renderHook } from "@testing-library/react";
-import { useConst } from "../src/use-const";
+import { useConstFn } from "../src/use-const-fn";
 
-describe("useConst", () => {
-  it("does not change over rerenders", () => {
-    // Memorize the function.
-    const { result, rerender } = renderHook(() =>
-      useConst(() => {
-        return (value: any) => value;
-      })
-    );
-    const firstFn = result.current;
-    expect(firstFn(1)).toEqual(1);
+describe("useConstFn", () => {
+  it("sets up correctly", () => {
+    const { result } = renderHook(() => useConstFn(() => 1));
+    expect(result.current()).toEqual(1);
+  });
 
-    // Rerender and see if the function is created again.
+  it("stays the same across re-renders", () => {
+    const targetFn = jest.fn();
+
+    const { result, rerender } = renderHook(() => useConstFn(targetFn));
+    expect(result.current).toEqual(targetFn);
+
     rerender();
-    const secondFn = result.current;
-    expect(secondFn(2)).toEqual(2);
-    expect(firstFn === secondFn).toEqual(true);
+    expect(result.current).toEqual(targetFn);
   });
 });

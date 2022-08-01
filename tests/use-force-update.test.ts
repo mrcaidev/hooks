@@ -4,15 +4,15 @@ import { useForceUpdate } from "../src/use-force-update";
 
 describe("useForceUpdate", () => {
   it("can force an update", () => {
-    const fn = jest.fn();
+    const effect = jest.fn();
+
     const { result } = renderHook(() => {
-      useEffect(fn);
+      useEffect(effect);
       return useForceUpdate();
     });
-    expect(fn).toHaveBeenCalledTimes(1);
-    act(() => {
-      result.current();
-    });
-    expect(fn).toHaveBeenCalledTimes(2);
+    expect(effect).toHaveBeenCalledTimes(1);
+
+    act(() => result.current());
+    expect(effect).toHaveBeenCalledTimes(2);
   });
 });

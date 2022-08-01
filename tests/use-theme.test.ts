@@ -31,43 +31,37 @@ describe("useTheme", () => {
   it("can specify storage key", () => {
     const { result } = renderHook(() => useTheme({ storageKey: "test" }));
     expect(result.current.theme).toEqual("dark");
-    expect(localStorage.getItem("test")).toBeNull();
+    expect(localStorage.getItem("test")).toEqual(null);
 
-    act(() => {
-      result.current.toggle();
-    });
+    act(() => result.current.toggle());
+    expect(result.current.theme).toEqual("light");
     expect(localStorage.getItem("test")).toEqual('"light"');
   });
 
   it("can toggle theme", () => {
     const { result } = renderHook(() => useTheme());
+    expect(result.current.theme).toEqual("dark");
 
-    // Toggle to light.
-    act(() => {
-      result.current.toggle();
-    });
+    act(() => result.current.toggle());
     expect(result.current.theme).toEqual("light");
 
-    // Toggle to dark.
-    act(() => {
-      result.current.toggle();
-    });
+    act(() => result.current.toggle());
     expect(result.current.theme).toEqual("dark");
   });
 
   it("can set to light", () => {
     const { result } = renderHook(() => useTheme({ defaultTheme: "dark" }));
-    act(() => {
-      result.current.setLight();
-    });
+    expect(result.current.theme).toEqual("dark");
+
+    act(() => result.current.setLight());
     expect(result.current.theme).toEqual("light");
   });
 
   it("can set to dark", () => {
     const { result } = renderHook(() => useTheme({ defaultTheme: "light" }));
-    act(() => {
-      result.current.setDark();
-    });
+    expect(result.current.theme).toEqual("light");
+
+    act(() => result.current.setDark());
     expect(result.current.theme).toEqual("dark");
   });
 });

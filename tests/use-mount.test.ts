@@ -4,19 +4,21 @@ import { useMount } from "../src/use-mount";
 describe("useMount", () => {
   it("only runs on mount", () => {
     const cleanup = jest.fn();
-    const effect = jest.fn(() => cleanup);
+    const effect = jest.fn();
 
-    // Mount.
-    const { rerender, unmount } = renderHook(() => useMount(effect));
+    const { rerender, unmount } = renderHook(() =>
+      useMount(() => {
+        effect();
+        return cleanup;
+      })
+    );
     expect(effect).toHaveBeenCalledTimes(1);
     expect(cleanup).toHaveBeenCalledTimes(0);
 
-    // Update.
     rerender();
     expect(effect).toHaveBeenCalledTimes(1);
     expect(cleanup).toHaveBeenCalledTimes(0);
 
-    // Unmount.
     unmount();
     expect(effect).toHaveBeenCalledTimes(1);
     expect(cleanup).toHaveBeenCalledTimes(1);

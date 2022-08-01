@@ -2,35 +2,39 @@ import { act, renderHook } from "@testing-library/react";
 import { useToggle } from "../src/use-toggle";
 
 describe("useToggle", () => {
+  it("sets up correctly", () => {
+    const { result } = renderHook(() => useToggle("hello", "world"));
+    expect(result.current.value).toEqual("hello");
+    expect(result.current.toggle).toBeInstanceOf(Function);
+    expect(result.current.setLeft).toBeInstanceOf(Function);
+    expect(result.current.setRight).toBeInstanceOf(Function);
+  });
+
   it("can toggle", () => {
     const { result } = renderHook(() => useToggle("hello", "world"));
+    expect(result.current.value).toEqual("hello");
 
-    // Toggle from left to right.
-    act(() => {
-      result.current.toggle();
-    });
+    act(() => result.current.toggle());
     expect(result.current.value).toEqual("world");
 
-    // Toggle from right to left.
-    act(() => {
-      result.current.toggle();
-    });
+    act(() => result.current.toggle());
     expect(result.current.value).toEqual("hello");
   });
 
-  it("can set to left", () => {
+  it("can directly set to left or right", () => {
     const { result } = renderHook(() => useToggle("hello", "world"));
-    act(() => {
-      result.current.setLeft();
-    });
     expect(result.current.value).toEqual("hello");
-  });
 
-  it("can set to right", () => {
-    const { result } = renderHook(() => useToggle("hello", "world"));
-    act(() => {
-      result.current.setRight();
-    });
+    act(() => result.current.setRight());
     expect(result.current.value).toEqual("world");
+
+    act(() => result.current.setRight());
+    expect(result.current.value).toEqual("world");
+
+    act(() => result.current.setLeft());
+    expect(result.current.value).toEqual("hello");
+
+    act(() => result.current.setLeft());
+    expect(result.current.value).toEqual("hello");
   });
 });

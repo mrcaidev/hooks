@@ -21,7 +21,6 @@ describe("useMediaQuery", () => {
     const { result } = renderHook(() =>
       useMediaQuery("(prefers-color-scheme: light)")
     );
-
     expect(result.current).toEqual(false);
   });
 
@@ -29,7 +28,6 @@ describe("useMediaQuery", () => {
     const { result } = renderHook(() =>
       useMediaQuery("(prefers-color-scheme: dark)")
     );
-
     expect(result.current).toEqual(true);
   });
 });
