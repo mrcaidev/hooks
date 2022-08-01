@@ -7,8 +7,7 @@ import {
 import { useUnmount } from "./use-unmount";
 
 /**
- * Use `ComponentDidUpdate`.
- *
+ * Use update phase.
  * @param effect - Callback to run on update.
  * @param deps - Dependency list of effect.
  */

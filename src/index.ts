@@ -1,6 +1,5 @@
 /**
  * A collection of React utility hooks.
- *
  * @packageDocumentation
  */
 

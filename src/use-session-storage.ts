@@ -5,19 +5,11 @@ import {
 } from "./use-storage";
 import { isBrowser } from "./utils/isBrowser";
 
-/**
- * Options to interact with session storage.
- */
 export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
-
-/**
- * Contains current stored value, and a function to update it.
- */
 export type UseSessionStorageResult<T> = UseStorageResult<T>;
 
 /**
  * Use session storage value.
- *
  * @param key - Key of session storage item.
  * @param options - Options to interact with session storage.
  * @returns Value of session storage item, and a function to update it.

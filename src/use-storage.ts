@@ -1,25 +1,12 @@
 import { useEffect, useState, type SetStateAction } from "react";
 
-/**
- * Options to interact with storage.
- */
 export interface UseStorageOptions<T> {
-  /** Storage to use. */
   storage: Storage | undefined;
-
-  /** Default value if key is not found. */
   defaultValue?: T;
-
-  /** A function to serialize target object into string. */
   serializer?: (value: T) => string;
-
-  /** A function to deserialize string into target object. */
   deserializer?: (value: string) => T;
 }
 
-/**
- * Contains current stored value, and a function to update it.
- */
 export interface UseStorageResult<T> {
   value: T;
   set: (value: SetStateAction<T>) => void;
@@ -28,7 +15,6 @@ export interface UseStorageResult<T> {
 
 /**
  * Use storage value.
- *
  * @param key - Key of storage item.
  * @param options - Options to interact with storage.
  * @returns Value of storage item, and a function to update it.
@@ -44,12 +30,9 @@ export function useStorage<T>(
     deserializer = JSON.parse,
   } = options;
 
-  // Manage storage value as a state.
   const [value, setValue] = useState(defaultValue);
 
-  // After component is mounted.
   useEffect(() => {
-    // Update state with current stored value.
     const storedValue = getter(key, {
       storage,
       defaultValue,
@@ -60,14 +43,12 @@ export function useStorage<T>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
-  // Every time the value updates, update storage simultaneously.
   const setValueWrapper = (action: SetStateAction<T>) => {
     const newValue = action instanceof Function ? action(value) : action;
     setValue(newValue);
     setter(key, newValue, { storage, serializer });
   };
 
-  // Set value to `undefined` will remove the item.
   const remove = () => {
     setValue(undefined as any as T);
     setter(key, undefined, { storage, serializer });
@@ -76,18 +57,11 @@ export function useStorage<T>(
   return { value, set: setValueWrapper, remove };
 }
 
-/** Options to get storage value. */
 type GetterOptions<T> = Required<
   Pick<UseStorageOptions<T>, "storage" | "defaultValue" | "deserializer">
 >;
 
-/**
- * Get storage value.
- *
- * @param key - Key of storage item.
- * @returns Deserialized value, or `undefined` if key is not found.
- */
-export function getter<T>(key: string, options: GetterOptions<T>) {
+function getter<T>(key: string, options: GetterOptions<T>) {
   const { storage, defaultValue, deserializer } = options;
 
   try {
@@ -101,18 +75,11 @@ export function getter<T>(key: string, options: GetterOptions<T>) {
   }
 }
 
-/** Options to set storage value. */
 type SetterOptions<T> = Required<
   Pick<UseStorageOptions<T>, "storage" | "serializer">
 >;
 
-/**
- * Set storage value.
- *
- * @param key - Key of storage item.
- * @param value - New value.
- */
-export function setter<T>(key: string, value: T, options: SetterOptions<T>) {
+function setter<T>(key: string, value: T, options: SetterOptions<T>) {
   const { storage, serializer } = options;
 
   try {

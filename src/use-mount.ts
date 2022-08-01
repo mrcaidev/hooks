@@ -1,8 +1,7 @@
 import { useEffect, type EffectCallback } from "react";
 
 /**
- * Use `ComponentDidMount`.
- *
+ * Use mount phase.
  * @param effect - Callback to run on mount.
  */
 export function useMount(effect: EffectCallback): void {

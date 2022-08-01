@@ -5,19 +5,11 @@ import {
 } from "./use-storage";
 import { isBrowser } from "./utils/isBrowser";
 
-/**
- * Options to interact with local storage.
- */
 export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
-
-/**
- * Contains current stored value, and a function to update it.
- */
 export type UseLocalStorageResult<T> = UseStorageResult<T>;
 
 /**
- * Use local storage value.
- *
+ * Use local storage.
  * @param key - Key of local storage item.
  * @param options - Options to interact with local storage.
  * @returns Value of local storage item, and a function to update it.

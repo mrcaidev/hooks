@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 
 /**
- * Use `ComponentWillUnmount`.
- *
+ * Use unmount phase.
  * @param cleanup - Callback to run on unmount.
  */
 export function useUnmount(cleanup: () => void): void {
