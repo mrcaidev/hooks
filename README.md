@@ -2,17 +2,17 @@
   <a href="#">
     <img src="public/reactjs.svg" alt="Logo" width="80" height="80">
   </a>
-  <h1>React Hooks</h1>
+  <h1>Hooks</h1>
 
   <p>A collection of React utility hooks</p>
   <p>
-    <strong><a href="https://mrcaidev.github.io/react-hooks">Explore the docs »</a></strong>
+    <strong><a href="https://mrcaidev.github.io/hooks">Explore the docs »</a></strong>
   </p>
 </div>
 
 ## ✨ Introduction
 
-**React hooks** is a collection of commonly-used React hook, including:
+**Hooks** is a collection of commonly-used React hooks, including:
 
 - Lifecycle _(Mount, update, unmount...)_
 - Optimization _(Memorization...)_
@@ -24,17 +24,17 @@ Started as a learning project, hoping to become well-trusted, non-trival and pro
 
 ## 🚀 Getting started
 
-`@mrcaidev/react-hooks` is available in npm registry.
+`@mrcaidev/hooks` is available in npm registry.
 
 ```bash
-npm i @mrcaidev/react-hooks    # Use npm
-yarn add @mrcaidev/react-hooks # Use yarn
-pnpm add @mrcaidev/react-hooks # Use pnpm
+npm i @mrcaidev/hooks    # Use npm
+yarn add @mrcaidev/hooks # Use yarn
+pnpm add @mrcaidev/hooks # Use pnpm
 ```
 
 And start to use hooks in your web app!
 
-For detailed documentation of hooks and types, please refer to the [documentation](https://mrcaidev.github.io/react-hooks).
+For detailed documentation of hooks and types, please refer to the [documentation](https://mrcaidev.github.io/hooks).
 
 ## 🧰 Built with
 
@@ -54,15 +54,15 @@ For detailed documentation of hooks and types, please refer to the [documentatio
 
 ### Bug report
 
-If something goes wrong, please [open an issue](https://github.com/mrcaidev/react-hooks/issues) to help us improve.
+If something goes wrong, please [open an issue](https://github.com/mrcaidev/hooks/issues) to help us improve.
 
 ### Feature request
 
-If you have an idea of a new hook, or a better solution for an existing hook, please fork this repository and [create a pull request](https://github.com/mrcaidev/react-hooks/pulls).
+If you have an idea of a new hook, or a better solution for an existing hook, please fork this repository and [create a pull request](https://github.com/mrcaidev/hooks/pulls).
 
 ### Other feedback
 
-You can always [open an issue](<(https://github.com/mrcaidev/react-hooks/issues)>), or directly contact the author via [mrcaidev@qq.com](mailto:mrcaidev@qq.com).
+You can always [open an issue](https://github.com/mrcaidev/hooks/issues), or directly contact the author via [mrcaidev@qq.com](mailto:mrcaidev@qq.com).
 
 ## 📜 License
 

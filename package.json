@@ -1,5 +1,5 @@
 {
-  "name": "@mrcaidev/react-hooks",
+  "name": "@mrcaidev/hooks",
   "version": "0.1.0",
   "description": "React utility hooks",
   "keywords": [
@@ -7,13 +7,13 @@
     "hooks",
     "typescript"
   ],
-  "homepage": "https://github.com/mrcaidev/react-hooks",
-  "bugs": "https://github.com/mrcaidev/react-hooks/issues",
+  "homepage": "https://github.com/mrcaidev/hooks",
+  "bugs": "https://github.com/mrcaidev/hooks/issues",
   "license": "MIT",
   "author": "Yuwang Cai <mrcaidev@gmail.com> (https://mrcai.space)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrcaidev/react-hooks"
+    "url": "https://github.com/mrcaidev/hooks"
   },
   "packageManager": "pnpm@7.5.0",
   "files": [
@@ -21,7 +21,7 @@
   ],
   "main": "dist/index.js",
   "browser": "dist/index.js",
-  "typings": "dist/react-hooks.d.ts",
+  "typings": "dist/hooks.d.ts",
   "scripts": {
     "build": "run-s build:esm build:api build:docs",
     "build:esm": "tsc --project tsconfig.build.json",

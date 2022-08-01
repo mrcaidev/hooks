@@ -8,5 +8,5 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [@mrcaidev/react-hooks](./react-hooks.md) | A collection of React utility hooks. |
+|  [@mrcaidev/hooks](./hooks.md) | A collection of React utility hooks. |
 
