@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { useTheme } from "../src/use-theme";
 
-beforeAll(() => {
+beforeEach(() => {
   // Mock device environment: Dark preferred.
   const device: Record<string, boolean> = {
     "(prefers-color-scheme: dark)": true,
@@ -15,17 +15,31 @@ beforeAll(() => {
       removeEventListener: () => {},
     } as any as MediaQueryList;
   };
+
+  // Clear local storage.
+  localStorage.removeItem("theme");
+  localStorage.removeItem("test");
 });
 
 describe("useTheme", () => {
-  it("can detect OS theme", () => {
+  it("detects OS theme", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual(null);
   });
 
   it("can override OS theme", () => {
     const { result } = renderHook(() => useTheme({ defaultTheme: "light" }));
     expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual(null);
+  });
+
+  it("reads user theme", () => {
+    localStorage.setItem("theme", '"light"');
+
+    const { result } = renderHook(() => useTheme());
+    expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual('"light"');
   });
 
   it("can specify storage key", () => {
@@ -41,27 +55,42 @@ describe("useTheme", () => {
   it("can toggle theme", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual(null);
 
     act(() => result.current.toggle());
     expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual('"light"');
 
     act(() => result.current.toggle());
     expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual('"dark"');
   });
 
   it("can set to light", () => {
     const { result } = renderHook(() => useTheme({ defaultTheme: "dark" }));
     expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual(null);
 
     act(() => result.current.setLight());
     expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual('"light"');
+
+    act(() => result.current.setLight());
+    expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual('"light"');
   });
 
   it("can set to dark", () => {
     const { result } = renderHook(() => useTheme({ defaultTheme: "light" }));
     expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual(null);
 
     act(() => result.current.setDark());
     expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual('"dark"');
+
+    act(() => result.current.setDark());
+    expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual('"dark"');
   });
 });
