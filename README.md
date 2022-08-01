@@ -2,8 +2,7 @@
   <a href="#">
     <img src="public/reactjs.svg" alt="Logo" width="80" height="80">
   </a>
-  <h1>Hooks</h1>
-
+  <h1>@mrcaidev/hooks</h1>
   <p>A collection of React utility hooks</p>
   <p>
     <strong><a href="https://mrcaidev.github.io/hooks">Explore the docs »</a></strong>
@@ -12,12 +11,11 @@
 
 ## ✨ Introduction
 
-**Hooks** is a collection of commonly-used React hooks, including:
+**@mrcaidev/hooks** is a collection of commonly-used React hooks, including:
 
-- Lifecycle _(Mount, update, unmount...)_
-- Optimization _(Memorization...)_
+- Basics _(Counter, theme, memorization...)_
+- Lifecycles _(Mount, update, unmount...)_
 - Web APIs _(Storage, media query...)_
-- Small Tools _(Counter, toggler, ...)_
 - ...
 
 Started as a learning project, hoping to become well-trusted, non-trival and production-level. 👍
