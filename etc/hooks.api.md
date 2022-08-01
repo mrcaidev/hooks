@@ -81,12 +81,9 @@ export function useTheme(options?: UseThemeOptions): {
     setDark: () => void;
 };
 
-// Warning: (ae-forgotten-export) The symbol "UseToggleOptions" needs to be exported by the entry point index.d.ts
-//
 // @public
-export function useToggle<L, R>(left: L, right: R, options?: UseToggleOptions<L, R>): {
+export function useToggle<L, R>(left: L, right: R): {
     value: L | R;
-    set: Dispatch<SetStateAction<L | R>>;
     toggle: () => void;
     setLeft: () => void;
     setRight: () => void;

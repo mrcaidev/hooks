@@ -2,29 +2,6 @@ import { act, renderHook } from "@testing-library/react";
 import { useToggle } from "../src/use-toggle";
 
 describe("useToggle", () => {
-  it("can receive initial value", () => {
-    const { result } = renderHook(() =>
-      useToggle("hello", "world", { initialValue: "world" })
-    );
-    expect(result.current.value).toEqual("world");
-  });
-
-  it("can set arbitrary value", () => {
-    const { result } = renderHook(() => useToggle("hello", "world"));
-
-    // Set to left.
-    act(() => {
-      result.current.set("hello");
-    });
-    expect(result.current.value).toEqual("hello");
-
-    // Set to right.
-    act(() => {
-      result.current.set("world");
-    });
-    expect(result.current.value).toEqual("world");
-  });
-
   it("can toggle", () => {
     const { result } = renderHook(() => useToggle("hello", "world"));
 
