@@ -23,10 +23,9 @@
   "browser": "dist/index.js",
   "typings": "dist/hooks.d.ts",
   "scripts": {
-    "build": "run-s build:esm build:api build:docs",
+    "build": "run-s build:esm build:api",
     "build:esm": "tsc --project tsconfig.build.json",
     "build:api": "mkdir -p etc && api-extractor run --local",
-    "build:docs": "api-documenter markdown -i temp -o docs",
     "clean": "rimraf dist && rimraf temp && rimraf *.tsbuildinfo",
     "dev": "tsc --project tsconfig.build.json --watch",
     "format": "prettier src tests --write --cache",
@@ -43,7 +42,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@microsoft/api-documenter": "^7.19.1",
     "@microsoft/api-extractor": "^7.28.7",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.6",
