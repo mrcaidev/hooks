@@ -17,7 +17,7 @@ export function useCounter(initialValue = 0) {
 
   return {
     count,
-    setCount,
+    set: setCount,
     increment,
     decrement,
     incrementBy,

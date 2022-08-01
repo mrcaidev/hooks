@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
@@ -31,7 +29,7 @@ export function useConstFn<T extends (...args: any) => any>(fn: T): T;
 // @public
 export function useCounter(initialValue?: number): {
     count: number;
-    setCount: Dispatch<SetStateAction<number>>;
+    set: Dispatch<SetStateAction<number>>;
     increment: () => void;
     decrement: () => void;
     incrementBy: (value: number) => void;
