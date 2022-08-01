@@ -7,15 +7,11 @@ const DEFAULT_STORAGE_KEY = "theme";
 
 /**
  * Theme type.
- *
- * @public
  */
 export type Theme = "light" | "dark";
 
 /**
  * Options to custom theme.
- *
- * @public
  */
 export interface UseThemeOptions {
   /** Theme to override user's OS preferrence. */
@@ -27,8 +23,6 @@ export interface UseThemeOptions {
 
 /**
  * Current theme, and functions to update it.
- *
- * @public
  */
 export interface UseThemeResult {
   /** Current theme. */
@@ -49,8 +43,6 @@ export interface UseThemeResult {
  *
  * @param options - Options to customize theme.
  * @returns Current theme, and functions to update it.
- *
- * @public
  */
 export function useTheme(options: UseThemeOptions = {}): UseThemeResult {
   const { defaultTheme, storageKey = DEFAULT_STORAGE_KEY } = options;

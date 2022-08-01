@@ -11,8 +11,6 @@ import { useUnmount } from "./use-unmount";
  *
  * @param effect - Callback to run on update.
  * @param deps - Dependency list of effect.
- *
- * @public
  */
 export function useUpdate(
   effect: EffectCallback,

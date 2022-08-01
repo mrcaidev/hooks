@@ -5,8 +5,6 @@ import { useRef } from "react";
  *
  * @param fn - A function whose return value will be memorized.
  * @returns The memorized value.
- *
- * @public
  */
 export function useConst<T>(fn: () => T): T {
   const ref = useRef<{ value: T }>();

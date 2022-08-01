@@ -2,8 +2,6 @@ import { useState } from "react";
 
 /**
  * Contains a counter and some functions to update it.
- *
- * @public
  */
 export interface UseCounterResult {
   /** Current counter number. */
@@ -36,8 +34,6 @@ export interface UseCounterResult {
  *
  * @param initialValue - Initial value of the counter, defaults to 0.
  * @returns A counter and some functions to update it.
- *
- * @public
  */
 export function useCounter(initialValue = 0): UseCounterResult {
   const [count, setCount] = useState(initialValue);

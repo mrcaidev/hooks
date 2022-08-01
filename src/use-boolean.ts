@@ -2,8 +2,6 @@ import { useState } from "react";
 
 /**
  * A boolean value, and functions to update it.
- *
- * @public
  */
 export interface UseBooleanResult {
   /** Current boolean value. */
@@ -24,8 +22,6 @@ export interface UseBooleanResult {
  *
  * @param initialValue - Initial boolean value, defaults to false.
  * @returns A boolean value, and functions to update it.
- *
- * @public
  */
 export function useBoolean(initialValue = false): UseBooleanResult {
   const [value, setValue] = useState(initialValue);

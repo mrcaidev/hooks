@@ -7,15 +7,11 @@ import { isBrowser } from "./utils/isBrowser";
 
 /**
  * Options to interact with local storage.
- *
- * @public
  */
 export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 /**
  * Contains current stored value, and a function to update it.
- *
- * @public
  */
 export type UseLocalStorageResult<T> = UseStorageResult<T>;
 
@@ -25,8 +21,6 @@ export type UseLocalStorageResult<T> = UseStorageResult<T>;
  * @param key - Key of local storage item.
  * @param options - Options to interact with local storage.
  * @returns Value of local storage item, and a function to update it.
- *
- * @public
  */
 export function useLocalStorage<T>(
   key: string,

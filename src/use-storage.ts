@@ -2,8 +2,6 @@ import { useEffect, useState, type SetStateAction } from "react";
 
 /**
  * Options to interact with storage.
- *
- * @public
  */
 export interface UseStorageOptions<T> {
   /** Storage to use. */
@@ -21,8 +19,6 @@ export interface UseStorageOptions<T> {
 
 /**
  * Contains current stored value, and a function to update it.
- *
- * @public
  */
 export interface UseStorageResult<T> {
   value: T;
@@ -36,8 +32,6 @@ export interface UseStorageResult<T> {
  * @param key - Key of storage item.
  * @param options - Options to interact with storage.
  * @returns Value of storage item, and a function to update it.
- *
- * @public
  */
 export function useStorage<T>(
   key: string,
@@ -92,8 +86,6 @@ type GetterOptions<T> = Required<
  *
  * @param key - Key of storage item.
  * @returns Deserialized value, or `undefined` if key is not found.
- *
- * @internal
  */
 export function getter<T>(key: string, options: GetterOptions<T>) {
   const { storage, defaultValue, deserializer } = options;
@@ -119,8 +111,6 @@ type SetterOptions<T> = Required<
  *
  * @param key - Key of storage item.
  * @param value - New value.
- *
- * @internal
  */
 export function setter<T>(key: string, value: T, options: SetterOptions<T>) {
   const { storage, serializer } = options;
