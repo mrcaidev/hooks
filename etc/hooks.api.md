@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
