@@ -1,6 +1,10 @@
 import { act, renderHook } from "@testing-library/react";
 import { useLocalStorage } from "../src/use-local-storage";
 
+beforeEach(() => {
+  localStorage.clear();
+});
+
 describe("useLocalStorage", () => {
   describe("without stored value", () => {
     it("works with no options", () => {

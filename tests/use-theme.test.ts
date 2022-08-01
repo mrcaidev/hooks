@@ -17,8 +17,7 @@ beforeEach(() => {
   };
 
   // Clear local storage.
-  localStorage.removeItem("theme");
-  localStorage.removeItem("test");
+  localStorage.clear();
 });
 
 describe("useTheme", () => {

@@ -1,6 +1,10 @@
 import { act, renderHook } from "@testing-library/react";
 import { useSessionStorage } from "../src/use-session-storage";
 
+beforeEach(() => {
+  sessionStorage.clear();
+});
+
 describe("useSessionStorage", () => {
   describe("without stored value", () => {
     it("works with no options", () => {
