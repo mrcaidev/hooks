@@ -1,22 +1,11 @@
 import { useState } from "react";
 
-export interface UseCounterResult {
-  count: number;
-  setCount: (value: number) => void;
-  increment: () => void;
-  decrement: () => void;
-  incrementBy: (value: number) => void;
-  decrementBy: (value: number) => void;
-  reset: () => void;
-  resetToZero: () => void;
-}
-
 /**
  * Use a counter.
  * @param initialValue - Initial value of the counter, defaults to 0.
  * @returns A counter and functions to update it.
  */
-export function useCounter(initialValue = 0): UseCounterResult {
+export function useCounter(initialValue = 0) {
   const [count, setCount] = useState(initialValue);
 
   const increment = () => setCount((count) => count + 1);

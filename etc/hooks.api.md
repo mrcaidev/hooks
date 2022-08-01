@@ -5,22 +5,17 @@
 ```ts
 
 import { DependencyList } from 'react';
+import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
 import { SetStateAction } from 'react';
 
 // @public
-export type Theme = "light" | "dark";
-
-// @public
-export function useBoolean(initialValue?: boolean): UseBooleanResult;
-
-// @public
-export interface UseBooleanResult {
-    off: () => void;
-    on: () => void;
-    toggle: () => void;
+export function useBoolean(initialValue?: boolean): {
     value: boolean;
-}
+    toggle: () => void;
+    on: () => void;
+    off: () => void;
+};
 
 // @public
 export function useConst<T>(fn: () => T): T;
@@ -29,31 +24,28 @@ export function useConst<T>(fn: () => T): T;
 export function useConstFn<T extends (...args: any) => any>(fn: T): T;
 
 // @public
-export function useCounter(initialValue?: number): UseCounterResult;
-
-// @public
-export interface UseCounterResult {
+export function useCounter(initialValue?: number): {
     count: number;
-    decrement: () => void;
-    decrementBy: (value: number) => void;
+    setCount: Dispatch<SetStateAction<number>>;
     increment: () => void;
+    decrement: () => void;
     incrementBy: (value: number) => void;
+    decrementBy: (value: number) => void;
     reset: () => void;
     resetToZero: () => void;
-    setCount: (value: number) => void;
-}
+};
 
 // @public
 export function useForceUpdate(): () => void;
 
+// Warning: (ae-forgotten-export) The symbol "UseLocalStorageOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): UseLocalStorageResult<T>;
-
-// @public
-export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
-
-// @public
-export type UseLocalStorageResult<T> = UseStorageResult<T>;
+export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {
+    value: T;
+    set: Dispatch<SetStateAction<T>>;
+    remove: () => void;
+};
 
 // @public
 export function useMediaQuery(query: string): boolean;
@@ -61,74 +53,53 @@ export function useMediaQuery(query: string): boolean;
 // @public
 export function useMount(effect: EffectCallback): void;
 
+// Warning: (ae-forgotten-export) The symbol "UseSessionStorageOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function useSessionStorage<T>(key: string, options?: UseSessionStorageOptions<T>): UseSessionStorageResult<T>;
-
-// @public
-export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
-
-// @public
-export type UseSessionStorageResult<T> = UseStorageResult<T>;
-
-// @public
-export function useStorage<T>(key: string, options: UseStorageOptions<T>): UseStorageResult<T>;
-
-// @public
-export interface UseStorageOptions<T> {
-    defaultValue?: T;
-    deserializer?: (value: string) => T;
-    serializer?: (value: T) => string;
-    storage: Storage | undefined;
-}
-
-// @public
-export interface UseStorageResult<T> {
-    // (undocumented)
-    remove: () => void;
-    // (undocumented)
-    set: (value: SetStateAction<T>) => void;
-    // (undocumented)
+export function useSessionStorage<T>(key: string, options?: UseSessionStorageOptions<T>): {
     value: T;
-}
+    set: Dispatch<SetStateAction<T>>;
+    remove: () => void;
+};
 
+// Warning: (ae-forgotten-export) The symbol "UseStorageOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function useTheme(options?: UseThemeOptions): UseThemeResult;
+export function useStorage<T>(key: string, options: UseStorageOptions<T>): {
+    value: T;
+    set: Dispatch<SetStateAction<T>>;
+    remove: () => void;
+};
 
+// Warning: (ae-forgotten-export) The symbol "UseThemeOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export interface UseThemeOptions {
-    defaultTheme?: Theme;
-    storageKey?: string;
-}
-
-// @public
-export interface UseThemeResult {
-    setDark: () => void;
-    setLight: () => void;
+export function useTheme(options?: UseThemeOptions): {
     theme: Theme;
     toggle: () => void;
-}
+    setLight: () => void;
+    setDark: () => void;
+};
 
+// Warning: (ae-forgotten-export) The symbol "UseToggleOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function useToggle<L, R>(left: L, right: R, options?: UseToggleOptions<L, R>): UseToggleResult<L, R>;
-
-// @public
-export interface UseToggleOptions<L, R> {
-    initialValue: L | R;
-}
-
-// @public
-export interface UseToggleResult<L, R> {
-    set: (value: L | R) => void;
+export function useToggle<L, R>(left: L, right: R, options?: UseToggleOptions<L, R>): {
+    value: L | R;
+    set: Dispatch<SetStateAction<L | R>>;
+    toggle: () => void;
     setLeft: () => void;
     setRight: () => void;
-    toggle: () => void;
-    value: L | R;
-}
+};
 
 // @public
 export function useUnmount(cleanup: () => void): void;
 
 // @public
 export function useUpdate(effect: EffectCallback, deps?: DependencyList): void;
+
+// Warnings were encountered during analysis:
+//
+// src/use-theme.ts:21:1 - (ae-forgotten-export) The symbol "Theme" needs to be exported by the entry point index.d.ts
 
 ```

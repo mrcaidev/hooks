@@ -1,15 +1,7 @@
 import { useState } from "react";
 
-export interface UseToggleOptions<L, R> {
+interface UseToggleOptions<L, R> {
   initialValue: L | R;
-}
-
-export interface UseToggleResult<L, R> {
-  value: L | R;
-  set: (value: L | R) => void;
-  toggle: () => void;
-  setLeft: () => void;
-  setRight: () => void;
 }
 
 /**
@@ -22,7 +14,7 @@ export function useToggle<L, R>(
   left: L,
   right: R,
   options: UseToggleOptions<L, R> = { initialValue: left }
-): UseToggleResult<L, R> {
+) {
   const { initialValue } = options;
 
   const [value, setValue] = useState<L | R>(initialValue);

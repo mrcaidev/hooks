@@ -1,4 +1,4 @@
-import { useEffect, useState, type SetStateAction } from "react";
+import { useEffect, useState } from "react";
 
 export interface UseStorageOptions<T> {
   storage: Storage | undefined;
@@ -7,22 +7,13 @@ export interface UseStorageOptions<T> {
   deserializer?: (value: string) => T;
 }
 
-export interface UseStorageResult<T> {
-  value: T;
-  set: (value: SetStateAction<T>) => void;
-  remove: () => void;
-}
-
 /**
  * Use storage value.
  * @param key - Key of storage item.
  * @param options - Options to interact with storage.
  * @returns Value of storage item, and a function to update it.
  */
-export function useStorage<T>(
-  key: string,
-  options: UseStorageOptions<T>
-): UseStorageResult<T> {
+export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
   const {
     storage,
     defaultValue = undefined as any as T,
@@ -33,7 +24,7 @@ export function useStorage<T>(
   const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
-    const storedValue = getter(key, {
+    const storedValue = getStorage(key, {
       storage,
       defaultValue,
       deserializer,
@@ -43,25 +34,25 @@ export function useStorage<T>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
-  const setValueWrapper = (action: SetStateAction<T>) => {
+  const setValueWrapper: typeof setValue = (action) => {
     const newValue = action instanceof Function ? action(value) : action;
     setValue(newValue);
-    setter(key, newValue, { storage, serializer });
+    setStorage(key, newValue, { storage, serializer });
   };
 
   const remove = () => {
     setValue(undefined as any as T);
-    setter(key, undefined, { storage, serializer });
+    setStorage(key, undefined, { storage, serializer });
   };
 
   return { value, set: setValueWrapper, remove };
 }
 
-type GetterOptions<T> = Required<
+type GetStorageOptions<T> = Required<
   Pick<UseStorageOptions<T>, "storage" | "defaultValue" | "deserializer">
 >;
 
-function getter<T>(key: string, options: GetterOptions<T>) {
+function getStorage<T>(key: string, options: GetStorageOptions<T>) {
   const { storage, defaultValue, deserializer } = options;
 
   try {
@@ -75,11 +66,11 @@ function getter<T>(key: string, options: GetterOptions<T>) {
   }
 }
 
-type SetterOptions<T> = Required<
+type SetStorageOptions<T> = Required<
   Pick<UseStorageOptions<T>, "storage" | "serializer">
 >;
 
-function setter<T>(key: string, value: T, options: SetterOptions<T>) {
+function setStorage<T>(key: string, value: T, options: SetStorageOptions<T>) {
   const { storage, serializer } = options;
 
   try {

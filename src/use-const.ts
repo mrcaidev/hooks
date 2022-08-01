@@ -5,7 +5,7 @@ import { useRef } from "react";
  * @param fn - A function to generate the constant value.
  * @returns A constant value.
  */
-export function useConst<T>(fn: () => T): T {
+export function useConst<T>(fn: () => T) {
   const ref = useRef<{ value: T }>();
 
   if (ref.current === undefined) {

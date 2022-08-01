@@ -5,18 +5,11 @@ import { useMediaQuery } from "./use-media-query";
 const MEDIA_QUERY = "(prefers-color-scheme: dark)";
 const DEFAULT_STORAGE_KEY = "theme";
 
-export type Theme = "light" | "dark";
+type Theme = "light" | "dark";
 
-export interface UseThemeOptions {
+interface UseThemeOptions {
   defaultTheme?: Theme;
   storageKey?: string;
-}
-
-export interface UseThemeResult {
-  theme: Theme;
-  toggle: () => void;
-  setLight: () => void;
-  setDark: () => void;
 }
 
 /**
@@ -24,7 +17,7 @@ export interface UseThemeResult {
  * @param options - Options to customize theme.
  * @returns Current theme, and functions to update it.
  */
-export function useTheme(options: UseThemeOptions = {}): UseThemeResult {
+export function useTheme(options: UseThemeOptions = {}) {
   const { defaultTheme, storageKey = DEFAULT_STORAGE_KEY } = options;
 
   const isDarkPreferred = useMediaQuery(MEDIA_QUERY);

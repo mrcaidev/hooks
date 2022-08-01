@@ -1,12 +1,7 @@
-import {
-  useStorage,
-  type UseStorageOptions,
-  type UseStorageResult,
-} from "./use-storage";
+import { useStorage, type UseStorageOptions } from "./use-storage";
 import { isBrowser } from "./utils/isBrowser";
 
-export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
-export type UseSessionStorageResult<T> = UseStorageResult<T>;
+type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 /**
  * Use session storage value.
@@ -17,7 +12,7 @@ export type UseSessionStorageResult<T> = UseStorageResult<T>;
 export function useSessionStorage<T>(
   key: string,
   options?: UseSessionStorageOptions<T>
-): UseSessionStorageResult<T> {
+) {
   return useStorage<T>(key, {
     storage: isBrowser() ? sessionStorage : undefined,
     ...(options ?? {}),

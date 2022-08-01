@@ -5,6 +5,6 @@ import { useConst } from "./use-const";
  * @param fn - A function to be made constant.
  * @returns A constant function.
  */
-export function useConstFn<T extends (...args: any) => any>(fn: T): T {
+export function useConstFn<T extends (...args: any) => any>(fn: T) {
   return useConst(() => fn);
 }

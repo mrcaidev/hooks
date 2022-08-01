@@ -11,10 +11,7 @@ import { useUnmount } from "./use-unmount";
  * @param effect - Callback to run on update.
  * @param deps - Dependency list of effect.
  */
-export function useUpdate(
-  effect: EffectCallback,
-  deps: DependencyList = []
-): void {
+export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
   const isMounted = useRef(false);
 
   useUnmount(() => {
