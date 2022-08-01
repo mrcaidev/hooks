@@ -29,7 +29,7 @@
     "incremental": true,
     "skipLibCheck": true,
     "paths": {
-      "react-hooks": ["src"]
+      "hooks": ["src"]
     }
   },
   "include": ["src", "tests"]
