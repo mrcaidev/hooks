@@ -1,7 +1,8 @@
 import { useStorage, type UseStorageOptions } from "./use-storage";
 import { isBrowser } from "./utils/isBrowser";
 
-type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+/** Options to interact with session storage. */
+export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 /**
  * Use session storage value.

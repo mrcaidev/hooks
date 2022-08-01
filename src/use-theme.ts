@@ -5,10 +5,15 @@ import { useMediaQuery } from "./use-media-query";
 const MEDIA_QUERY = "(prefers-color-scheme: dark)";
 const DEFAULT_STORAGE_KEY = "theme";
 
-type Theme = "light" | "dark";
+/** Theme type. */
+export type Theme = "light" | "dark";
 
-interface UseThemeOptions {
+/** Options to customize theme. */
+export interface UseThemeOptions {
+  /** Default theme to override user's OS preferrence. */
   defaultTheme?: Theme;
+
+  /** Key to store theme value in local storage. */
   storageKey?: string;
 }
 

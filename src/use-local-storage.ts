@@ -1,7 +1,8 @@
 import { useStorage, type UseStorageOptions } from "./use-storage";
 import { isBrowser } from "./utils/isBrowser";
 
-type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+/** Options to interact with local storage. */
+export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 /**
  * Use local storage.

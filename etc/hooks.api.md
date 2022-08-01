@@ -4,10 +4,15 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
 import { SetStateAction } from 'react';
+
+// @public
+export type Theme = "light" | "dark";
 
 // @public
 export function useBoolean(initialValue?: boolean): {
@@ -38,8 +43,6 @@ export function useCounter(initialValue?: number): {
 // @public
 export function useForceUpdate(): () => void;
 
-// Warning: (ae-forgotten-export) The symbol "UseLocalStorageOptions" needs to be exported by the entry point index.d.ts
-//
 // @public
 export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {
     value: T;
@@ -48,13 +51,14 @@ export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions
 };
 
 // @public
+export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+
+// @public
 export function useMediaQuery(query: string): boolean;
 
 // @public
 export function useMount(effect: EffectCallback): void;
 
-// Warning: (ae-forgotten-export) The symbol "UseSessionStorageOptions" needs to be exported by the entry point index.d.ts
-//
 // @public
 export function useSessionStorage<T>(key: string, options?: UseSessionStorageOptions<T>): {
     value: T;
@@ -62,8 +66,9 @@ export function useSessionStorage<T>(key: string, options?: UseSessionStorageOpt
     remove: () => void;
 };
 
-// Warning: (ae-forgotten-export) The symbol "UseStorageOptions" needs to be exported by the entry point index.d.ts
-//
+// @public
+export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+
 // @public
 export function useStorage<T>(key: string, options: UseStorageOptions<T>): {
     value: T;
@@ -71,8 +76,14 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>): {
     remove: () => void;
 };
 
-// Warning: (ae-forgotten-export) The symbol "UseThemeOptions" needs to be exported by the entry point index.d.ts
-//
+// @public
+export interface UseStorageOptions<T> {
+    defaultValue?: T;
+    deserializer?: (value: string) => T;
+    serializer?: (value: T) => string;
+    storage: Storage | undefined;
+}
+
 // @public
 export function useTheme(options?: UseThemeOptions): {
     theme: Theme;
@@ -80,6 +91,12 @@ export function useTheme(options?: UseThemeOptions): {
     setLight: () => void;
     setDark: () => void;
 };
+
+// @public
+export interface UseThemeOptions {
+    defaultTheme?: Theme;
+    storageKey?: string;
+}
 
 // @public
 export function useToggle<L, R>(left: L, right: R): {
@@ -94,9 +111,5 @@ export function useUnmount(cleanup: () => void): void;
 
 // @public
 export function useUpdate(effect: EffectCallback, deps?: DependencyList): void;
-
-// Warnings were encountered during analysis:
-//
-// src/use-theme.ts:21:1 - (ae-forgotten-export) The symbol "Theme" needs to be exported by the entry point index.d.ts
 
 ```

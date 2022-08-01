@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 
+/** Options to interact with storage objects. */
 export interface UseStorageOptions<T> {
+  /** Storage type, either `localStorage` or `sessionStorage`. */
   storage: Storage | undefined;
+
+  /** Default state if value does not yet exist. */
   defaultValue?: T;
+
+  /** A function to serialize value T into string. */
   serializer?: (value: T) => string;
+
+  /** A function to deserialize string into value T. */
   deserializer?: (value: string) => T;
 }
 
