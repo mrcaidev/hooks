@@ -9,7 +9,16 @@
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
+import { RefObject } from 'react';
 import { SetStateAction } from 'react';
+
+// @public
+export interface ModifierKeys {
+    alt?: boolean;
+    ctrl?: boolean;
+    meta?: boolean;
+    shift?: boolean;
+}
 
 // @public
 export type Theme = "light" | "dark";
@@ -21,6 +30,9 @@ export function useBoolean(initialValue?: boolean): {
     on: () => void;
     off: () => void;
 };
+
+// @public
+export function useClickOutside(ref: RefObject<HTMLElement | null>, callback: (e: Event) => void): void;
 
 // @public
 export function useConst<T>(fn: () => T): T;
@@ -42,6 +54,9 @@ export function useCounter(initialValue?: number): {
 
 // @public
 export function useForceUpdate(): () => void;
+
+// @public
+export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
 
 // @public
 export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {
