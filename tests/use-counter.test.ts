@@ -14,7 +14,7 @@ describe("useCounter", () => {
     const { result } = renderHook(() => useCounter());
     expect(result.current.count).toEqual(0);
 
-    act(() => result.current.setCount(1));
+    act(() => result.current.set(1));
     expect(result.current.count).toEqual(1);
   });
 
