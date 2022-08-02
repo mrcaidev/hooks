@@ -9,6 +9,7 @@ export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
 export { useForceUpdate } from "./use-force-update";
+export { useHover, type UseHoverOptions } from "./use-hover";
 export { useKeydown, type ModifierKeys } from "./use-keydown";
 export {
   useLocalStorage,

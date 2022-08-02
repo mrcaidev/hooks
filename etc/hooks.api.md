@@ -56,6 +56,16 @@ export function useCounter(initialValue?: number): {
 export function useForceUpdate(): () => void;
 
 // @public
+export function useHover(ref: RefObject<HTMLElement | null>, options?: UseHoverOptions): boolean;
+
+// @public
+export interface UseHoverOptions {
+    onEnter?: (e?: MouseEvent) => void;
+    onLeave?: (e?: MouseEvent) => void;
+    onToggle?: (e?: MouseEvent, isHovering?: boolean) => void;
+}
+
+// @public
 export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
 
 // @public
