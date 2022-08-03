@@ -51,6 +51,28 @@ describe("useTheme", () => {
     expect(localStorage.getItem("test")).toEqual('"light"');
   });
 
+  it("can set", () => {
+    const { result } = renderHook(() => useTheme());
+    expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual(null);
+
+    act(() => result.current.set("light"));
+    expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual('"light"');
+
+    act(() => result.current.set("light"));
+    expect(result.current.theme).toEqual("light");
+    expect(localStorage.getItem("theme")).toEqual('"light"');
+
+    act(() => result.current.set("dark"));
+    expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual('"dark"');
+
+    act(() => result.current.set("dark"));
+    expect(result.current.theme).toEqual("dark");
+    expect(localStorage.getItem("theme")).toEqual('"dark"');
+  });
+
   it("can toggle theme", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toEqual("dark");

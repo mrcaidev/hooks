@@ -22,6 +22,9 @@ export interface UseThemeResult {
   /** Current theme. */
   theme: Theme;
 
+  /** Set theme. */
+  set: (theme: Theme) => void;
+
   /** Toggle theme. */
   toggle: () => void;
 
@@ -52,5 +55,5 @@ export function useTheme(options: UseThemeOptions = {}): UseThemeResult {
   const setDark = () => setUserTheme("dark");
   const setLight = () => setUserTheme("light");
 
-  return { theme, toggle, setLight, setDark };
+  return { theme, set: setUserTheme, toggle, setLight, setDark };
 }
