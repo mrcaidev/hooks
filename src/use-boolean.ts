@@ -5,6 +5,9 @@ export interface UseBooleanResult {
   /** Current boolean value. */
   value: boolean;
 
+  /** Set boolean value. */
+  set: (value: boolean) => void;
+
   /** Toggle boolean value. */
   toggle: () => void;
 
@@ -27,5 +30,5 @@ export function useBoolean(initialValue = false): UseBooleanResult {
   const on = () => setValue(true);
   const off = () => setValue(false);
 
-  return { value, toggle, on, off };
+  return { value, set: setValue, toggle, on, off };
 }

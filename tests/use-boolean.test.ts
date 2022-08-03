@@ -13,6 +13,23 @@ describe("useBoolean", () => {
     expect(resultC.current.value).toEqual(true);
   });
 
+  it("can set", () => {
+    const { result } = renderHook(() => useBoolean());
+    expect(result.current.value).toEqual(false);
+
+    act(() => result.current.set(true));
+    expect(result.current.value).toEqual(true);
+
+    act(() => result.current.set(true));
+    expect(result.current.value).toEqual(true);
+
+    act(() => result.current.set(false));
+    expect(result.current.value).toEqual(false);
+
+    act(() => result.current.set(false));
+    expect(result.current.value).toEqual(false);
+  });
+
   it("can toggle", () => {
     const { result } = renderHook(() => useBoolean());
     expect(result.current.value).toEqual(false);
