@@ -37,7 +37,7 @@ export interface UseThemeResult {
 
 /**
  * Use current theme.
- * @param options - Options to customize theme.
+ * @param options - Options to customize theme, defaults to `{}`.
  * @returns Current theme, and functions to update it.
  */
 export function useTheme(options: UseThemeOptions = {}): UseThemeResult {

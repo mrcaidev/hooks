@@ -8,8 +8,8 @@ import { useUnmount } from "./use-unmount";
 
 /**
  * Use update phase.
- * @param effect - Callback to run on update.
- * @param deps - Dependency list of effect.
+ * @param effect - A callback function to run on update phase.
+ * @param deps - Dependency list of effect, defaults to `[]`.
  */
 export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
   const isMounted = useRef(false);

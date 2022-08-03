@@ -5,7 +5,7 @@ export interface UseCounterResult {
   /** Current count. */
   count: number;
 
-  /** Set count to arbitrary number. */
+  /** Set count. */
   set: (value: number) => void;
 
   /** Increment count by 1. */
@@ -14,15 +14,16 @@ export interface UseCounterResult {
   /** Decrement count by 1. */
   decrement: () => void;
 
-  /** Increment count by arbitrary number. */
+  /** Increment count by a certain value. */
   incrementBy: (value: number) => void;
 
-  /** Decrement count by arbitrary number. */
+  /** Decrement count by a certain value. */
   decrementBy: (value: number) => void;
 
   /** Reset count to initial value. */
   reset: () => void;
 
+  // TODO: Remove this API.
   /** Reset count to 0. */
   resetToZero: () => void;
 }

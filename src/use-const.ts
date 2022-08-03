@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 /**
- * Use a constant value.
+ * Memorize a value.
  * @param fn - A function to generate the constant value.
  * @returns A constant value.
  */

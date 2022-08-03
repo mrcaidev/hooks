@@ -5,7 +5,7 @@ export interface UseStorageOptions<T> {
   /** Storage type, either `localStorage` or `sessionStorage`. */
   storage: Storage | undefined;
 
-  /** Default state if value does not yet exist. */
+  /** Default state if the item does not yet exist. */
   defaultValue?: T;
 
   /** A function to serialize value T into string. */
@@ -19,7 +19,7 @@ export interface UseStorageOptions<T> {
 export interface UseStorageResult<T> {
   /**
    * Current value of local storage,
-   * or default value if local storage does not yet has this item.
+   * or default value if this item does not yet exist in local storage.
    */
   value: T;
 
@@ -31,7 +31,7 @@ export interface UseStorageResult<T> {
 }
 
 /**
- * Use storage value.
+ * Use storage.
  * @param key - Key of storage item.
  * @param options - Options to interact with storage.
  * @returns Value of storage item, and a function to update it.

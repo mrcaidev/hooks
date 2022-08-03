@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
 /**
- * Use a constant function.
+ * Memorize a function.
  * @param fn - A function to be made constant.
  * @returns A constant function.
  */

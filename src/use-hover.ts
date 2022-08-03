@@ -1,27 +1,29 @@
 import { useEffect, useState, type RefObject } from "react";
 
-/** Actions to invoke on hover state changes. */
+/** Callback functions on hover state changes. */
 export interface UseHoverOptions {
-  /** A function to invoke on mouse entering element. */
+  /** Callback function on mouse entering. */
   onEnter?: (e?: MouseEvent) => void;
 
-  /** A function to invoke on mouse leaving element. */
+  /** Callback function on mouse leaving. */
   onLeave?: (e?: MouseEvent) => void;
 
-  /** A function to invoke on hover state changes. */
+  // TODO: Exchange param order.
+  /** Callback function on hover state changing. */
   onToggle?: (e?: MouseEvent, isHovering?: boolean) => void;
 }
 
 /**
- * Use hover state on container element.
- * @param ref - A ref object of container element.
- * @param options - Functions to invoke on hover state changes.
- * @returns `true` if mouse is hovering on container, or `false` otherwise.
+ * Watch for hovering on an element.
+ * @param ref - A ref object of target element.
+ * @param options - Callback functions on hover state changes, defaults to `{}`.
+ * @returns `true` if mouse is hovering on target element, or `false` otherwise.
  */
 export function useHover(
   ref: RefObject<HTMLElement | null>,
   options: UseHoverOptions = {}
 ) {
+  // TODO: Leave unspecified callbacks as undefined.
   const {
     onEnter = () => {},
     onLeave = () => {},
@@ -30,6 +32,7 @@ export function useHover(
 
   const [isHovering, setIsHovering] = useState(false);
 
+  // TODO: Move setIsHovering on top.
   const handleEnter = (e: MouseEvent) => {
     onEnter(e);
     setIsHovering(true);

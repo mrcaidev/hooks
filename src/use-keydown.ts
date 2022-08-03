@@ -2,23 +2,24 @@ import { useEffect } from "react";
 
 /** Modifier keys. */
 export interface ModifierKeys {
-  /** `true` if Ctrl key is pressed at the same time. */
+  /** `true` if "Ctrl" should be pressed, defaults to `false`. */
   ctrl?: boolean;
 
-  /** `true` if Shift key is pressed at the same time. */
+  /** `true` if "Shift" should be pressed, defaults to `false`. */
   shift?: boolean;
 
-  /** `true` if Alt key is pressed at the same time. */
+  /** `true` if "Alt" should be pressed, defaults to `false`. */
   alt?: boolean;
 
-  /** `true` if Meta key is pressed at the same time. */
+  /** `true` if "Meta" should be pressed, defaults to `false`. */
   meta?: boolean;
 }
 
 /**
- * Use keyDown event.
- * @param code - Code of target key to trigger callback.
- * @param callback - A function to invoke on key down.
+ * Watch for keyDown events.
+ * @param code - Code of target key.
+ * @param callback - A callback function on keyDown events.
+ * @param modifier - Modifier keys that should be pressed at the same time, defaults to `{}`.
  */
 export function useKeydown(
   code: string,

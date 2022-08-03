@@ -1,14 +1,16 @@
 import { useEffect, type RefObject } from "react";
 
 /**
- * Use clicking outside a container.
- * @param ref - A ref object on the container node.
- * @param callback - A function to invoke on outside clicks.
+ * Watch for clicks outside an element.
+ * @param ref - A ref object of target element.
+ * @param callback - A callback function on outside click events.
  */
 export function useClickOutside(
   ref: RefObject<HTMLElement | null>,
+  // TODO: Make e optional.
   callback: (e: Event) => void
 ) {
+  // TODO: Event -> MouseEvent.
   const listener = (e: Event) => {
     const element = ref.current;
     if (!element || element.contains(e.target as Node)) return;

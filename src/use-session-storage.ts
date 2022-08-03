@@ -12,7 +12,7 @@ export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 export type UseSessionStorageResult<T> = UseStorageResult<T>;
 
 /**
- * Use session storage value.
+ * Use session storage.
  * @param key - Key of session storage item.
  * @param options - Options to interact with session storage.
  * @returns Value of session storage item, and a function to update it.
