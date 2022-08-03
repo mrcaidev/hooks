@@ -60,12 +60,4 @@ describe("useCounter", () => {
     act(() => result.current.reset());
     expect(result.current.count).toEqual(1);
   });
-
-  it("can reset to 0", () => {
-    const { result } = renderHook(() => useCounter(1));
-    expect(result.current.count).toEqual(1);
-
-    act(() => result.current.resetToZero());
-    expect(result.current.count).toEqual(0);
-  });
 });

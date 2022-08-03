@@ -22,10 +22,6 @@ export interface UseCounterResult {
 
   /** Reset count to initial value. */
   reset: () => void;
-
-  // TODO: Remove this API.
-  /** Reset count to 0. */
-  resetToZero: () => void;
 }
 
 /**
@@ -41,7 +37,6 @@ export function useCounter(initialValue = 0): UseCounterResult {
   const incrementBy = (value: number) => setCount((count) => count + value);
   const decrementBy = (value: number) => setCount((count) => count - value);
   const reset = () => setCount(initialValue);
-  const resetToZero = () => setCount(0);
 
   return {
     count,
@@ -51,6 +46,5 @@ export function useCounter(initialValue = 0): UseCounterResult {
     incrementBy,
     decrementBy,
     reset,
-    resetToZero,
   };
 }

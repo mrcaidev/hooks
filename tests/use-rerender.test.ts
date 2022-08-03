@@ -1,14 +1,14 @@
 import { act, renderHook } from "@testing-library/react";
 import { useEffect } from "react";
-import { useForceUpdate } from "../src/use-force-update";
+import { useRerender } from "../src/use-rerender";
 
-describe("useForceUpdate", () => {
-  it("can force an update", () => {
+describe("useRerender", () => {
+  it("can force a re-render", () => {
     const effect = jest.fn();
 
     const { result } = renderHook(() => {
       useEffect(effect);
-      return useForceUpdate();
+      return useRerender();
     });
     expect(effect).toHaveBeenCalledTimes(1);
 

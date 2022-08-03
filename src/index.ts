@@ -8,7 +8,6 @@ export { useClickOutside } from "./use-click-outside";
 export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter, type UseCounterResult } from "./use-counter";
-export { useForceUpdate } from "./use-force-update";
 export { useHover, type UseHoverOptions } from "./use-hover";
 export { useKeydown, type ModifierKeys } from "./use-keydown";
 export {
@@ -18,6 +17,7 @@ export {
 } from "./use-local-storage";
 export { useMediaQuery } from "./use-media-query";
 export { useMount } from "./use-mount";
+export { useRerender } from "./use-rerender";
 export {
   useSessionStorage,
   type UseSessionStorageOptions,

@@ -32,7 +32,7 @@ export interface UseBooleanResult {
 }
 
 // @public
-export function useClickOutside(ref: RefObject<HTMLElement | null>, callback: (e: Event) => void): void;
+export function useClickOutside(ref: RefObject<HTMLElement | null>, callback: (e?: MouseEvent) => void): void;
 
 // @public
 export function useConst<T>(fn: () => T): T;
@@ -51,12 +51,8 @@ export interface UseCounterResult {
     increment: () => void;
     incrementBy: (value: number) => void;
     reset: () => void;
-    resetToZero: () => void;
     set: (value: number) => void;
 }
-
-// @public
-export function useForceUpdate(): () => void;
 
 // @public
 export function useHover(ref: RefObject<HTMLElement | null>, options?: UseHoverOptions): boolean;
@@ -65,7 +61,7 @@ export function useHover(ref: RefObject<HTMLElement | null>, options?: UseHoverO
 export interface UseHoverOptions {
     onEnter?: (e?: MouseEvent) => void;
     onLeave?: (e?: MouseEvent) => void;
-    onToggle?: (e?: MouseEvent, isHovering?: boolean) => void;
+    onToggle?: (isHovering?: boolean, e?: MouseEvent) => void;
 }
 
 // @public
@@ -85,6 +81,9 @@ export function useMediaQuery(query: string): boolean;
 
 // @public
 export function useMount(effect: EffectCallback): void;
+
+// @public
+export function useRerender(): () => void;
 
 // @public
 export function useSessionStorage<T>(key: string, options?: UseSessionStorageOptions<T>): UseSessionStorageResult<T>;

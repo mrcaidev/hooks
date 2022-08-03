@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-// TODO: Rename function to useRerender.
 /**
  * Force a component to re-render.
  * @returns A function to force re-render.
  */
-export function useForceUpdate() {
+export function useRerender() {
   const [, setState] = useState({});
 
-  const update = () => setState({});
+  const rerender = () => setState({});
 
-  return update;
+  return rerender;
 }

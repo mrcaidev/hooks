@@ -8,9 +8,8 @@ export interface UseHoverOptions {
   /** Callback function on mouse leaving. */
   onLeave?: (e?: MouseEvent) => void;
 
-  // TODO: Exchange param order.
   /** Callback function on hover state changing. */
-  onToggle?: (e?: MouseEvent, isHovering?: boolean) => void;
+  onToggle?: (isHovering?: boolean, e?: MouseEvent) => void;
 }
 
 /**
@@ -23,25 +22,19 @@ export function useHover(
   ref: RefObject<HTMLElement | null>,
   options: UseHoverOptions = {}
 ) {
-  // TODO: Leave unspecified callbacks as undefined.
-  const {
-    onEnter = () => {},
-    onLeave = () => {},
-    onToggle = () => {},
-  } = options;
+  const { onEnter, onLeave, onToggle } = options;
 
   const [isHovering, setIsHovering] = useState(false);
 
-  // TODO: Move setIsHovering on top.
   const handleEnter = (e: MouseEvent) => {
-    onEnter(e);
     setIsHovering(true);
-    onToggle(e, true);
+    onEnter?.(e);
+    onToggle?.(true, e);
   };
   const handleLeave = (e: MouseEvent) => {
-    onLeave(e);
     setIsHovering(false);
-    onToggle(e, false);
+    onLeave?.(e);
+    onToggle?.(false, e);
   };
 
   useEffect(() => {
