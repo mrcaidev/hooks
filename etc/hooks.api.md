@@ -26,6 +26,7 @@ export function useBoolean(initialValue?: boolean): UseBooleanResult;
 export interface UseBooleanResult {
     off: () => void;
     on: () => void;
+    set: (value: boolean) => void;
     toggle: () => void;
     value: boolean;
 }
@@ -123,6 +124,7 @@ export interface UseThemeOptions {
 
 // @public
 export interface UseThemeResult {
+    set: (theme: Theme) => void;
     setDark: () => void;
     setLight: () => void;
     theme: Theme;
