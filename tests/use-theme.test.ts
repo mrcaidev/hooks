@@ -15,8 +15,9 @@ beforeEach(() => {
       removeEventListener: () => {},
     } as any as MediaQueryList;
   };
+});
 
-  // Clear local storage.
+afterEach(() => {
   localStorage.clear();
 });
 

@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { useLocalStorage } from "../src/use-local-storage";
 
-beforeEach(() => {
+afterEach(() => {
   localStorage.clear();
 });
 
