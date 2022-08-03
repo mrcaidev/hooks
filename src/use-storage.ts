@@ -15,13 +15,31 @@ export interface UseStorageOptions<T> {
   deserializer?: (value: string) => T;
 }
 
+/** Result of useStorage. */
+export interface UseStorageResult<T> {
+  /**
+   * Current value of local storage,
+   * or default value if local storage does not yet has this item.
+   */
+  value: T;
+
+  /** Set value in both state and local storage. */
+  set: (value: T) => void;
+
+  /** Remove value in local storage, and set state to `undefined`. */
+  remove: () => void;
+}
+
 /**
  * Use storage value.
  * @param key - Key of storage item.
  * @param options - Options to interact with storage.
  * @returns Value of storage item, and a function to update it.
  */
-export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
+export function useStorage<T>(
+  key: string,
+  options: UseStorageOptions<T>
+): UseStorageResult<T> {
   const {
     storage,
     defaultValue = undefined as any as T,

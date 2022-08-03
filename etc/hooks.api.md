@@ -4,13 +4,9 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { DependencyList } from 'react';
-import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
 import { RefObject } from 'react';
-import { SetStateAction } from 'react';
 
 // @public
 export interface ModifierKeys {
@@ -24,12 +20,15 @@ export interface ModifierKeys {
 export type Theme = "light" | "dark";
 
 // @public
-export function useBoolean(initialValue?: boolean): {
-    value: boolean;
-    toggle: () => void;
-    on: () => void;
+export function useBoolean(initialValue?: boolean): UseBooleanResult;
+
+// @public
+export interface UseBooleanResult {
     off: () => void;
-};
+    on: () => void;
+    toggle: () => void;
+    value: boolean;
+}
 
 // @public
 export function useClickOutside(ref: RefObject<HTMLElement | null>, callback: (e: Event) => void): void;
@@ -41,16 +40,19 @@ export function useConst<T>(fn: () => T): T;
 export function useConstFn<T extends (...args: any) => any>(fn: T): T;
 
 // @public
-export function useCounter(initialValue?: number): {
+export function useCounter(initialValue?: number): UseCounterResult;
+
+// @public
+export interface UseCounterResult {
     count: number;
-    set: Dispatch<SetStateAction<number>>;
-    increment: () => void;
     decrement: () => void;
-    incrementBy: (value: number) => void;
     decrementBy: (value: number) => void;
+    increment: () => void;
+    incrementBy: (value: number) => void;
     reset: () => void;
     resetToZero: () => void;
-};
+    set: (value: number) => void;
+}
 
 // @public
 export function useForceUpdate(): () => void;
@@ -69,14 +71,13 @@ export interface UseHoverOptions {
 export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
 
 // @public
-export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {
-    value: T;
-    set: Dispatch<SetStateAction<T>>;
-    remove: () => void;
-};
+export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): UseLocalStorageResult<T>;
 
 // @public
 export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+
+// @public
+export type UseLocalStorageResult<T> = UseStorageResult<T>;
 
 // @public
 export function useMediaQuery(query: string): boolean;
@@ -85,21 +86,16 @@ export function useMediaQuery(query: string): boolean;
 export function useMount(effect: EffectCallback): void;
 
 // @public
-export function useSessionStorage<T>(key: string, options?: UseSessionStorageOptions<T>): {
-    value: T;
-    set: Dispatch<SetStateAction<T>>;
-    remove: () => void;
-};
+export function useSessionStorage<T>(key: string, options?: UseSessionStorageOptions<T>): UseSessionStorageResult<T>;
 
 // @public
 export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 // @public
-export function useStorage<T>(key: string, options: UseStorageOptions<T>): {
-    value: T;
-    set: Dispatch<SetStateAction<T>>;
-    remove: () => void;
-};
+export type UseSessionStorageResult<T> = UseStorageResult<T>;
+
+// @public
+export function useStorage<T>(key: string, options: UseStorageOptions<T>): UseStorageResult<T>;
 
 // @public
 export interface UseStorageOptions<T> {
@@ -110,12 +106,14 @@ export interface UseStorageOptions<T> {
 }
 
 // @public
-export function useTheme(options?: UseThemeOptions): {
-    theme: Theme;
-    toggle: () => void;
-    setLight: () => void;
-    setDark: () => void;
-};
+export interface UseStorageResult<T> {
+    remove: () => void;
+    set: (value: T) => void;
+    value: T;
+}
+
+// @public
+export function useTheme(options?: UseThemeOptions): UseThemeResult;
 
 // @public
 export interface UseThemeOptions {
@@ -124,12 +122,23 @@ export interface UseThemeOptions {
 }
 
 // @public
-export function useToggle<L, R>(left: L, right: R): {
-    value: L | R;
+export interface UseThemeResult {
+    setDark: () => void;
+    setLight: () => void;
+    theme: Theme;
     toggle: () => void;
+}
+
+// @public
+export function useToggle<L, R>(left: L, right: R): UseToggleResult<L, R>;
+
+// @public
+export interface UseToggleResult<L, R> {
     setLeft: () => void;
     setRight: () => void;
-};
+    toggle: () => void;
+    value: L | R;
+}
 
 // @public
 export function useUnmount(cleanup: () => void): void;
