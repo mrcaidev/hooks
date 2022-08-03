@@ -19,12 +19,13 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index.js",
-  "browser": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "typings": "dist/hooks.d.ts",
   "scripts": {
-    "build": "run-s build:esm build:api",
+    "build": "run-s build:esm build:cjs build:api",
     "build:esm": "tsc --project tsconfig.build.json",
+    "build:cjs": "tsc --project tsconfig.node.json",
     "build:api": "mkdir -p etc && api-extractor run --local",
     "clean": "rimraf dist && rimraf temp && rimraf *.tsbuildinfo",
     "dev": "tsc --project tsconfig.build.json --watch",
