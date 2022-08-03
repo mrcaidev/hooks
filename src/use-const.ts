@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo } from "react";
 
 /**
  * Use a constant value.
@@ -6,11 +6,6 @@ import { useRef } from "react";
  * @returns A constant value.
  */
 export function useConst<T>(fn: () => T) {
-  const ref = useRef<{ value: T }>();
-
-  if (ref.current === undefined) {
-    ref.current = { value: fn() };
-  }
-
-  return ref.current.value;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useMemo(fn, []);
 }

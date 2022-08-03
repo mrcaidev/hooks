@@ -1,4 +1,4 @@
-import { useConst } from "./use-const";
+import { useCallback } from "react";
 
 /**
  * Use a constant function.
@@ -6,5 +6,6 @@ import { useConst } from "./use-const";
  * @returns A constant function.
  */
 export function useConstFn<T extends (...args: any) => any>(fn: T) {
-  return useConst(() => fn);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useCallback(fn, []);
 }
