@@ -55,6 +55,9 @@ export interface UseCounterResult {
 }
 
 // @public
+export function useFocusTrap(firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): void;
+
+// @public
 export function useHover(ref: RefObject<HTMLElement | null>, options?: UseHoverOptions): boolean;
 
 // @public

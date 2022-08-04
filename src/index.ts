@@ -8,6 +8,7 @@ export { useClickOutside } from "./use-click-outside";
 export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter, type UseCounterResult } from "./use-counter";
+export { useFocusTrap } from "./use-focus-trap";
 export { useHover, type UseHoverOptions } from "./use-hover";
 export { useKeydown, type ModifierKeys } from "./use-keydown";
 export {
