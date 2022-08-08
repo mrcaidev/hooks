@@ -10,7 +10,7 @@ export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
 export { useEventListener, type EventMap } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
-export { useHover, type UseHoverOptions } from "./use-hover";
+export { useHover, type UseHoverListeners } from "./use-hover";
 export { useKeydown, type ModifierKeys } from "./use-keydown";
 export {
   useLocalStorage,

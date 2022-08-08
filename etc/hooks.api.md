@@ -63,13 +63,13 @@ export function useEventListener<K extends keyof EventMap>(target: WithRef<Targe
 export function useFocusTrap(firstTarget: WithRef<HTMLElement>, lastTarget: WithRef<HTMLElement>): void;
 
 // @public
-export function useHover(ref: RefObject<HTMLElement | null>, options?: UseHoverOptions): boolean;
+export function useHover(target: WithRef<HTMLElement | Element>, listeners?: UseHoverListeners): boolean;
 
 // @public
-export interface UseHoverOptions {
-    onEnter?: (e?: MouseEvent) => void;
-    onLeave?: (e?: MouseEvent) => void;
-    onToggle?: (isHovering?: boolean, e?: MouseEvent) => void;
+export interface UseHoverListeners {
+    onEnter?: (e: MouseEvent) => void;
+    onLeave?: (e: MouseEvent) => void;
+    onToggle?: (isHovering: boolean, e: MouseEvent) => void;
 }
 
 // @public
