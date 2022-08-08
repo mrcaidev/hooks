@@ -3,7 +3,7 @@ import {
   type UseStorageOptions,
   type UseStorageResult,
 } from "./use-storage";
-import { isBrowser } from "./utils/isBrowser";
+import { isBrowser } from "./utils/validator";
 
 /** Options to interact with local storage. */
 export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
