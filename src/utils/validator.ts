@@ -1,9 +1,9 @@
-import { type MutableRefObject } from "react";
+import { type RefObject } from "react";
 
 export function isBrowser() {
   return typeof window !== "undefined";
 }
 
-export function isRef(obj: any): obj is MutableRefObject<any> {
-  return "current" in obj;
+export function isRef(obj: any): obj is RefObject<any> {
+  return typeof obj === "object" && "current" in obj;
 }
