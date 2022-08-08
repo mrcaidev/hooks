@@ -60,7 +60,7 @@ export function useCounter(initialValue?: number): {
 export function useEventListener<K extends keyof EventMap>(target: WithRef<Target>, type: K, listener: (e: EventMap[K]) => void, options?: AddEventListenerOptions): void;
 
 // @public
-export function useFocusTrap(firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): void;
+export function useFocusTrap(firstTarget: WithRef<HTMLElement>, lastTarget: WithRef<HTMLElement>): void;
 
 // @public
 export function useHover(ref: RefObject<HTMLElement | null>, options?: UseHoverOptions): boolean;

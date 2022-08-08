@@ -1,29 +1,38 @@
-import { useEffect, type RefObject } from "react";
+import { useMount } from "./use-mount";
+import { getTarget, type WithRef } from "./utils/target";
 
 /**
- * Trap the tab focus between two elements.
- * @param firstRef - A ref object of the element at the start of the trap.
- * @param lastRef - A ref object of the element at the end of the trap.
+ * Trap tab focus between two elements.
+ * @param firstTarget - Target at the start of the trap.
+ * @param lastTarget - Target at the end of the trap.
  */
 export function useFocusTrap(
-  firstRef: RefObject<HTMLElement>,
-  lastRef: RefObject<HTMLElement>
+  firstTarget: WithRef<HTMLElement>,
+  lastTarget: WithRef<HTMLElement>
 ) {
-  const handleTab = (e: KeyboardEvent) => {
-    if (e.code !== "Tab") return;
-    if (e.shiftKey && document.activeElement === firstRef.current) {
-      e.preventDefault();
-      lastRef.current?.focus();
-    } else if (!e.shiftKey && document.activeElement === lastRef.current) {
-      e.preventDefault();
-      firstRef.current?.focus();
-    }
-  };
+  useMount(() => {
+    const firstElement = getTarget(firstTarget);
+    const lastElement = getTarget(lastTarget);
+    if (
+      !firstElement ||
+      !firstElement.addEventListener ||
+      !lastElement ||
+      !lastElement.addEventListener
+    )
+      return;
 
-  useEffect(() => {
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.code !== "Tab") return;
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    };
     document.addEventListener("keydown", handleTab);
-    return () => document.removeEventListener("keydown", handleTab);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => document.removeEventListener("keydown", handleTab);
+  });
 }
