@@ -1,31 +1,22 @@
-import { type MutableRefObject } from "react";
+import { type RefObject } from "react";
 import { isBrowser, isRef } from "./validator";
 
-/** Real target in DOM/BOM. */
-export type NativeTarget = HTMLElement | Document | Window;
+/** Real targets: elements, document, window. */
+export type Target = HTMLElement | Document | Window | null | undefined;
 
 /**
- * Target in a broader sense:
- * - Either a native target, e.g. an element, a window, or a document.
- * - Or a ref object containing a native target.
+ * The real target, or the ref object containing that target.
  */
-export type Target<T extends NativeTarget = Document> =
-  | WithNullOrUndefined<T>
-  | WithNullOrUndefined<MutableRefObject<T>>;
+export type WithRef<T extends Target> = T | RefObject<T>;
 
 /**
  * Get the native target out of a generalized target.
  * @param target A generalized target.
- * @param defaultTarget Fallback native target, if native target is not found.
  * @returns A native target indicated by `target`.
  */
-export function getNativeTarget<T extends NativeTarget>(
-  target: Target<T>,
-  defaultTarget: NativeTarget = document
-) {
-  if (!isBrowser() || !target) {
-    return defaultTarget;
+export function getTarget<T extends Target>(target: WithRef<T>) {
+  if (!isBrowser()) {
+    return undefined;
   }
-  const nativeTarget = isRef(target) ? target.current : target;
-  return nativeTarget;
+  return isRef(target) ? target.current : target;
 }
