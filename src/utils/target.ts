@@ -2,7 +2,7 @@ import { type RefObject } from "react";
 import { isBrowser, isRef } from "./validator";
 
 /** Real targets: document, elements, window. */
-export type Target = Document | HTMLElement | Window | null | undefined;
+export type Target = Document | HTMLElement | Element | Window;
 
 /** The real target, or the ref object containing that target. */
 export type WithRef<T extends Target> =

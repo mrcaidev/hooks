@@ -8,7 +8,7 @@ import { getTarget, type WithRef } from "./utils/target";
  * @param listener - Event listener on outside click events.
  */
 export function useClickOutside(
-  target: WithRef<HTMLElement>,
+  target: WithRef<HTMLElement | Element>,
   listener: (e: MouseEvent) => void
 ) {
   const callbackRef = useLatest(listener);

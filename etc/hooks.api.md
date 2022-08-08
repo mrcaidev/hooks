@@ -22,7 +22,7 @@ export interface ModifierKeys {
 }
 
 // @public
-export type Target = Document | HTMLElement | Window | null | undefined;
+export type Target = Document | HTMLElement | Element | Window;
 
 // @public
 export type Theme = "light" | "dark";
@@ -37,7 +37,7 @@ export function useBoolean(initialValue?: boolean): {
 };
 
 // @public
-export function useClickOutside(target: WithRef<HTMLElement>, listener: (e: MouseEvent) => void): void;
+export function useClickOutside(target: WithRef<HTMLElement | Element>, listener: (e: MouseEvent) => void): void;
 
 // @public
 export function useConst<T>(fn: () => T): T;
