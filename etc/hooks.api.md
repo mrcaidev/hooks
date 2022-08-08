@@ -37,7 +37,7 @@ export function useBoolean(initialValue?: boolean): {
 };
 
 // @public
-export function useClickOutside(ref: RefObject<HTMLElement | null>, callback: (e?: MouseEvent) => void): void;
+export function useClickOutside(target: WithRef<HTMLElement>, listener: (e: MouseEvent) => void): void;
 
 // @public
 export function useConst<T>(fn: () => T): T;
@@ -57,12 +57,7 @@ export function useCounter(initialValue?: number): {
 };
 
 // @public
-export function useEventListener<K extends keyof EventMap>(type: K, listener: (e: EventMap[K]) => void, options?: UseEventListenerOptions): void;
-
-// @public
-export interface UseEventListenerOptions extends AddEventListenerOptions {
-    target?: WithRef<Target>;
-}
+export function useEventListener<K extends keyof EventMap>(target: WithRef<Target>, type: K, listener: (e: EventMap[K]) => void, options?: AddEventListenerOptions): void;
 
 // @public
 export function useFocusTrap(firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): void;

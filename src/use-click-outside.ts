@@ -1,24 +1,28 @@
-import { useEffect, type RefObject } from "react";
+import { useLatest } from "./use-latest";
+import { useMount } from "./use-mount";
+import { getTarget, type WithRef } from "./utils/target";
 
 /**
  * Watch for clicks outside an element.
- * @param ref - A ref object of target element.
- * @param callback - A callback function on outside click events.
+ * @param target - A ref object of target element.
+ * @param listener - Event listener on outside click events.
  */
 export function useClickOutside(
-  ref: RefObject<HTMLElement | null>,
-  callback: (e?: MouseEvent) => void
+  target: WithRef<HTMLElement>,
+  listener: (e: MouseEvent) => void
 ) {
-  const listener = (e: MouseEvent) => {
-    const element = ref.current;
-    if (!element || element.contains(e.target as Node)) return;
-    callback(e);
-  };
+  const callbackRef = useLatest(listener);
 
-  useEffect(() => {
+  useMount(() => {
+    const element = getTarget(target);
+    if (!element || !element.addEventListener) return;
+
+    const listener = (e: MouseEvent) => {
+      if (element.contains(e.target as Node)) return;
+      callbackRef.current(e);
+    };
     document.addEventListener("click", listener);
-    return () => document.removeEventListener("click", listener);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => document.removeEventListener("click", listener);
+  });
 }
