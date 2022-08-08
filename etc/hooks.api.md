@@ -149,6 +149,6 @@ export function useUnmount(cleanup: () => void): void;
 export function useUpdate(effect: EffectCallback, deps?: DependencyList): void;
 
 // @public
-export type WithRef<T extends Target> = T | RefObject<T>;
+export type WithRef<T extends Target> = T | null | undefined | RefObject<T | null | undefined>;
 
 ```

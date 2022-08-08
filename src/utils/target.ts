@@ -5,7 +5,11 @@ import { isBrowser, isRef } from "./validator";
 export type Target = Document | HTMLElement | Window | null | undefined;
 
 /** The real target, or the ref object containing that target. */
-export type WithRef<T extends Target> = T | RefObject<T>;
+export type WithRef<T extends Target> =
+  | T
+  | null
+  | undefined
+  | RefObject<T | null | undefined>;
 
 /**
  * Get the real target out of a generalized target.
