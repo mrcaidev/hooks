@@ -17,30 +17,12 @@ export interface UseThemeOptions {
   storageKey?: string;
 }
 
-/** Result of useTheme. */
-export interface UseThemeResult {
-  /** Current theme. */
-  theme: Theme;
-
-  /** Set theme. */
-  set: (theme: Theme) => void;
-
-  /** Toggle theme. */
-  toggle: () => void;
-
-  /** Set theme to light. */
-  setLight: () => void;
-
-  /** Set theme to dark. */
-  setDark: () => void;
-}
-
 /**
  * Use current theme.
  * @param options - Options to customize theme, defaults to `{}`.
  * @returns Current theme, and functions to update it.
  */
-export function useTheme(options: UseThemeOptions = {}): UseThemeResult {
+export function useTheme(options: UseThemeOptions = {}) {
   const { defaultTheme, storageKey = DEFAULT_STORAGE_KEY } = options;
 
   const isDarkPreferred = useMediaQuery(MEDIA_QUERY);

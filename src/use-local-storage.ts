@@ -1,15 +1,8 @@
-import {
-  useStorage,
-  type UseStorageOptions,
-  type UseStorageResult,
-} from "./use-storage";
+import { useStorage, type UseStorageOptions } from "./use-storage";
 import { isBrowser } from "./utils/validator";
 
 /** Options to interact with local storage. */
 export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
-
-/** Result of useLocalStorage. */
-export type UseLocalStorageResult<T> = UseStorageResult<T>;
 
 /**
  * Use local storage.
@@ -20,7 +13,7 @@ export type UseLocalStorageResult<T> = UseStorageResult<T>;
 export function useLocalStorage<T>(
   key: string,
   options?: UseLocalStorageOptions<T>
-): UseLocalStorageResult<T> {
+) {
   return useStorage<T>(key, {
     storage: isBrowser() ? localStorage : undefined,
     ...(options ?? {}),
