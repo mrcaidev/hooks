@@ -1,22 +1,21 @@
 import { type RefObject } from "react";
 import { isBrowser, isRef } from "./validator";
 
-/** Real targets: elements, document, window. */
-export type Target = HTMLElement | Document | Window | null | undefined;
+/** Real targets: document, elements, window. */
+export type Target = Document | HTMLElement | Window | null | undefined;
 
-/**
- * The real target, or the ref object containing that target.
- */
+/** The real target, or the ref object containing that target. */
 export type WithRef<T extends Target> = T | RefObject<T>;
 
 /**
- * Get the native target out of a generalized target.
- * @param target A generalized target.
- * @returns A native target indicated by `target`.
+ * Get the real target out of a generalized target.
+ * @param withRefTarget A generalized target.
+ * @returns The real target indicated by `target`,
+ *          or `null` or `undefined` if not found.
  */
-export function getTarget<T extends Target>(target: WithRef<T>) {
+export function getTarget<T extends Target>(withRefTarget: WithRef<T>) {
   if (!isBrowser()) {
     return undefined;
   }
-  return isRef(target) ? target.current : target;
+  return isRef(withRefTarget) ? withRefTarget.current : withRefTarget;
 }

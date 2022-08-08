@@ -8,6 +8,11 @@ export { useClickOutside } from "./use-click-outside";
 export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
+export {
+  useEventListener,
+  type EventMap,
+  type UseEventListenerOptions,
+} from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover, type UseHoverOptions } from "./use-hover";
 export { useKeydown, type ModifierKeys } from "./use-keydown";
@@ -27,3 +32,4 @@ export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";
+export { type Target, type WithRef } from "./utils/target";
