@@ -3,16 +3,16 @@ import { useFocusTrap } from "../src/use-focus-trap";
 
 beforeAll(() => {
   document.body.innerHTML = `
-    <button data-testid="1">1</button>
-    <button data-testid="2">2</button>
-    <button data-testid="3">3</button>
+    <button data-testid="first">First</button>
+    <button>Middle</button>
+    <button data-testid="last">Last</button>
   `;
 });
 
 describe("useFocusTrap", () => {
   it("correctly sets up and tears down", () => {
-    const first = screen.getByTestId("1");
-    const last = screen.getByTestId("3");
+    const first = { current: screen.getByTestId("first") };
+    const last = { current: screen.getByTestId("last") };
     const addEventListener = jest.spyOn(document, "addEventListener");
     const removeEventListener = jest.spyOn(document, "removeEventListener");
 
@@ -25,24 +25,9 @@ describe("useFocusTrap", () => {
     expect(removeEventListener).toHaveBeenCalledTimes(1);
   });
 
-  it("works with element target", () => {
-    const first = screen.getByTestId("1");
-    const last = screen.getByTestId("3");
-
-    renderHook(() => useFocusTrap(first, last));
-    first.focus();
-    expect(document.activeElement).toEqual(first);
-
-    fireEvent.keyDown(document, { code: "Tab", shiftKey: true });
-    expect(document.activeElement).toEqual(last);
-
-    fireEvent.keyDown(document, { code: "Tab" });
-    expect(document.activeElement).toEqual(first);
-  });
-
-  it("works with ref target", () => {
-    const first = { current: screen.getByTestId("1") };
-    const last = { current: screen.getByTestId("3") };
+  it("traps the focus", () => {
+    const first = { current: screen.getByTestId("first") };
+    const last = { current: screen.getByTestId("last") };
 
     renderHook(() => useFocusTrap(first, last));
     first.current.focus();

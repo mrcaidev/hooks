@@ -5,5 +5,5 @@ export function isBrowser() {
 }
 
 export function isRef(obj: any): obj is RefObject<any> {
-  return typeof obj === "object" && "current" in obj;
+  return typeof obj === "object" && obj !== null && "current" in obj;
 }

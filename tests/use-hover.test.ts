@@ -9,11 +9,11 @@ beforeAll(() => {
 
 describe("useHover", () => {
   it("correctly sets up and tears down", () => {
-    const target = screen.getByTestId("target");
-    const addEventListener = jest.spyOn(target, "addEventListener");
-    const removeEventListener = jest.spyOn(target, "removeEventListener");
+    const ref = { current: screen.getByTestId("target") };
+    const addEventListener = jest.spyOn(ref.current, "addEventListener");
+    const removeEventListener = jest.spyOn(ref.current, "removeEventListener");
 
-    const { result, unmount } = renderHook(() => useHover(target));
+    const { result, unmount } = renderHook(() => useHover(ref));
     expect(result.current).toBe(false);
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
@@ -23,57 +23,16 @@ describe("useHover", () => {
     expect(removeEventListener).toHaveBeenCalledTimes(2);
   });
 
-  it("works with element target", () => {
-    const target = screen.getByTestId("target");
-    const onEnter = jest.fn();
-    const onLeave = jest.fn();
-    const onToggle = jest.fn();
+  it("responds to hover state changes", () => {
+    const ref = { current: screen.getByTestId("target") };
 
-    const { result } = renderHook(() =>
-      useHover(target, { onEnter, onLeave, onToggle })
-    );
+    const { result } = renderHook(() => useHover(ref));
     expect(result.current).toEqual(false);
-    expect(onEnter).toHaveBeenCalledTimes(0);
-    expect(onLeave).toHaveBeenCalledTimes(0);
-    expect(onToggle).toHaveBeenCalledTimes(0);
 
-    fireEvent.mouseEnter(target);
+    fireEvent.mouseEnter(ref.current);
     expect(result.current).toEqual(true);
-    expect(onEnter).toHaveBeenCalledTimes(1);
-    expect(onLeave).toHaveBeenCalledTimes(0);
-    expect(onToggle).toHaveBeenCalledTimes(1);
 
-    fireEvent.mouseLeave(target);
+    fireEvent.mouseLeave(ref.current);
     expect(result.current).toEqual(false);
-    expect(onEnter).toHaveBeenCalledTimes(1);
-    expect(onLeave).toHaveBeenCalledTimes(1);
-    expect(onToggle).toHaveBeenCalledTimes(2);
-  });
-
-  it("works with ref target", () => {
-    const target = { current: screen.getByTestId("target") };
-    const onEnter = jest.fn();
-    const onLeave = jest.fn();
-    const onToggle = jest.fn();
-
-    const { result } = renderHook(() =>
-      useHover(target, { onEnter, onLeave, onToggle })
-    );
-    expect(result.current).toEqual(false);
-    expect(onEnter).toHaveBeenCalledTimes(0);
-    expect(onLeave).toHaveBeenCalledTimes(0);
-    expect(onToggle).toHaveBeenCalledTimes(0);
-
-    fireEvent.mouseEnter(target.current);
-    expect(result.current).toEqual(true);
-    expect(onEnter).toHaveBeenCalledTimes(1);
-    expect(onLeave).toHaveBeenCalledTimes(0);
-    expect(onToggle).toHaveBeenCalledTimes(1);
-
-    fireEvent.mouseLeave(target.current);
-    expect(result.current).toEqual(false);
-    expect(onEnter).toHaveBeenCalledTimes(1);
-    expect(onLeave).toHaveBeenCalledTimes(1);
-    expect(onToggle).toHaveBeenCalledTimes(2);
   });
 });

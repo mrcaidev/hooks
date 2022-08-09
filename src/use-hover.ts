@@ -1,44 +1,27 @@
-import { useState } from "react";
-import { useEventListener } from "./use-event-listener";
-import { type WithRef } from "./utils/target";
-
-/** Event listeners on hover state changes. */
-export interface UseHoverListeners {
-  /** Watch for mouse entering. */
-  onEnter?: (e: MouseEvent) => void;
-
-  /** Watch for mouse leaving. */
-  onLeave?: (e: MouseEvent) => void;
-
-  /** Watch for hover state changing. */
-  onToggle?: (isHovering: boolean, e: MouseEvent) => void;
-}
+import { useEffect, useState, type RefObject } from "react";
+import { off, on } from "./utils/event";
 
 /**
  * Watch for hovering on an element.
- * @param target - Target to watch.
- * @param listeners - Event listeners on hover state changes, defaults to `{}`.
+ * @param ref - A ref object of the element to watch.
  * @returns `true` if mouse is hovering on target element, or `false` otherwise.
  */
-export function useHover(
-  target: WithRef<HTMLElement | Element>,
-  listeners: UseHoverListeners = {}
-) {
-  const { onEnter, onLeave, onToggle } = listeners;
-
+export function useHover(ref: RefObject<HTMLElement>) {
   const [isHovering, setIsHovering] = useState(false);
 
-  useEventListener(target, "mouseenter", (e) => {
-    setIsHovering(true);
-    onEnter?.(e);
-    onToggle?.(true, e);
-  });
+  useEffect(() => {
+    const element = ref.current;
+    const enterListener = () => setIsHovering(true);
+    const leaveListener = () => setIsHovering(false);
 
-  useEventListener(target, "mouseleave", (e) => {
-    setIsHovering(false);
-    onLeave?.(e);
-    onToggle?.(false, e);
-  });
+    on(element, "mouseenter", enterListener);
+    on(element, "mouseleave", leaveListener);
+
+    return () => {
+      off(element, "mouseenter", enterListener);
+      off(element, "mouseleave", leaveListener);
+    };
+  }, [ref]);
 
   return isHovering;
 }

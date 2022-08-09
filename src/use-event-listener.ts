@@ -1,32 +1,30 @@
-import { useLatest } from "./use-latest";
-import { useMount } from "./use-mount";
-import { getTarget, type Target, type WithRef } from "./utils/target";
-
-/** Mapping between event name and event type. */
-export type EventMap = HTMLElementEventMap & DocumentEventMap & WindowEventMap;
+import { useEffect, useRef, type RefObject } from "react";
+import { off, on } from "./utils/event";
+import { isRef } from "./utils/validator";
 
 /**
  * Watch for events.
  * @param target - Target to attach event listener to.
  * @param type - Type of event to watch for.
- * @param listener - Event listener on target event.
+ * @param callback - A callback to call when event is triggered.
  * @param options - An object that specifies characteristics about the event listener, defaults to `{}`.
  */
 export function useEventListener<K extends keyof EventMap>(
-  target: WithRef<Target>,
+  target: RefObject<HTMLElement> | Document | Window | null,
   type: K,
-  listener: (e: EventMap[K]) => void,
-  options: AddEventListenerOptions = {}
+  callback: (e: EventMap[K]) => void,
+  options: Omit<AddEventListenerOptions, "signal"> = {}
 ) {
-  const listenerRef = useLatest(listener);
+  const { capture = false, once = false, passive = false } = options;
 
-  useMount(() => {
-    const targetWithoutRef = getTarget(target);
-    if (!targetWithoutRef || !targetWithoutRef.addEventListener) return;
+  const callbackRef = useRef(callback);
+  callbackRef.current = callback;
 
-    const listener = listenerRef.current as EventListener;
-    targetWithoutRef.addEventListener(type, listener, options);
+  useEffect(() => {
+    const realTarget = isRef(target) ? target.current : target;
+    const listener = callbackRef.current as EventListener;
 
-    return () => targetWithoutRef.removeEventListener(type, listener, options);
-  });
+    on(realTarget, type, listener, { capture, once, passive });
+    return () => off(realTarget, type, listener);
+  }, [type, target, capture, once, passive]);
 }

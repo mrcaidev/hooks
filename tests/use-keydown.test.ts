@@ -16,39 +16,49 @@ describe("useKeydown", () => {
   });
 
   it("responds to target keydown", () => {
-    const listener = jest.fn();
+    const fn = jest.fn();
 
-    renderHook(() => useKeydown("Tab", listener));
-    expect(listener).toHaveBeenCalledTimes(0);
-
-    fireEvent.keyDown(document.body, { code: "Tab" });
-    expect(listener).toHaveBeenCalledTimes(1);
+    renderHook(() => useKeydown("Tab", fn));
+    expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.keyDown(document.body, { code: "Tab" });
-    expect(listener).toHaveBeenCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(1);
+
+    fireEvent.keyDown(document.body, { code: "Tab" });
+    expect(fn).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not respond to irrelevant keydown", () => {
+    const fn = jest.fn();
+
+    renderHook(() => useKeydown("Tab", fn));
+    expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.keyDown(document.body, { code: "Enter" });
-    expect(listener).toHaveBeenCalledTimes(2);
+    expect(fn).toHaveBeenCalledTimes(0);
+
+    fireEvent.keyDown(document.body, { code: "Escape" });
+    expect(fn).toHaveBeenCalledTimes(0);
   });
 
   it("recognizes modifier keys", () => {
-    const listener = jest.fn();
+    const fn = jest.fn();
 
-    renderHook(() => useKeydown("Tab", listener, { ctrl: true, shift: true }));
-    expect(listener).toHaveBeenCalledTimes(0);
+    renderHook(() => useKeydown("Tab", fn, { ctrl: true, shift: true }));
+    expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.keyDown(document.body, { code: "Tab" });
-    expect(listener).toHaveBeenCalledTimes(0);
+    expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.keyDown(document.body, { code: "Tab", ctrlKey: true });
-    expect(listener).toHaveBeenCalledTimes(0);
+    expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.keyDown(document.body, {
       code: "Tab",
       ctrlKey: true,
       shiftKey: true,
     });
-    expect(listener).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
 
     fireEvent.keyDown(document.body, {
       code: "Tab",
@@ -56,6 +66,6 @@ describe("useKeydown", () => {
       shiftKey: true,
       altKey: true,
     });
-    expect(listener).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledTimes(1);
   });
 });

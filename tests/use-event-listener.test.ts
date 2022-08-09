@@ -3,7 +3,7 @@ import { useEventListener } from "../src/use-event-listener";
 
 beforeAll(() => {
   document.body.innerHTML = `
-    <button>Click</button>
+    <div data-testid="target" />
   `;
 });
 
@@ -23,7 +23,7 @@ describe("useEventListener", () => {
     expect(removeEventListener).toHaveBeenCalledTimes(1);
   });
 
-  it("works with document target", () => {
+  it("responds to document events", () => {
     const fn = jest.fn();
 
     renderHook(() => useEventListener(document, "click", fn));
@@ -34,29 +34,23 @@ describe("useEventListener", () => {
 
     fireEvent.click(document);
     expect(fn).toHaveBeenCalledTimes(2);
-
-    fireEvent.focus(document);
-    expect(fn).toHaveBeenCalledTimes(2);
   });
 
-  it("works with element target", () => {
+  it("responds to element events", () => {
     const fn = jest.fn();
-    const button = screen.getByRole("button");
+    const ref = { current: screen.getByTestId("target") };
 
-    renderHook(() => useEventListener(button, "click", fn));
+    renderHook(() => useEventListener(ref, "click", fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(button);
+    fireEvent.click(ref.current);
     expect(fn).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(button);
-    expect(fn).toHaveBeenCalledTimes(2);
-
-    fireEvent.focus(button);
+    fireEvent.click(ref.current);
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
-  it("works with window target", () => {
+  it("responds to window events", () => {
     const fn = jest.fn();
 
     renderHook(() => useEventListener(window, "click", fn));
@@ -67,46 +61,26 @@ describe("useEventListener", () => {
 
     fireEvent.click(window);
     expect(fn).toHaveBeenCalledTimes(2);
-
-    fireEvent.focus(window);
-    expect(fn).toHaveBeenCalledTimes(2);
-  });
-
-  it("works with ref target", () => {
-    const fn = jest.fn();
-    const ref = { current: screen.getByRole("button") };
-
-    renderHook(() => useEventListener(ref, "click", fn));
-    expect(fn).toHaveBeenCalledTimes(0);
-
-    fireEvent.click(ref.current);
-    expect(fn).toHaveBeenCalledTimes(1);
-
-    fireEvent.click(ref.current);
-    expect(fn).toHaveBeenCalledTimes(2);
-
-    fireEvent.focus(ref.current);
-    expect(fn).toHaveBeenCalledTimes(2);
   });
 
   it("works with capture option", () => {
     const callOrder: string[] = [];
     const documentFn = jest.fn(() => callOrder.push("document"));
-    const buttonFn = jest.fn(() => callOrder.push("button"));
-    const button = screen.getByRole("button");
+    const refFn = jest.fn(() => callOrder.push("ref"));
+    const ref = { current: screen.getByTestId("target") };
 
     renderHook(() =>
       useEventListener(document, "click", documentFn, { capture: true })
     );
-    renderHook(() => useEventListener(button, "click", buttonFn));
+    renderHook(() => useEventListener(ref, "click", refFn));
     expect(documentFn).toHaveBeenCalledTimes(0);
-    expect(buttonFn).toHaveBeenCalledTimes(0);
+    expect(refFn).toHaveBeenCalledTimes(0);
     expect(callOrder).toEqual([]);
 
-    fireEvent.click(button);
+    fireEvent.click(ref.current);
     expect(documentFn).toHaveBeenCalledTimes(1);
-    expect(buttonFn).toHaveBeenCalledTimes(1);
-    expect(callOrder).toEqual(["document", "button"]);
+    expect(refFn).toHaveBeenCalledTimes(1);
+    expect(callOrder).toEqual(["document", "ref"]);
   });
 
   it("works with passive option", () => {

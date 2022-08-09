@@ -13,11 +13,11 @@ beforeAll(() => {
 
 describe("useClickOutside", () => {
   it("correctly sets up and tears down", () => {
-    const target = screen.getByTestId("target");
+    const ref = { current: screen.getByTestId("target") };
     const addEventListener = jest.spyOn(document, "addEventListener");
     const removeEventListener = jest.spyOn(document, "removeEventListener");
 
-    const { unmount } = renderHook(() => useClickOutside(target, () => {}));
+    const { unmount } = renderHook(() => useClickOutside(ref, () => {}));
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
 
@@ -26,41 +26,33 @@ describe("useClickOutside", () => {
     expect(removeEventListener).toHaveBeenCalledTimes(1);
   });
 
-  it("works with element target", () => {
+  it("responds to outside clicks", () => {
     const fn = jest.fn();
+    const ref = { current: screen.getByTestId("target") };
     const outside = screen.getByTestId("outside");
-    const target = screen.getByTestId("target");
-    const inside = screen.getByTestId("inside");
 
-    renderHook(() => useClickOutside(target, fn));
+    renderHook(() => useClickOutside(ref, fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.click(outside);
     expect(fn).toHaveBeenCalledTimes(1);
 
     fireEvent.click(outside);
-    expect(fn).toHaveBeenCalledTimes(2);
-
-    fireEvent.click(inside);
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
-  it("works with ref target", () => {
+  it("does not respond to inside clicks", () => {
     const fn = jest.fn();
-    const outside = screen.getByTestId("outside");
-    const target = { current: screen.getByTestId("target") };
+    const ref = { current: screen.getByTestId("target") };
     const inside = screen.getByTestId("inside");
 
-    renderHook(() => useClickOutside(target, fn));
+    renderHook(() => useClickOutside(ref, fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(outside);
-    expect(fn).toHaveBeenCalledTimes(1);
+    fireEvent.click(inside);
+    expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(outside);
-    expect(fn).toHaveBeenCalledTimes(2);
-
-    fireEvent.focus(inside);
-    expect(fn).toHaveBeenCalledTimes(2);
+    fireEvent.click(inside);
+    expect(fn).toHaveBeenCalledTimes(0);
   });
 });
