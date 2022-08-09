@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { useToggle } from "../src/use-toggle";
 
 describe("useToggle", () => {
-  it("sets up correctly", () => {
+  it("correctly sets up and tears down", () => {
     const { result } = renderHook(() => useToggle("hello", "world"));
     expect(result.current.value).toEqual("hello");
     expect(result.current.toggle).toBeInstanceOf(Function);

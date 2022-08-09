@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { useConst } from "../src/use-const";
 
 describe("useConst", () => {
-  it("sets up correctly", () => {
+  it("correctly sets up and tears down", () => {
     const { result } = renderHook(() => useConst(() => 1));
     expect(result.current).toEqual(1);
   });

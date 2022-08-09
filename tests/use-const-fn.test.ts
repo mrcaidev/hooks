@@ -2,8 +2,9 @@ import { renderHook } from "@testing-library/react";
 import { useConstFn } from "../src/use-const-fn";
 
 describe("useConstFn", () => {
-  it("sets up correctly", () => {
+  it("correctly sets up and tears down", () => {
     const { result } = renderHook(() => useConstFn(() => 1));
+    expect(result.current).toBeInstanceOf(Function);
     expect(result.current()).toEqual(1);
   });
 

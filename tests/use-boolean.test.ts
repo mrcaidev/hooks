@@ -2,15 +2,18 @@ import { act, renderHook } from "@testing-library/react";
 import { useBoolean } from "../src/use-boolean";
 
 describe("useBoolean", () => {
-  it("sets up correctly", () => {
-    const { result: resultA } = renderHook(() => useBoolean());
-    expect(resultA.current.value).toEqual(false);
+  it("correctly sets up and tears down", () => {
+    const { result } = renderHook(() => useBoolean());
+    expect(result.current.value).toEqual(false);
+    expect(result.current.set).toBeInstanceOf(Function);
+    expect(result.current.toggle).toBeInstanceOf(Function);
+    expect(result.current.on).toBeInstanceOf(Function);
+    expect(result.current.off).toBeInstanceOf(Function);
+  });
 
-    const { result: resultB } = renderHook(() => useBoolean(false));
-    expect(resultB.current.value).toEqual(false);
-
-    const { result: resultC } = renderHook(() => useBoolean(true));
-    expect(resultC.current.value).toEqual(true);
+  it("can override initial value", () => {
+    const { result } = renderHook(() => useBoolean(true));
+    expect(result.current.value).toEqual(true);
   });
 
   it("can set", () => {

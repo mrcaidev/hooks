@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { useLatest } from "../src/use-latest";
 
 describe("useLatest", () => {
-  it("sets up correctly", () => {
+  it("correctly sets up and tears down", () => {
     const { result } = renderHook(() => useLatest("hello"));
     expect(result.current.current).toEqual("hello");
   });

@@ -17,11 +17,19 @@ beforeEach(() => {
   };
 });
 
-afterEach(() => {
-  localStorage.clear();
-});
+afterEach(() => localStorage.clear());
 
 describe("useTheme", () => {
+  it("correctly sets up and tears down", () => {
+    const { result } = renderHook(() => useTheme());
+    expect(result.current.theme).toEqual("dark");
+    expect(result.current.set).toBeInstanceOf(Function);
+    expect(result.current.toggle).toBeInstanceOf(Function);
+    expect(result.current.setLight).toBeInstanceOf(Function);
+    expect(result.current.setDark).toBeInstanceOf(Function);
+    expect(localStorage.getItem("theme")).toEqual(null);
+  });
+
   it("detects OS theme", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toEqual("dark");
