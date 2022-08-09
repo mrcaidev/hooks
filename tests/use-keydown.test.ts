@@ -2,57 +2,60 @@ import { fireEvent, renderHook } from "@testing-library/react";
 import { useKeydown } from "../src/use-keydown";
 
 describe("useKeydown", () => {
-  it("invokes callback on target keydown", () => {
-    const callback = jest.fn();
+  it("correctly sets up and tears down", () => {
+    const addEventListener = jest.spyOn(document, "addEventListener");
+    const removeEventListener = jest.spyOn(document, "removeEventListener");
 
-    renderHook(() => useKeydown("Tab", callback));
-    expect(callback).toHaveBeenCalledTimes(0);
+    const { unmount } = renderHook(() => useKeydown("Tab", () => {}));
+    expect(addEventListener).toHaveBeenCalledTimes(2);
+    expect(removeEventListener).toHaveBeenCalledTimes(0);
 
-    fireEvent.keyDown(document.documentElement, { code: "Tab" });
-    expect(callback).toHaveBeenCalledTimes(1);
-
-    fireEvent.keyDown(document.documentElement, { code: "Tab" });
-    expect(callback).toHaveBeenCalledTimes(2);
+    unmount();
+    expect(addEventListener).toHaveBeenCalledTimes(2);
+    expect(removeEventListener).toHaveBeenCalledTimes(1);
   });
 
-  it("invokes callback on irrelevant keydown", () => {
-    const callback = jest.fn();
+  it("responds to target keydown", () => {
+    const listener = jest.fn();
 
-    renderHook(() => useKeydown("Tab", callback));
-    expect(callback).toHaveBeenCalledTimes(0);
+    renderHook(() => useKeydown("Tab", listener));
+    expect(listener).toHaveBeenCalledTimes(0);
 
-    fireEvent.keyDown(document.documentElement, { code: "Enter" });
-    expect(callback).toHaveBeenCalledTimes(0);
+    fireEvent.keyDown(document.body, { code: "Tab" });
+    expect(listener).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(document.documentElement, { code: "a" });
-    expect(callback).toHaveBeenCalledTimes(0);
+    fireEvent.keyDown(document.body, { code: "Tab" });
+    expect(listener).toHaveBeenCalledTimes(2);
+
+    fireEvent.keyDown(document.body, { code: "Enter" });
+    expect(listener).toHaveBeenCalledTimes(2);
   });
 
   it("recognizes modifier keys", () => {
-    const callback = jest.fn();
+    const listener = jest.fn();
 
-    renderHook(() => useKeydown("Tab", callback, { ctrl: true, shift: true }));
-    expect(callback).toHaveBeenCalledTimes(0);
+    renderHook(() => useKeydown("Tab", listener, { ctrl: true, shift: true }));
+    expect(listener).toHaveBeenCalledTimes(0);
 
-    fireEvent.keyDown(document.documentElement, { code: "Tab" });
-    expect(callback).toHaveBeenCalledTimes(0);
+    fireEvent.keyDown(document.body, { code: "Tab" });
+    expect(listener).toHaveBeenCalledTimes(0);
 
-    fireEvent.keyDown(document.documentElement, { code: "Tab", ctrlKey: true });
-    expect(callback).toHaveBeenCalledTimes(0);
+    fireEvent.keyDown(document.body, { code: "Tab", ctrlKey: true });
+    expect(listener).toHaveBeenCalledTimes(0);
 
-    fireEvent.keyDown(document.documentElement, {
+    fireEvent.keyDown(document.body, {
       code: "Tab",
       ctrlKey: true,
       shiftKey: true,
     });
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(listener).toHaveBeenCalledTimes(1);
 
-    fireEvent.keyDown(document.documentElement, {
+    fireEvent.keyDown(document.body, {
       code: "Tab",
       ctrlKey: true,
       shiftKey: true,
       altKey: true,
     });
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(listener).toHaveBeenCalledTimes(1);
   });
 });

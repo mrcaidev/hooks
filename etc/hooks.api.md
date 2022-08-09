@@ -73,7 +73,7 @@ export interface UseHoverListeners {
 }
 
 // @public
-export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
+export function useKeydown(code: string, listener: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
 
 // @public
 export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {

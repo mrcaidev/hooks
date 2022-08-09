@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEventListener } from "./use-event-listener";
 
 /** Modifier keys. */
 export interface ModifierKeys {
@@ -16,18 +16,19 @@ export interface ModifierKeys {
 }
 
 /**
- * Watch for keyDown events.
+ * Watch for key down events.
  * @param code - Code of target key.
- * @param callback - A callback function on keyDown events.
+ * @param listener - Event listener on key down events.
  * @param modifier - Modifier keys that should be pressed at the same time, defaults to `{}`.
  */
 export function useKeydown(
   code: string,
-  callback: (e: KeyboardEvent) => void,
+  listener: (e: KeyboardEvent) => void,
   modifier: ModifierKeys = {}
 ) {
   const { ctrl = false, shift = false, alt = false, meta = false } = modifier;
-  const listener = (e: KeyboardEvent) => {
+
+  useEventListener(document, "keydown", (e) => {
     if (
       e.code === code &&
       e.ctrlKey === ctrl &&
@@ -35,14 +36,7 @@ export function useKeydown(
       e.altKey === alt &&
       e.metaKey === meta
     ) {
-      callback(e);
+      listener(e);
     }
-  };
-
-  useEffect(() => {
-    document.addEventListener("keydown", listener);
-    return () => document.removeEventListener("keydown", listener);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 }
