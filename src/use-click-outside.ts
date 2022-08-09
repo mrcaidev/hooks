@@ -1,13 +1,13 @@
-import { useEffect, useRef, type RefObject } from "react";
-import { off, on } from "./utils/event";
+import { useEffect, useRef } from "react";
+import { getTarget, off, on, type WithRef } from "./utils/event";
 
 /**
- * Watch for clicks outside an element.
- * @param ref - A ref object of the element to watch.
- * @param callback - A callback to call when the element is clicked outside.
+ * Watch for click events outside an element.
+ * @param withRefElement - The element to watch, or a ref object of that element.
+ * @param callback - A callback to call on click events outside the element.
  */
 export function useClickOutside(
-  ref: RefObject<HTMLElement>,
+  withRefElement: WithRef<HTMLElement>,
   callback: (e: MouseEvent) => void
 ) {
   const callbackRef = useRef(callback);
@@ -15,16 +15,13 @@ export function useClickOutside(
 
   useEffect(() => {
     const listener = (e: MouseEvent) => {
-      const element = ref.current;
+      const element = getTarget(withRefElement);
       if (!element) return;
-
       const isClickInside = element.contains(e.target as Node);
       if (isClickInside) return;
-
       callbackRef.current(e);
     };
-
     on(document, "click", listener);
     return () => off(document, "click", listener);
-  }, [ref]);
+  }, [withRefElement]);
 }

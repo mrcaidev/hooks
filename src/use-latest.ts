@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 /**
  * Cache a mutable value, and always return its latest value.
- * @param value Initial value, expected to change later on.
+ * @param value Initial value of the mutable value.
  * @returns A ref object containing the latest value.
  */
 export function useLatest<T>(value: T) {

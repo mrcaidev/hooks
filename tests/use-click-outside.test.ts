@@ -13,11 +13,11 @@ beforeAll(() => {
 
 describe("useClickOutside", () => {
   it("correctly sets up and tears down", () => {
-    const ref = { current: screen.getByTestId("target") };
+    const target = screen.getByTestId("target");
     const addEventListener = jest.spyOn(document, "addEventListener");
     const removeEventListener = jest.spyOn(document, "removeEventListener");
 
-    const { unmount } = renderHook(() => useClickOutside(ref, () => {}));
+    const { unmount } = renderHook(() => useClickOutside(target, () => {}));
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
 
@@ -27,11 +27,11 @@ describe("useClickOutside", () => {
   });
 
   it("responds to outside clicks", () => {
-    const fn = jest.fn();
-    const ref = { current: screen.getByTestId("target") };
+    const target = screen.getByTestId("target");
     const outside = screen.getByTestId("outside");
+    const fn = jest.fn();
 
-    renderHook(() => useClickOutside(ref, fn));
+    renderHook(() => useClickOutside(target, fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.click(outside);
@@ -42,11 +42,11 @@ describe("useClickOutside", () => {
   });
 
   it("does not respond to inside clicks", () => {
-    const fn = jest.fn();
-    const ref = { current: screen.getByTestId("target") };
+    const target = screen.getByTestId("target");
     const inside = screen.getByTestId("inside");
+    const fn = jest.fn();
 
-    renderHook(() => useClickOutside(ref, fn));
+    renderHook(() => useClickOutside(target, fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
     fireEvent.click(inside);

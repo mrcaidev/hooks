@@ -1,31 +1,34 @@
-import { useEffect, type RefObject } from "react";
-import { off, on } from "./utils/event";
+import { useEffect } from "react";
+import { getTarget, off, on, type WithRef } from "./utils/event";
 
 /**
  * Trap tab focus between two elements.
- * @param firstRef - A ref object of the first focusable element in modal.
- * @param lastRef - A ref object of the last focusable element in modal.
+ * @param withRefFirstElement - The first focusable element in modal,
+ *                              or a ref object of that element.
+ * @param withRefLastElement - The last focusable element in modal,
+ *                             or a ref object of that element.
  */
 export function useFocusTrap(
-  firstRef: RefObject<HTMLElement>,
-  lastRef: RefObject<HTMLElement>
+  withRefFirstElement: WithRef<HTMLElement>,
+  withRefLastElement: WithRef<HTMLElement>
 ) {
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
-      const firstElement = firstRef.current;
-      const lastElement = lastRef.current;
+      const firstElement = getTarget(withRefFirstElement);
+      const lastElement = getTarget(withRefLastElement);
+      if (!firstElement || !lastElement) return;
 
       if (e.code !== "Tab") return;
       if (e.shiftKey && document.activeElement === firstElement) {
         e.preventDefault();
-        lastElement?.focus();
+        lastElement.focus();
       } else if (!e.shiftKey && document.activeElement === lastElement) {
         e.preventDefault();
-        firstElement?.focus();
+        firstElement.focus();
       }
     };
 
     on(document, "keydown", listener);
     return () => off(document, "keydown", listener);
-  }, [firstRef, lastRef]);
+  }, [withRefFirstElement, withRefLastElement]);
 }

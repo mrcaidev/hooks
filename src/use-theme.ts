@@ -20,7 +20,7 @@ export interface UseThemeOptions {
 /**
  * Use current theme.
  * @param options - Options to customize theme, defaults to `{}`.
- * @returns Current theme, and functions to update it.
+ * @returns Current theme, and some functions to update it.
  */
 export function useTheme(options: UseThemeOptions = {}) {
   const { defaultTheme, storageKey = DEFAULT_STORAGE_KEY } = options;

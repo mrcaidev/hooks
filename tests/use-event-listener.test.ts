@@ -29,24 +29,24 @@ describe("useEventListener", () => {
     renderHook(() => useEventListener(document, "click", fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(document);
+    fireEvent.click(document.body);
     expect(fn).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(document);
+    fireEvent.click(document.body);
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
   it("responds to element events", () => {
+    const target = screen.getByTestId("target");
     const fn = jest.fn();
-    const ref = { current: screen.getByTestId("target") };
 
-    renderHook(() => useEventListener(ref, "click", fn));
+    renderHook(() => useEventListener(target, "click", fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(ref.current);
+    fireEvent.click(target);
     expect(fn).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(ref.current);
+    fireEvent.click(target);
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
@@ -64,22 +64,22 @@ describe("useEventListener", () => {
   });
 
   it("works with capture option", () => {
+    const target = screen.getByTestId("target");
     const callOrder: string[] = [];
     const documentFn = jest.fn(() => callOrder.push("document"));
-    const refFn = jest.fn(() => callOrder.push("ref"));
-    const ref = { current: screen.getByTestId("target") };
+    const targetFn = jest.fn(() => callOrder.push("ref"));
 
     renderHook(() =>
       useEventListener(document, "click", documentFn, { capture: true })
     );
-    renderHook(() => useEventListener(ref, "click", refFn));
+    renderHook(() => useEventListener(target, "click", targetFn));
     expect(documentFn).toHaveBeenCalledTimes(0);
-    expect(refFn).toHaveBeenCalledTimes(0);
+    expect(targetFn).toHaveBeenCalledTimes(0);
     expect(callOrder).toEqual([]);
 
-    fireEvent.click(ref.current);
+    fireEvent.click(target);
     expect(documentFn).toHaveBeenCalledTimes(1);
-    expect(refFn).toHaveBeenCalledTimes(1);
+    expect(targetFn).toHaveBeenCalledTimes(1);
     expect(callOrder).toEqual(["document", "ref"]);
   });
 
@@ -91,7 +91,7 @@ describe("useEventListener", () => {
     );
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(document);
+    fireEvent.click(document.body);
     expect(fn).toHaveBeenCalledTimes(1);
     expect(fn).toThrowError();
   });
@@ -102,10 +102,10 @@ describe("useEventListener", () => {
     renderHook(() => useEventListener(document, "click", fn, { once: true }));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(document);
+    fireEvent.click(document.body);
     expect(fn).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(document);
+    fireEvent.click(document.body);
     expect(fn).toHaveBeenCalledTimes(1);
   });
 });

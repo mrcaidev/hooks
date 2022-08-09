@@ -37,7 +37,7 @@ export function useBoolean(initialValue?: boolean): {
 };
 
 // @public
-export function useClickOutside(ref: RefObject<HTMLElement>, callback: (e: MouseEvent) => void): void;
+export function useClickOutside(withRefElement: WithRef<HTMLElement>, callback: (e: MouseEvent) => void): void;
 
 // @public
 export function useConst<T>(fn: () => T): T;
@@ -60,13 +60,13 @@ export function useCounter(initialValue?: number): {
 export function useDebounce<T>(value: T, timeout?: number): T;
 
 // @public
-export function useEventListener<K extends keyof EventMap>(target: RefObject<HTMLElement> | Document | Window | null, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
+export function useEventListener<K extends keyof EventMap>(withRefTarget: WithRef<Target>, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
 
 // @public
-export function useFocusTrap(firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): void;
+export function useFocusTrap(withRefFirstElement: WithRef<HTMLElement>, withRefLastElement: WithRef<HTMLElement>): void;
 
 // @public
-export function useHover(ref: RefObject<HTMLElement>): boolean;
+export function useHover(withRefElement: WithRef<HTMLElement>): boolean;
 
 // @public
 export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
@@ -143,5 +143,8 @@ export function useUnmount(cleanup: () => void): void;
 
 // @public
 export function useUpdate(effect: EffectCallback, deps?: DependencyList): void;
+
+// @public
+export type WithRef<T extends Target> = T | null | RefObject<T>;
 
 ```

@@ -1,16 +1,24 @@
-import { useEffect, useRef, type RefObject } from "react";
-import { off, on, type EventMap } from "./utils/event";
-import { isRef } from "./utils/validator";
+import { useEffect, useRef } from "react";
+import {
+  getTarget,
+  off,
+  on,
+  type EventMap,
+  type Target,
+  type WithRef,
+} from "./utils/event";
 
 /**
  * Watch for events.
- * @param target - Target to attach event listener to.
- * @param type - Type of event to watch for.
- * @param callback - A callback to call when event is triggered.
- * @param options - An object that specifies characteristics about the event listener, defaults to `{}`.
+ * @param withRefTarget - The target to attach event listener to,
+ *                        or a ref object of that target.
+ * @param type - The type of event to watch for.
+ * @param callback - A callback to call on the event.
+ * @param options - An object that specifies characteristics
+ *                  about the event listener, defaults to `{}`.
  */
 export function useEventListener<K extends keyof EventMap>(
-  target: RefObject<HTMLElement> | Document | Window | null,
+  withRefTarget: WithRef<Target>,
   type: K,
   callback: (e: EventMap[K]) => void,
   options: Omit<AddEventListenerOptions, "signal"> = {}
@@ -21,10 +29,11 @@ export function useEventListener<K extends keyof EventMap>(
   callbackRef.current = callback;
 
   useEffect(() => {
-    const realTarget = isRef(target) ? target.current : target;
-    const listener = callbackRef.current as EventListener;
+    const target = getTarget(withRefTarget);
+    if (!target) return;
 
-    on(realTarget, type, listener, { capture, once, passive });
-    return () => off(realTarget, type, listener);
-  }, [type, target, capture, once, passive]);
+    const listener = callbackRef.current as EventListener;
+    on(target, type, listener, { capture, once, passive });
+    return () => off(target, type, listener);
+  }, [type, withRefTarget, capture, once, passive]);
 }

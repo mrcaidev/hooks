@@ -2,9 +2,9 @@ import { useState } from "react";
 
 /**
  * Use an either-or value.
- * @param left - Left-hand value.
- * @param right - Right-hand value.
- * @returns An either-or value, and functions to update it.
+ * @param left - The left-hand value.
+ * @param right - The right-hand value.
+ * @returns The either-or value, and some functions to update it.
  */
 export function useToggle<L, R>(left: L, right: R) {
   const [isLeft, setIsLeft] = useState(true);

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 /**
- * Use the matching result of a media query.
- * @param query - A media query expression.
- * @returns `true` if condition is matched, or `false` otherwise.
+ * Watch the result of a media query.
+ * @param query - The media query expression.
+ * @returns `true` if the condition is matched, or `false` otherwise.
  */
 export function useMediaQuery(query: string) {
   const [isMatched, setIsMatched] = useState(false);

@@ -9,11 +9,11 @@ beforeAll(() => {
 
 describe("useHover", () => {
   it("correctly sets up and tears down", () => {
-    const ref = { current: screen.getByTestId("target") };
-    const addEventListener = jest.spyOn(ref.current, "addEventListener");
-    const removeEventListener = jest.spyOn(ref.current, "removeEventListener");
+    const target = screen.getByTestId("target");
+    const addEventListener = jest.spyOn(target, "addEventListener");
+    const removeEventListener = jest.spyOn(target, "removeEventListener");
 
-    const { result, unmount } = renderHook(() => useHover(ref));
+    const { result, unmount } = renderHook(() => useHover(target));
     expect(result.current).toBe(false);
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
@@ -24,15 +24,15 @@ describe("useHover", () => {
   });
 
   it("responds to hover state changes", () => {
-    const ref = { current: screen.getByTestId("target") };
+    const target = screen.getByTestId("target");
 
-    const { result } = renderHook(() => useHover(ref));
+    const { result } = renderHook(() => useHover(target));
     expect(result.current).toEqual(false);
 
-    fireEvent.mouseEnter(ref.current);
+    fireEvent.mouseEnter(target);
     expect(result.current).toEqual(true);
 
-    fireEvent.mouseLeave(ref.current);
+    fireEvent.mouseLeave(target);
     expect(result.current).toEqual(false);
   });
 });

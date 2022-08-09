@@ -3,7 +3,7 @@ import { useState } from "react";
 /**
  * Use a boolean value.
  * @param initialValue - Initial boolean value, defaults to `false`.
- * @returns A boolean value, and functions to update it.
+ * @returns The boolean value, and some functions to update it.
  */
 export function useBoolean(initialValue = false) {
   const [value, setValue] = useState(initialValue);

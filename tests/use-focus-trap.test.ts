@@ -11,8 +11,8 @@ beforeAll(() => {
 
 describe("useFocusTrap", () => {
   it("correctly sets up and tears down", () => {
-    const first = { current: screen.getByTestId("first") };
-    const last = { current: screen.getByTestId("last") };
+    const first = screen.getByTestId("first");
+    const last = screen.getByTestId("last");
     const addEventListener = jest.spyOn(document, "addEventListener");
     const removeEventListener = jest.spyOn(document, "removeEventListener");
 
@@ -26,17 +26,17 @@ describe("useFocusTrap", () => {
   });
 
   it("traps the focus", () => {
-    const first = { current: screen.getByTestId("first") };
-    const last = { current: screen.getByTestId("last") };
+    const first = screen.getByTestId("first");
+    const last = screen.getByTestId("last");
 
     renderHook(() => useFocusTrap(first, last));
-    first.current.focus();
-    expect(document.activeElement).toEqual(first.current);
+    first.focus();
+    expect(document.activeElement).toEqual(first);
 
     fireEvent.keyDown(document, { code: "Tab", shiftKey: true });
-    expect(document.activeElement).toEqual(last.current);
+    expect(document.activeElement).toEqual(last);
 
     fireEvent.keyDown(document, { code: "Tab" });
-    expect(document.activeElement).toEqual(first.current);
+    expect(document.activeElement).toEqual(first);
   });
 });

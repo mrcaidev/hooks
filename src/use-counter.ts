@@ -3,7 +3,7 @@ import { useState } from "react";
 /**
  * Use a counter.
  * @param initialValue - Initial value of the counter, defaults to 0.
- * @returns A counter and functions to update it.
+ * @returns The counter and some functions to update it.
  */
 export function useCounter(initialValue = 0) {
   const [count, setCount] = useState(initialValue);

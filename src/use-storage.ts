@@ -19,7 +19,7 @@ export interface UseStorageOptions<T> {
  * Use storage.
  * @param key - Key of storage item.
  * @param options - Options to interact with storage.
- * @returns Value of storage item, and a function to update it.
+ * @returns The value of storage item, and a function to update it.
  */
 export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
   const {
