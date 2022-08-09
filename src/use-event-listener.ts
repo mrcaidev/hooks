@@ -1,5 +1,5 @@
 import { useEffect, useRef, type RefObject } from "react";
-import { off, on } from "./utils/event";
+import { off, on, type EventMap } from "./utils/event";
 import { isRef } from "./utils/validator";
 
 /**

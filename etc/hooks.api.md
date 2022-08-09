@@ -4,13 +4,14 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
 import { RefObject } from 'react';
 import { SetStateAction } from 'react';
+
+// @public
+export type EventMap = DocumentEventMap & HTMLElementEventMap & WindowEventMap;
 
 // @public
 export interface ModifierKeys {
@@ -19,6 +20,9 @@ export interface ModifierKeys {
     meta?: boolean;
     shift?: boolean;
 }
+
+// @public
+export type Target = Document | HTMLElement | Window;
 
 // @public
 export type Theme = "light" | "dark";

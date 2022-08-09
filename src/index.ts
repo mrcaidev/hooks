@@ -29,3 +29,4 @@ export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";
+export { type EventMap, type Target } from "./utils/event";
