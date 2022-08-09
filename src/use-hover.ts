@@ -17,7 +17,7 @@ export interface UseHoverListeners {
 /**
  * Watch for hovering on an element.
  * @param target - Target to watch.
- * @param listeners - Event listeners on hover state changes.
+ * @param listeners - Event listeners on hover state changes, defaults to `{}`.
  * @returns `true` if mouse is hovering on target element, or `false` otherwise.
  */
 export function useHover(

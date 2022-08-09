@@ -7,7 +7,7 @@ export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 /**
  * Use local storage.
  * @param key - Key of local storage item.
- * @param options - Options to interact with local storage.
+ * @param options - Options to interact with local storage, defaults to `{}`.
  * @returns Value of local storage item, and a function to update it.
  */
 export function useLocalStorage<T>(

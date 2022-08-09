@@ -10,7 +10,7 @@ export type EventMap = HTMLElementEventMap & DocumentEventMap & WindowEventMap;
  * @param target - Target to attach event listener to.
  * @param type - Type of event to watch for.
  * @param listener - Event listener on target event.
- * @param options - An object that specifies characteristics about the event listener.
+ * @param options - An object that specifies characteristics about the event listener, defaults to `{}`.
  */
 export function useEventListener<K extends keyof EventMap>(
   target: WithRef<Target>,
