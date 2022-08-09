@@ -57,6 +57,9 @@ export function useCounter(initialValue?: number): {
 };
 
 // @public
+export function useDebounce<T>(value: T, timeout?: number): T;
+
+// @public
 export function useEventListener<K extends keyof EventMap>(target: RefObject<HTMLElement> | Document | Window | null, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
 
 // @public

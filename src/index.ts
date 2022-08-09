@@ -8,6 +8,7 @@ export { useClickOutside } from "./use-click-outside";
 export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
+export { useDebounce } from "./use-debounce";
 export { useEventListener } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover } from "./use-hover";
