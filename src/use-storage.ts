@@ -50,7 +50,7 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
 
   const remove = () => {
     setValue(undefined as any as T);
-    setStorage(key, undefined, { storage, serializer });
+    removeStorage(key, { storage });
   };
 
   return { value, set: setValueWrapper, remove };
@@ -87,6 +87,18 @@ function setStorage<T>(key: string, value: T, options: SetStorageOptions<T>) {
     } else {
       storage?.setItem(key, serializer(value));
     }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+type RemoveStorageOptions = Required<Pick<UseStorageOptions<any>, "storage">>;
+
+function removeStorage(key: string, options: RemoveStorageOptions) {
+  const { storage } = options;
+
+  try {
+    storage?.removeItem(key);
   } catch (err) {
     console.error(err);
   }
