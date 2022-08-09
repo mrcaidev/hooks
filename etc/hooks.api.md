@@ -13,18 +13,12 @@ import { RefObject } from 'react';
 import { SetStateAction } from 'react';
 
 // @public
-export type EventMap = HTMLElementEventMap & DocumentEventMap & WindowEventMap;
-
-// @public
 export interface ModifierKeys {
     alt?: boolean;
     ctrl?: boolean;
     meta?: boolean;
     shift?: boolean;
 }
-
-// @public
-export type Target = Document | HTMLElement | Element | Window;
 
 // @public
 export type Theme = "light" | "dark";
@@ -39,7 +33,7 @@ export function useBoolean(initialValue?: boolean): {
 };
 
 // @public
-export function useClickOutside(target: WithRef<HTMLElement | Element>, listener: (e: MouseEvent) => void): void;
+export function useClickOutside(ref: RefObject<HTMLElement>, callback: (e: MouseEvent) => void): void;
 
 // @public
 export function useConst<T>(fn: () => T): T;
@@ -59,23 +53,16 @@ export function useCounter(initialValue?: number): {
 };
 
 // @public
-export function useEventListener<K extends keyof EventMap>(target: WithRef<Target>, type: K, listener: (e: EventMap[K]) => void, options?: AddEventListenerOptions): void;
+export function useEventListener<K extends keyof EventMap>(target: RefObject<HTMLElement> | Document | Window | null, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
 
 // @public
-export function useFocusTrap(firstTarget: WithRef<HTMLElement>, lastTarget: WithRef<HTMLElement>): void;
+export function useFocusTrap(firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): void;
 
 // @public
-export function useHover(target: WithRef<HTMLElement | Element>, listeners?: UseHoverListeners): boolean;
+export function useHover(ref: RefObject<HTMLElement>): boolean;
 
 // @public
-export interface UseHoverListeners {
-    onEnter?: (e: MouseEvent) => void;
-    onLeave?: (e: MouseEvent) => void;
-    onToggle?: (isHovering: boolean, e: MouseEvent) => void;
-}
-
-// @public
-export function useKeydown(code: string, listener: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
+export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
 
 // @public
 export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {
@@ -89,6 +76,13 @@ export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 // @public
 export function useMediaQuery(query: string): boolean;
+
+// @public
+export function useModal(openRef: RefObject<HTMLElement>, firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): {
+    show: boolean;
+    open: () => void;
+    close: () => void;
+};
 
 // @public
 export function useMount(effect: EffectCallback): void;
@@ -142,8 +136,5 @@ export function useUnmount(cleanup: () => void): void;
 
 // @public
 export function useUpdate(effect: EffectCallback, deps?: DependencyList): void;
-
-// @public
-export type WithRef<T extends Target> = T | null | undefined | RefObject<T | null | undefined>;
 
 ```
