@@ -107,13 +107,6 @@ export function useSessionStorage<T>(key: string, options?: UseSessionStorageOpt
 export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 
 // @public
-export function useStorage<T>(key: string, options: UseStorageOptions<T>): {
-    value: T;
-    set: Dispatch<SetStateAction<T>>;
-    remove: () => void;
-};
-
-// @public
 export interface UseStorageOptions<T> {
     defaultValue?: T;
     deserializer?: (value: string) => T;

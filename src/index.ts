@@ -23,7 +23,7 @@ export {
   useSessionStorage,
   type UseSessionStorageOptions,
 } from "./use-session-storage";
-export { useStorage, type UseStorageOptions } from "./use-storage";
+export { type UseStorageOptions } from "./use-storage";
 export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
