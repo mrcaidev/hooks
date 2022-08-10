@@ -28,6 +28,7 @@ export {
 export { type UseStorageOptions } from "./use-storage";
 export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
 export { useThrottle } from "./use-throttle";
+export { useThrottleEffect } from "./use-throttle-effect";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";
