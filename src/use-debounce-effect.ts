@@ -5,31 +5,19 @@ import {
   type EffectCallback,
 } from "react";
 import { useUnmount } from "./use-unmount";
-
-/** Options to specify the behavior of debounce. */
-export interface UseDebounceEffectOptions {
-  /** Timeout (ms) before effect callback is called, defaults to 500. */
-  timeout?: number;
-
-  /**
-   * If `true`, the timer will immediately start after mounted.
-   * If `false`, the timer will only start on dependency or option updates.
-   * Defaults to `false`.
-   */
-  onMount?: boolean;
-}
+import { type TimeoutOptions } from "./utils/timeout";
 
 /**
  * Debounce a side effect.
- * @param effect - Effect callback to be debounced.
+ * @param effect - The effect callback to be debounced.
  * @param deps - Dependencies to be passed to the effect callback, defaults to `[]`.
- * @param options - Options to specify the behavior of
- *                  the effect callback, defaults to `{}`.
+ * @param options - An object that specifies the behavior of debounce,
+ *                  defaults to `{}`.
  */
 export function useDebounceEffect(
   effect: EffectCallback,
   deps: DependencyList = [],
-  options: UseDebounceEffectOptions = {}
+  options: TimeoutOptions = {}
 ) {
   const { timeout = 500, onMount = false } = options;
 

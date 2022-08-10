@@ -9,10 +9,7 @@ export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
 export { useDebounce } from "./use-debounce";
-export {
-  useDebounceEffect,
-  type UseDebounceEffectOptions,
-} from "./use-debounce-effect";
+export { useDebounceEffect } from "./use-debounce-effect";
 export { useEventListener } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover } from "./use-hover";
@@ -30,8 +27,9 @@ export {
 } from "./use-session-storage";
 export { type UseStorageOptions } from "./use-storage";
 export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
-export { useThrottle, type UseThrottleOptions } from "./use-throttle";
+export { useThrottle } from "./use-throttle";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";
 export { type EventMap, type Target, type WithRef } from "./utils/event";
+export { type TimeoutOptions } from "./utils/timeout";

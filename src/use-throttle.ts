@@ -1,26 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useUnmount } from "./use-unmount";
-
-/** Options to specify the behavior of throttle. */
-export interface UseThrottleOptions {
-  /** Timeout (ms) before the value is updated, defaults to 500. */
-  timeout?: number;
-
-  /**
-   * If `true`, the timer will immediately start after mounted.
-   * If `false`, the timer will only start on dependency or option updates.
-   * Defaults to `false`.
-   */
-  onMount?: boolean;
-}
+import { type TimeoutOptions } from "./utils/timeout";
 
 /**
  * Throttle a value.
  * @param value - The value to be throttled.
- * @param options - Options to specify the behavior of throttle.
+ * @param options - An object that specifies the behavior of throttle,
+ *                  defaults to `{}`.
  * @returns The throttled value.
  */
-export function useThrottle<T>(value: T, options: UseThrottleOptions = {}) {
+export function useThrottle<T>(value: T, options: TimeoutOptions = {}) {
   const { timeout = 500, onMount = false } = options;
 
   const isMounted = useRef(false);
