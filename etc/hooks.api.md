@@ -9,6 +9,7 @@
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
+import { MutableRefObject } from 'react';
 import { RefObject } from 'react';
 import { SetStateAction } from 'react';
 
@@ -84,6 +85,9 @@ export function useHover(withRefElement: WithRef<HTMLElement>): boolean;
 
 // @public
 export function useKeydown(code: string, callback: (e: KeyboardEvent) => void, modifier?: ModifierKeys): void;
+
+// @public
+export function useLatest<T>(value: T): MutableRefObject<T>;
 
 // @public
 export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions<T>): {

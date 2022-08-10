@@ -15,6 +15,7 @@ export { useEventListener } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover } from "./use-hover";
 export { useKeydown, type ModifierKeys } from "./use-keydown";
+export { useLatest } from "./use-latest";
 export {
   useLocalStorage,
   type UseLocalStorageOptions,
