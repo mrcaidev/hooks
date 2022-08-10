@@ -120,15 +120,6 @@ export interface UseSessionStorageOptions<T> {
 }
 
 // @public
-export interface UseStorageOptions<T> {
-    defaultValue?: T;
-    deserializer?: (value: string) => T;
-    serializer?: (value: T) => string;
-    // Warning: (ae-forgotten-export) The symbol "StorageType" needs to be exported by the entry point index.d.ts
-    storageType: StorageType;
-}
-
-// @public
 export function useTheme(options?: UseThemeOptions): {
     theme: Theme;
     set: Dispatch<SetStateAction<Theme>>;

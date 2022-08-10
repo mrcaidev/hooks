@@ -25,7 +25,6 @@ export {
   useSessionStorage,
   type UseSessionStorageOptions,
 } from "./use-session-storage";
-export { type UseStorageOptions } from "./use-storage";
 export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
 export { useThrottle } from "./use-throttle";
 export { useThrottleEffect } from "./use-throttle-effect";
