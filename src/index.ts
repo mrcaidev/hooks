@@ -10,6 +10,7 @@ export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
 export { useDebounce } from "./use-debounce";
 export { useDebounceEffect } from "./use-debounce-effect";
+export { useDelayEffect } from "./use-delay-effect";
 export { useEventListener } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover } from "./use-hover";

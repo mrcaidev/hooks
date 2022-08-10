@@ -70,6 +70,9 @@ export function useDebounce<T>(value: T, options?: TimeoutOptions): T;
 // @public
 export function useDebounceEffect(effect: EffectCallback, deps?: DependencyList, options?: TimeoutOptions): void;
 
+// @public (undocumented)
+export function useDelayEffect(effect: EffectCallback, timeout?: number): void;
+
 // @public
 export function useEventListener<K extends keyof EventMap>(withRefTarget: WithRef<Target>, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
 
