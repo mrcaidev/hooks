@@ -28,6 +28,12 @@ export type Target = Document | HTMLElement | Window;
 export type Theme = "light" | "dark";
 
 // @public
+export interface TimeoutOptions {
+    onMount?: boolean;
+    timeout?: number;
+}
+
+// @public
 export function useBoolean(initialValue?: boolean): {
     value: boolean;
     set: Dispatch<SetStateAction<boolean>>;
@@ -57,16 +63,10 @@ export function useCounter(initialValue?: number): {
 };
 
 // @public
-export function useDebounce<T>(value: T, timeout?: number): T;
+export function useDebounce<T>(value: T, options?: TimeoutOptions): T;
 
 // @public
-export function useDebounceEffect(effect: EffectCallback, deps?: DependencyList, options?: UseDebounceEffectOptions): void;
-
-// @public
-export interface UseDebounceEffectOptions {
-    onMount?: boolean;
-    timeout?: number;
-}
+export function useDebounceEffect(effect: EffectCallback, deps?: DependencyList, options?: TimeoutOptions): void;
 
 // @public
 export function useEventListener<K extends keyof EventMap>(withRefTarget: WithRef<Target>, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
@@ -133,13 +133,7 @@ export interface UseThemeOptions {
 }
 
 // @public
-export function useThrottle<T>(value: T, options?: UseThrottleOptions): T;
-
-// @public
-export interface UseThrottleOptions {
-    onMount?: boolean;
-    timeout?: number;
-}
+export function useThrottle<T>(value: T, options?: TimeoutOptions): T;
 
 // @public
 export function useToggle<L, R>(left: L, right: R): {
