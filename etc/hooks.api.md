@@ -60,6 +60,15 @@ export function useCounter(initialValue?: number): {
 export function useDebounce<T>(value: T, timeout?: number): T;
 
 // @public
+export function useDebounceEffect(effect: EffectCallback, deps?: DependencyList, options?: UseDebounceEffectOptions): void;
+
+// @public
+export interface UseDebounceEffectOptions {
+    onMount?: boolean;
+    timeout?: number;
+}
+
+// @public
 export function useEventListener<K extends keyof EventMap>(withRefTarget: WithRef<Target>, type: K, callback: (e: EventMap[K]) => void, options?: Omit<AddEventListenerOptions, "signal">): void;
 
 // @public
