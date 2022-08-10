@@ -30,6 +30,7 @@ export {
 } from "./use-session-storage";
 export { type UseStorageOptions } from "./use-storage";
 export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
+export { useThrottle, type UseThrottleOptions } from "./use-throttle";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";

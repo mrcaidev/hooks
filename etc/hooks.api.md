@@ -133,6 +133,15 @@ export interface UseThemeOptions {
 }
 
 // @public
+export function useThrottle<T>(value: T, options?: UseThrottleOptions): T;
+
+// @public
+export interface UseThrottleOptions {
+    onMount?: boolean;
+    timeout?: number;
+}
+
+// @public
 export function useToggle<L, R>(left: L, right: R): {
     value: L | R;
     toggle: () => void;
