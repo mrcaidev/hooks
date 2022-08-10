@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EffectCallback } from 'react';
@@ -88,7 +90,11 @@ export function useLocalStorage<T>(key: string, options?: UseLocalStorageOptions
 };
 
 // @public
-export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+export interface UseLocalStorageOptions<T> {
+    defaultValue?: T;
+    deserializer?: (value: string) => T;
+    serializer?: (value: T) => string;
+}
 
 // @public
 export function useMediaQuery(query: string): boolean;
@@ -107,14 +113,19 @@ export function useSessionStorage<T>(key: string, options?: UseSessionStorageOpt
 };
 
 // @public
-export type UseSessionStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
+export interface UseSessionStorageOptions<T> {
+    defaultValue?: T;
+    deserializer?: (value: string) => T;
+    serializer?: (value: T) => string;
+}
 
 // @public
 export interface UseStorageOptions<T> {
     defaultValue?: T;
     deserializer?: (value: string) => T;
     serializer?: (value: T) => string;
-    storage: Storage | undefined;
+    // Warning: (ae-forgotten-export) The symbol "StorageType" needs to be exported by the entry point index.d.ts
+    storageType: StorageType;
 }
 
 // @public
