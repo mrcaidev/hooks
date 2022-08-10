@@ -18,7 +18,6 @@ export {
   type UseLocalStorageOptions,
 } from "./use-local-storage";
 export { useMediaQuery } from "./use-media-query";
-export { useModal } from "./use-modal";
 export { useMount } from "./use-mount";
 export { useRerender } from "./use-rerender";
 export {

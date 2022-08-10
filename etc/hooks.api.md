@@ -85,13 +85,6 @@ export type UseLocalStorageOptions<T> = Omit<UseStorageOptions<T>, "storage">;
 export function useMediaQuery(query: string): boolean;
 
 // @public
-export function useModal(openRef: RefObject<HTMLElement>, firstRef: RefObject<HTMLElement>, lastRef: RefObject<HTMLElement>): {
-    show: boolean;
-    open: () => void;
-    close: () => void;
-};
-
-// @public
 export function useMount(effect: EffectCallback): void;
 
 // @public
