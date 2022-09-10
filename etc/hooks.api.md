@@ -148,6 +148,9 @@ export function useThrottle<T>(value: T, options?: TimeoutOptions): T;
 export function useThrottleEffect(effect: EffectCallback, deps?: DependencyList, options?: TimeoutOptions): void;
 
 // @public
+export function useTitle(title: string): void;
+
+// @public
 export function useToggle<L, R>(left: L, right: R): {
     value: L | R;
     toggle: () => void;
