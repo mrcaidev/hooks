@@ -71,7 +71,7 @@ export function useDebounce<T>(value: T, options?: TimeoutOptions): T;
 // @public
 export function useDebounceEffect(effect: EffectCallback, deps?: DependencyList, options?: TimeoutOptions): void;
 
-// @public (undocumented)
+// @public
 export function useDelayEffect(effect: EffectCallback, timeout?: number): void;
 
 // @public
