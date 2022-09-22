@@ -165,6 +165,12 @@ export function useUnmount(cleanup: () => void): void;
 export function useUpdate(effect: EffectCallback, deps?: DependencyList): void;
 
 // @public
+export function useWindowSize(): {
+    width: number;
+    height: number;
+};
+
+// @public
 export type WithRef<T extends Target> = T | null | RefObject<T>;
 
 ```

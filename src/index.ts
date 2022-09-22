@@ -34,5 +34,6 @@ export { useTitle } from "./use-title";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";
+export { useWindowSize } from "./use-window-size";
 export { type EventMap, type Target, type WithRef } from "./utils/event";
 export { type TimeoutOptions } from "./utils/timeout";
