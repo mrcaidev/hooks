@@ -1,68 +1,22 @@
 {
-  "name": "@mrcaidev/hooks",
-  "version": "0.5.0",
-  "description": "React utility hooks",
-  "keywords": [
-    "react",
-    "hooks",
-    "typescript"
-  ],
-  "homepage": "https://github.com/mrcaidev/hooks",
-  "bugs": "https://github.com/mrcaidev/hooks/issues",
-  "license": "MIT",
-  "author": "Yuwang Cai <mrcaidev@gmail.com> (https://mrcai.space)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mrcaidev/hooks"
-  },
-  "packageManager": "pnpm@7.8.0",
-  "files": [
-    "dist"
-  ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "typings": "dist/hooks.d.ts",
+  "name": "hooks",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "build": "run-s build:esm build:cjs build:api",
-    "build:esm": "tsc --project tsconfig.build.json",
-    "build:cjs": "tsc --project tsconfig.node.json",
-    "build:api": "mkdir -p etc && api-extractor run --local",
-    "clean": "rimraf dist && rimraf temp && rimraf *.tsbuildinfo",
-    "dev": "tsc --project tsconfig.build.json --watch",
-    "format": "prettier src tests --write --cache",
-    "lint": "eslint src tests --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
-    "prepare": "husky install",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
-  },
-  "peerDependencies": {
-    "react": ">= 16.8.0",
-    "react-dom": ">= 16.8.0"
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "test": "turbo run test",
+    "lint": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
+    "format": "prettier . --write --cache --plugin-search-dir=.",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
-    "@microsoft/api-extractor": "^7.29.2",
-    "@testing-library/react": "^13.3.0",
-    "@types/jest": "^28.1.6",
-    "@types/react": "^18.0.17",
-    "@typescript-eslint/eslint-plugin": "^5.33.0",
-    "@typescript-eslint/parser": "^5.33.0",
-    "eslint": "^8.21.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-react": "^7.30.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-config-custom": "workspace:*",
     "husky": "^8.0.1",
-    "jest": "^28.1.3",
-    "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "^13.0.3",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.7.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "rimraf": "^3.0.2",
-    "ts-jest": "^28.0.7",
-    "typescript": "^4.7.4"
+    "prettier-config-custom": "workspace:*",
+    "turbo": "^1.5.1"
   }
 }

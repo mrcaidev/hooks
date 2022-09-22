@@ -1,4 +1,4 @@
-import { type RefObject } from "react";
+import type { RefObject } from "react";
 import { isBrowser, isRef } from "./validator";
 
 /** Valid targets for events: document, elements, window. */

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useUnmount } from "./use-unmount";
-import { type TimeoutOptions } from "./utils/timeout";
+import type { TimeoutOptions } from "./utils/timeout";
 
 /**
  * Throttle a value.

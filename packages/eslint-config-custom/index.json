@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2022": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "turbo",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "packages/*/tsconfig.json"
+      }
+    },
+    "react": {
+      "version": "detect"
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
+        "plugin:react-hooks/recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["*.tsx"],
+      "extends": [
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:jsx-a11y/recommended"
+      ]
+    },
+    {
+      "files": ["**/tests/**"],
+      "env": {
+        "jest": true
+      },
+      "extends": ["plugin:jest/recommended"]
+    },
+    {
+      "files": ["*.astro"],
+      "extends": [
+        "plugin:astro/recommended",
+        "plugin:astro/jsx-a11y-recommended"
+      ],
+      "parser": "astro-eslint-parser"
+    }
+  ],
+  "rules": {}
+}

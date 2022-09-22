@@ -1,4 +1,4 @@
-import { type RefObject } from "react";
+import type { RefObject } from "react";
 
 export function isBrowser() {
   return typeof window !== "undefined";

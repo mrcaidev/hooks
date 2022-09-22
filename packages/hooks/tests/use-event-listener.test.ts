@@ -93,7 +93,7 @@ describe("useEventListener", () => {
 
     fireEvent.click(document.body);
     expect(fn).toHaveBeenCalledTimes(1);
-    expect(fn).toThrowError();
+    expect(fn).toThrow();
   });
 
   it("works with once option", () => {

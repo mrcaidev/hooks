@@ -1,10 +1,10 @@
-node_modules
+.turbo
+.vscode
 coverage
 dist
+node_modules
 temp
-.vscode
+
 *.tsbuildinfo
-*.log
-*.tgz
 .DS_Store
 *.pem

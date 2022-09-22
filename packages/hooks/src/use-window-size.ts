@@ -14,6 +14,7 @@ export function useWindowSize() {
       setWidth(innerWidth);
       setHeight(innerHeight);
     };
+    listener();
     on(window, "resize", listener);
     return () => off(window, "resize", listener);
   }, []);

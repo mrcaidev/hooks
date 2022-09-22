@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -10,27 +11,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "rootDir": ".",
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "dist",
-    "sourceMap": true,
+    "importsNotUsedAsValues": "error",
+    "stripInternal": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "target": "ES6",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "composite": true,
+    "target": "ES6",
     "incremental": true,
-    "skipLibCheck": true,
-    "paths": {
-      "hooks": ["src"]
-    }
-  },
-  "include": ["src", "tests"]
+    "skipLibCheck": true
+  }
 }

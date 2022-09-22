@@ -5,7 +5,7 @@ import {
   type EffectCallback,
 } from "react";
 import { useUnmount } from "./use-unmount";
-import { type TimeoutOptions } from "./utils/timeout";
+import type { TimeoutOptions } from "./utils/timeout";
 
 /**
  * Debounce a side effect.
