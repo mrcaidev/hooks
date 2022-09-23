@@ -27,6 +27,7 @@ importers:
       '@astrojs/react': ^1.1.4
       '@astrojs/sitemap': ^1.0.0
       '@astrojs/tailwind': ^2.0.1
+      '@fontsource/inter': ^4.5.12
       '@mrcaidev/hooks': workspace:0.5.0
       '@types/node': ^18.7.18
       '@types/react': ^18.0.20
@@ -34,8 +35,9 @@ importers:
       astro: ^1.3.0
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-feather: ^2.0.10
       tailwindcss: ^3.1.8
-      tsconfig: workspace:0.0.0
+      tsconfig: workspace:*
       typescript: ^4.8.3
     dependencies:
       '@astrojs/image': 0.7.1
@@ -47,8 +49,10 @@ importers:
       astro: 1.3.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-feather: 2.0.10_react@18.2.0
       tailwindcss: 3.1.8_postcss@8.4.16
     devDependencies:
+      '@fontsource/inter': 4.5.12
       '@types/node': 18.7.18
       '@types/react': 18.0.20
       '@types/react-dom': 18.0.6
@@ -859,6 +863,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
+
+  /@fontsource/inter/4.5.12:
+    resolution: {integrity: sha512-bGKk4/8tube/nCk8hav0ZDBVbzJzc7m0Vt4xF5p15IN4YImwGdtKG38Oq5bU8xHNS+VfvbFFCepgQNj7Pr/Lvg==}
+    dev: true
 
   /@humanwhocodes/config-array/0.10.5:
     resolution: {integrity: sha512-XVVDtp+dVvRxMoxSiSfasYaG02VEe1qH5cKgMQJWhol6HwzbcqoCMJi8dAGoYAO57jhUyhI6cWuRiTcRaDaYug==}
@@ -6678,6 +6686,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  /react-feather/2.0.10_react@18.2.0:
+    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
