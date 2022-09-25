@@ -1,0 +1,31 @@
+---
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import type { MarkdownLayoutProps } from "astro";
+import Head from "components/Head.astro";
+import Header from "components/Header";
+import Nav from "components/Nav";
+import type { Frontmatter } from "models/frontmatter.model";
+import "styles/global.css";
+
+export type Props = MarkdownLayoutProps<Frontmatter>;
+const { frontmatter } = Astro.props;
+---
+
+<html lang="en" class="scroll-smooth [-webkit-tap-highlight-color:transparent]">
+  <Head {...frontmatter} />
+  <body class="bg-normal text-normal">
+    <Header />
+    <main class="mt-20">
+      <aside
+        class="hidden md:block fixed top-20 bottom-0 left-0 w-72 max-h-[calc(100vh-80px)] pl-12 pr-4 pb-4 overflow-auto"
+      >
+        <Nav />
+      </aside>
+      <div class="px-12 md:ml-72">
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>

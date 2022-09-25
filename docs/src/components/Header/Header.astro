@@ -1,0 +1,23 @@
+---
+import Nav from "components/Nav";
+import GithubLink from "./GithubLink.astro";
+import Logo from "./Logo.astro";
+import MenuToggler from "./MenuToggler";
+import ThemeToggler from "./ThemeToggler";
+---
+
+<header
+  class="flex justify-between items-center gap-8 fixed top-0 left-0 right-0 px-8 py-4 bg-normal z-10"
+>
+  <Logo />
+  <div class="hidden md:flex gap-3">
+    <GithubLink />
+    <ThemeToggler client:idle />
+  </div>
+  <div class="md:hidden">
+    <MenuToggler client:load>
+      <Nav slot="nav" />
+      <GithubLink slot="github" />
+    </MenuToggler>
+  </div>
+</header>

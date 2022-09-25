@@ -1,0 +1,16 @@
+---
+import { Image } from "@astrojs/image/components";
+---
+
+<a href="/" class="group flex items-center gap-2 px-2 py-1">
+  <Image
+    src="/reactjs.svg"
+    alt="Logo"
+    width={40}
+    height={40}
+    class="group-hover:motion-safe:animate-[spin_5s_linear_infinite]"
+  />
+  <span class="hidden sm:inline font-bold text-xl group-hover:text-highlight"
+    >@mrcaidev/hooks</span
+  >
+</a>

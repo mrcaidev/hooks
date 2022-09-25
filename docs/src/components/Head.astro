@@ -1,0 +1,59 @@
+---
+import type { Frontmatter } from "models/frontmatter.model";
+
+export type Props = Frontmatter;
+
+const { title, description, createdAt, updatedAt } = Astro.props;
+const image = new URL("/banner.jpg", Astro.site);
+---
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/reactjs.svg" />
+  <link rel="sitemap" href="/sitemap.xml" />
+  <title>{title} | @mrcaidev/hooks</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content={image} />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="675" />
+  <meta
+    property="og:image:alt"
+    content="Logo of @mrcaidev/hooks, composed of React.js logo, package name as title and 'React utility hooks' as subtitle."
+  />
+  <meta property="og:url" content={Astro.url.href} />
+  <meta property="og:description" content={description} />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="@mrcaidev/hooks" />
+  <meta property="article:published_time" content={createdAt} />
+  <meta property="article:modified_time" content={updatedAt} />
+  <meta property="article:author" content="https://www.mrcai.space" />
+  <meta property="article:section" content="Technology" />
+  <meta property="article:tag" content="Web development" />
+  <meta property="article:tag" content="React" />
+  <meta property="article:tag" content="package" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="mrcaidev" />
+  <meta name="twitter:creator" content="mrcaidev" />
+
+  <!-- Prevent FOUC -->
+  <script is:inline>
+    const root = document.documentElement;
+    const userTheme = localStorage.getItem("theme");
+    const isDarkOs = matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = userTheme === "dark" || (!userTheme && isDarkOs);
+    if (isDark) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  </script>
+</head>
