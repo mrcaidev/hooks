@@ -30,4 +30,12 @@
   .text-highlight {
     @apply text-sky-700 dark:text-sky-300;
   }
+  .article {
+    @apply prose prose-slate dark:prose-invert
+      prose-headings:text-normal prose-headings:scroll-mt-24
+      prose-a:text-normal hover:prose-a:text-highlight prose-a:underline-offset-4
+      prose-strong:text-highlight
+      prose-img:mx-auto
+      prose-code:text-normal;
+  }
 }

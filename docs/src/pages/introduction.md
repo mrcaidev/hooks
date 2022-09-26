@@ -10,6 +10,10 @@ layout: layouts/DocLayout.astro
 
 Lorem ipsum ...
 
+```ts
+console.log("hello");
+```
+
 ## This is heading 2
 
 Lorem ipsum ...
