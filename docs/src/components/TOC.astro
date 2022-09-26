@@ -1,0 +1,23 @@
+---
+import type { MarkdownHeading } from "astro";
+
+export interface Props {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+---
+
+<nav aria-label="On this page" class="flex flex-col gap-1">
+  {
+    headings.map(({ depth, slug, text }) => (
+      <a
+        href={"#" + slug}
+        class="px-2 py-1 rounded-md hover:bg-dim hover:text-highlight"
+        style={`padding-left: ${8 + (depth - 2) * 12}px`}
+      >
+        {text}
+      </a>
+    ))
+  }
+</nav>

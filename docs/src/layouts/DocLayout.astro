@@ -6,11 +6,12 @@ import type { MarkdownLayoutProps } from "astro";
 import Head from "components/Head.astro";
 import Header from "components/Header";
 import Nav from "components/Nav";
+import TOC from "components/TOC.astro";
 import type { Frontmatter } from "models/frontmatter.model";
 import "styles/global.css";
 
 export type Props = MarkdownLayoutProps<Frontmatter>;
-const { frontmatter } = Astro.props;
+const { frontmatter, headings } = Astro.props;
 ---
 
 <html lang="en" class="scroll-smooth [-webkit-tap-highlight-color:transparent]">
@@ -19,13 +20,32 @@ const { frontmatter } = Astro.props;
     <Header />
     <main class="mt-20">
       <aside
-        class="hidden md:block fixed top-20 bottom-0 left-0 w-72 max-h-[calc(100vh-80px)] pl-12 pr-4 pb-4 overflow-auto"
+        class="hidden md:block fixed top-20 bottom-0 left-8 w-72 max-h-[calc(100vh-80px)] px-4 pb-4 overflow-auto"
       >
         <Nav />
       </aside>
-      <article class="article px-12 md:ml-72">
-        <slot />
-      </article>
+      <div class="px-12 md:ml-80 xl:mr-80">
+        <h1 class="my-8 font-bold text-4xl">{frontmatter.title}</h1>
+        <details class="xl:hidden rounded-md open:bg-dim">
+          <summary
+            class="px-4 py-2 rounded-md font-semibold hover:bg-dim hover:text-highlight cursor-pointer"
+          >
+            On This Page</summary
+          >
+          <div class="px-4 pb-2">
+            <TOC headings={headings} />
+          </div>
+        </details>
+        <article class="article max-w-none">
+          <slot />
+        </article>
+      </div>
+      <aside
+        class="hidden xl:block fixed top-20 bottom-0 right-8 w-72 max-h-[calc(100vh-80px)] px-4 pb-4 overflow-auto"
+      >
+        <p class="pt-1 pb-2 font-semibold text-lg">On This Page</p>
+        <TOC headings={headings} />
+      </aside>
     </main>
   </body>
 </html>
