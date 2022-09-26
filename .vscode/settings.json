@@ -6,5 +6,8 @@
     "typescriptreact",
     "astro"
   ],
+  "files.associations": {
+    "*.mdx": "markdown"
+  },
   "prettier.documentSelectors": ["**/*.astro"]
 }
