@@ -1,9 +1,16 @@
 ---
 import type { Frontmatter } from "models/frontmatter.model";
 
-export type Props = Frontmatter;
+export type Props = Partial<Frontmatter>;
 
-const { title, description, createdAt, updatedAt } = Astro.props;
+const {
+  title = "Not Found",
+  description = "A collection of React hooks, with full TypeScript support",
+  createdAt: createdAtRaw = new Date().toISOString(),
+  updatedAt: updatedAtRaw = new Date().toISOString(),
+} = Astro.props;
+const createdAt = new Date(createdAtRaw).toISOString();
+const updatedAt = new Date(updatedAtRaw).toISOString();
 const image = new URL("/banner.jpg", Astro.site);
 ---
 
