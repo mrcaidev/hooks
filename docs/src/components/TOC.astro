@@ -9,6 +9,9 @@ const { headings } = Astro.props;
 ---
 
 <nav aria-label="On this page" class="flex flex-col gap-1">
+  <a href="#top" class="px-2 py-1 rounded-md hover:bg-dim hover:text-highlight"
+    >Overview</a
+  >
   {
     headings.map(({ depth, slug, text }) => (
       <a
