@@ -28,7 +28,6 @@ importers:
       '@astrojs/react': ^1.1.4
       '@astrojs/sitemap': ^1.0.0
       '@astrojs/tailwind': ^2.0.1
-      '@fontsource/inter': ^4.5.12
       '@mrcaidev/hooks': workspace:*
       '@tailwindcss/typography': ^0.5.7
       '@types/node': ^18.7.18
@@ -55,7 +54,6 @@ importers:
       react-feather: 2.0.10_react@18.2.0
       tailwindcss: 3.1.8_postcss@8.4.16
     devDependencies:
-      '@fontsource/inter': 4.5.12
       '@tailwindcss/typography': 0.5.7_tailwindcss@3.1.8
       '@types/node': 18.7.18
       '@types/react': 18.0.20
@@ -891,10 +889,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
-
-  /@fontsource/inter/4.5.12:
-    resolution: {integrity: sha512-bGKk4/8tube/nCk8hav0ZDBVbzJzc7m0Vt4xF5p15IN4YImwGdtKG38Oq5bU8xHNS+VfvbFFCepgQNj7Pr/Lvg==}
-    dev: true
 
   /@humanwhocodes/config-array/0.10.5:
     resolution: {integrity: sha512-XVVDtp+dVvRxMoxSiSfasYaG02VEe1qH5cKgMQJWhol6HwzbcqoCMJi8dAGoYAO57jhUyhI6cWuRiTcRaDaYug==}
