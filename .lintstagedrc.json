@@ -1,7 +1,7 @@
 {
-  "*.{astro,ts,tsx}": [
+  "*.{js,jsx,ts,tsx,astro}": [
     "eslint --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
     "prettier --write --cache --plugin-search-dir=."
   ],
-  "*.{html,json,md,mdx,yml,yaml}": "prettier --write --cache --plugin-search-dir=."
+  "*.{html,css,json,md,mdx,yml,yaml}": "prettier --write --cache --plugin-search-dir=."
 }

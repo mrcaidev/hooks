@@ -1,10 +1,8 @@
 {
-  "extends": "tsconfig/base.json",
+  "extends": "@mrcaidev/tsconfig/library.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": ".",
-    "declaration": true,
-    "declarationMap": true
+    "rootDir": "."
   },
   "include": ["src", "tests"]
 }

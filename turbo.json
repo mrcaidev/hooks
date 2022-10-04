@@ -9,7 +9,7 @@
       "cache": false
     },
     "test": {
-      "inputs": ["{src,test}/**/*.{ts,tsx}"],
+      "inputs": ["{src,tests}/**/*.{ts,tsx}"],
       "outputs": []
     }
   }

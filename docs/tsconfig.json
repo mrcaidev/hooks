@@ -1,8 +1,7 @@
 {
-  "extends": "tsconfig/base.json",
+  "extends": "@mrcaidev/tsconfig/frontend.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "noEmit": true,
     "target": "ESNext"
   }
 }

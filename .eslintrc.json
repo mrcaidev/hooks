@@ -1,4 +1,20 @@
 {
   "root": true,
-  "extends": ["custom"]
+  "extends": ["@mrcaidev/astro-react", "turbo"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": ["packages/*/tsconfig.json", "docs/tsconfig.json"]
+      }
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/tests/**/*.ts"],
+      "env": {
+        "jest": true
+      },
+      "extends": ["plugin:jest/recommended"]
+    }
+  ]
 }

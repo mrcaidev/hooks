@@ -7,46 +7,49 @@
     "hooks",
     "typescript"
   ],
-  "homepage": "https://github.com/mrcaidev/hooks",
+  "homepage": "https://hooks.mrcai.dev",
   "bugs": "https://github.com/mrcaidev/hooks/issues",
   "license": "MIT",
-  "author": "Yuwang Cai <mrcaidev@gmail.com> (https://mrcai.space)",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mrcaidev/hooks"
+  "author": {
+    "name": "Yuwang Cai",
+    "email": "mrcaidev@gmail.com",
+    "url": "https://mrcai.dev"
   },
   "files": [
     "dist"
   ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "typings": "dist/hooks.d.ts",
+  "typings": "dist/esm/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrcaidev/hooks",
+    "directory": "packages/hooks"
+  },
   "scripts": {
-    "build": "run-s build:package build:api",
-    "build:package": "run-p build:esm build:cjs",
-    "build:esm": "tsc --project tsconfig.build.json",
-    "build:cjs": "tsc --project tsconfig.node.json",
-    "build:api": "mkdir -p etc && api-extractor run --local",
-    "clean": "rm -rf dist temp *.tsbuildinfo",
-    "test": "jest"
+    "build": "pnpm run build:esm & pnpm run build:cjs",
+    "build:esm": "tsc --project tsconfig.esm.json",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
+    "test": "jest",
+    "clean": "rm -rf dist *.tsbuildinfo"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.2.0"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.31.2",
+    "@mrcaidev/tsconfig": "^0.1.0",
     "@testing-library/react": "^13.4.0",
-    "@types/jest": "^29.0.3",
-    "@types/react": "^18.0.20",
-    "@types/react-dom": "^18.0.6",
-    "jest": "^29.0.3",
-    "jest-environment-jsdom": "^29.0.3",
-    "npm-run-all": "^4.1.5",
+    "@types/jest": "^29.1.1",
+    "@types/react": "^18.0.21",
+    "jest": "^29.1.2",
+    "jest-environment-jsdom": "^29.1.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "ts-jest": "^29.0.1",
-    "tsconfig": "workspace:*",
-    "typescript": "^4.8.3"
+    "ts-jest": "^29.0.3",
+    "typescript": "^4.8.4"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
   }
 }
