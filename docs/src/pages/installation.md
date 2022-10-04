@@ -10,12 +10,12 @@ layout: layouts/DocLayout.astro
 
 ## Installation
 
-You should have [react](https://www.npmjs.com/package/react) and [react-dom](https://www.npmjs.com/package/react-dom) installed ahead of time.
+You should have [React](https://www.npmjs.com/package/react) installed beforehand.
 
 ```sh
-npm i @mrcaidev/hooks    # npm
-yarn add @mrcaidev/hooks # yarn
-pnpm add @mrcaidev/hooks # pnpm
+npm i @mrcaidev/hooks     # npm
+yarn add @mrcaidev/hooks  # yarn
+pnpm add @mrcaidev/hooks  # pnpm
 ```
 
 ## Basic Usage

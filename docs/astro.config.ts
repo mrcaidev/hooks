@@ -5,6 +5,6 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://hooks.mrcai.space",
+  site: "https://hooks.mrcai.dev",
   integrations: [react(), sitemap(), tailwind()],
 });

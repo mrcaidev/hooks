@@ -1,38 +1,35 @@
 <div align="center">
   <a href="#">
-    <img src="public/reactjs.svg" alt="Logo" width="80" height="80">
+    <img src="docs/public/reactjs.svg" alt="Logo" width="80">
   </a>
   <h1>@mrcaidev/hooks</h1>
-  <p>A collection of React utility hooks</p>
+  <p>React utility hooks</p>
   <p>
-    <strong><a href="https://mrcaidev.github.io/hooks">Explore the docs »</a></strong>
+    <strong><a href="https://hooks.mrcai.dev">🔍 Explore the docs 📖</a></strong>
   </p>
 </div>
 
 ## ✨ Introduction
 
-**@mrcaidev/hooks** is a collection of commonly-used React hooks, including:
+**@mrcaidev/hooks** is a collection of useful React hooks.
 
-- Basics _(Counter, theme, memorization...)_
-- Lifecycles _(Mount, update, unmount...)_
-- Web APIs _(Storage, media query...)_
-- ...
+It is:
 
-Started as a learning project, hoping to become well-trusted, non-trival and production-level. 👍
+- **Highly customizable:** Good defaults, with easy customization.
+- **100% in TypeScript:** Unleash the full power of type system.
+- **Ready for SSR:** You love SSG/SSR. We've got your back.
 
 ## 🚀 Getting started
 
 `@mrcaidev/hooks` is available in npm registry.
 
-```bash
-npm i @mrcaidev/hooks    # Use npm
-yarn add @mrcaidev/hooks # Use yarn
-pnpm add @mrcaidev/hooks # Use pnpm
+```sh
+npm i @mrcaidev/hooks     # Use npm
+yarn add @mrcaidev/hooks  # Use yarn
+pnpm add @mrcaidev/hooks  # Use pnpm
 ```
 
-And start to use hooks in your web app!
-
-For detailed documentation of hooks and types, please refer to the [documentation](https://mrcaidev.github.io/hooks).
+Please see the [documentation](https://hooks.mrcai.dev) for more information on hooks and types.
 
 ## 🧰 Built with
 
@@ -43,25 +40,24 @@ For detailed documentation of hooks and types, please refer to the [documentatio
 
 [![Prettier](https://shields.io/badge/prettier-24292e?style=for-the-badge&logo=prettier)](https://prettier.io/)
 [![ESLint](https://shields.io/badge/eslint-4b32c3?style=for-the-badge&logo=eslint)](https://eslint.org/)
-[![API Extractor](https://shields.io/badge/api%20extractor-1d6cc0?style=for-the-badge&logo=microsoft)](https://api-extractor.com/)
 [![Commitlint](https://shields.io/badge/commitlint-121212?style=for-the-badge&logo=commitlint)](https://commitlint.js.org/#/)
 
 ## 🤝 Contributing
 
-**Any contributions will be welcome and greatly appreciated.**
+All contributions are welcome and greatly appreciated.
 
-### Bug report
+### Bug Report
 
-If something goes wrong, please [open an issue](https://github.com/mrcaidev/hooks/issues) to help us improve.
+If something goes wrong, please [file a bug report](https://github.com/mrcaidev/hooks/issues), with a description of the problem and your expectations, as well as a minimal example for reproduction.
 
-### Feature request
+### Feature Request
 
-If you have an idea of a new hook, or a better solution for an existing hook, please fork this repository and [create a pull request](https://github.com/mrcaidev/hooks/pulls).
+If you have an idea of a new feature, please fork this repository and [submit a pull request](https://github.com/mrcaidev/hooks/pulls).
 
-### Other feedback
+### Other Feedback
 
-You can always [open an issue](https://github.com/mrcaidev/hooks/issues), or directly contact the author via [mrcaidev@qq.com](mailto:mrcaidev@qq.com).
+You can always [open an issue](https://github.com/mrcaidev/hooks/issues), or contact the author directly via [mrcaidev@gmail.com](mailto:mrcaidev@gmail.com).
 
 ## 📜 License
 
-[MIT](LICENSE)
+[MIT](https://github.com/mrcaidev/hooks/tree/master/LICENSE)

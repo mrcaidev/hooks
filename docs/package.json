@@ -12,7 +12,7 @@
     "@astrojs/react": "^1.1.4",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/tailwind": "^2.0.2",
-    "@mrcaidev/hooks": "workspace:0.5.0",
+    "@mrcaidev/hooks": "workspace:latest",
     "@mrcaidev/tsconfig": "^0.1.0",
     "astro": "^1.4.4",
     "react": "^18.2.0",
