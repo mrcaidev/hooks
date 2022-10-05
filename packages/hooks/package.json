@@ -30,6 +30,7 @@
     "build": "pnpm run build:esm & pnpm run build:cjs",
     "build:esm": "tsc --project tsconfig.esm.json",
     "build:cjs": "tsc --project tsconfig.cjs.json",
+    "dev": "pnpm run build:esm --watch & pnpm run build:cjs --watch",
     "test": "jest",
     "clean": "rm -rf dist *.tsbuildinfo"
   },
