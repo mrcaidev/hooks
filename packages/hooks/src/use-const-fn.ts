@@ -1,11 +1,9 @@
 import { useCallback } from "react";
 
 /**
- * Memorize a function.
- * @param fn - The function to be made constant.
- * @returns The constant function.
+ * Make a function constant.
  */
-export function useConstFn<T extends (...args: any) => any>(fn: T) {
+export function useConstFn<T extends Fn>(fn: T) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   return useCallback(fn, []);
 }

@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 
 /**
- * Change page title.
- * @param title - The page title.
+ * Manage page title.
  */
 export function useTitle(title: string) {
   useEffect(() => {

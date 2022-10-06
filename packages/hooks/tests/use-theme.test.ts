@@ -11,9 +11,9 @@ beforeEach(() => {
   window.matchMedia = (query: string) => {
     return {
       matches: device[query] ?? false,
-      addEventListener: () => {},
-      removeEventListener: () => {},
-    } as any as MediaQueryList;
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    } as unknown as MediaQueryList;
   };
 });
 

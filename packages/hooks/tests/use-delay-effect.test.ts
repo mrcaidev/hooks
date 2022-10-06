@@ -10,7 +10,7 @@ describe("useDelayEffect", () => {
     const setTimeout = jest.spyOn(window, "setTimeout");
     const clearTimeout = jest.spyOn(window, "clearTimeout");
 
-    const { unmount } = renderHook(() => useDelayEffect(() => {}));
+    const { unmount } = renderHook(() => useDelayEffect(jest.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(clearTimeout).toHaveBeenCalledTimes(0);
 

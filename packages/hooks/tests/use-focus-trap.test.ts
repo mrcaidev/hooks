@@ -16,7 +16,9 @@ describe("useFocusTrap", () => {
     const addEventListener = jest.spyOn(document, "addEventListener");
     const removeEventListener = jest.spyOn(document, "removeEventListener");
 
-    const { unmount } = renderHook(() => useFocusTrap(first, last));
+    const { unmount } = renderHook(() =>
+      useFocusTrap({ current: first }, { current: last })
+    );
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
 
@@ -29,7 +31,7 @@ describe("useFocusTrap", () => {
     const first = screen.getByTestId("first");
     const last = screen.getByTestId("last");
 
-    renderHook(() => useFocusTrap(first, last));
+    renderHook(() => useFocusTrap({ current: first }, { current: last }));
     first.focus();
     expect(document.activeElement).toEqual(first);
 

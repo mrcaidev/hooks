@@ -4,45 +4,50 @@ import {
   type DependencyList,
   type EffectCallback,
 } from "react";
-import { useUnmount } from "./use-unmount";
-import type { TimeoutOptions } from "./utils/timeout";
+
+interface Options {
+  timeout?: number;
+  onMount?: boolean;
+}
 
 /**
- * Throttle a side effect.
- * @param effect - The effect callback to be throttled.
- * @param deps - Dependencies to be passed to the effect callback, defaults to `[]`.
- * @param options - An object that specifies the behavior of throttle,
- *                  defaults to `{}`.
+ * Throttle an effect.
  */
 export function useThrottleEffect(
   effect: EffectCallback,
   deps: DependencyList = [],
-  options: TimeoutOptions = {}
+  options: Options = {}
 ) {
   const { timeout = 500, onMount = false } = options;
 
-  const isMounted = useRef(false);
-  const isCoolingDown = useRef(false);
+  const isMountedRef = useRef(false);
+  const isCoolingDownRef = useRef(false);
+  const effectRef = useRef(effect);
+  effectRef.current = effect;
 
   useEffect(() => {
-    if (!onMount && !isMounted.current) {
-      isMounted.current = true;
+    if (!onMount && !isMountedRef.current) {
+      isMountedRef.current = true;
       return;
     }
 
-    if (isCoolingDown.current) return;
+    if (isCoolingDownRef.current) {
+      return;
+    }
 
-    effect();
+    effectRef.current();
 
-    isCoolingDown.current = true;
+    isCoolingDownRef.current = true;
     setTimeout(() => {
-      isCoolingDown.current = false;
+      isCoolingDownRef.current = false;
     }, timeout);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, timeout, onMount]);
 
-  useUnmount(() => {
-    isMounted.current = false;
-  });
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 }

@@ -1,34 +1,34 @@
 import { useEffect, useRef, useState } from "react";
-import { useUnmount } from "./use-unmount";
-import type { TimeoutOptions } from "./utils/timeout";
+
+interface Options {
+  timeout?: number;
+  onMount?: boolean;
+}
 
 /**
  * Debounce a value.
- * @param value - The value to be debounced.
- * @param options - An object that specifies the behavior of debounce,
- *                  defaults to `{}`.
- * @returns The debounced value.
  */
-export function useDebounce<T>(value: T, options: TimeoutOptions = {}) {
+export function useDebounce<T>(value: T, options: Options = {}) {
   const { timeout = 500, onMount = false } = options;
 
-  const isMounted = useRef(false);
   const [debouncedValue, setDebouncedValue] = useState(value);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
-    if (!onMount && !isMounted.current) {
-      isMounted.current = true;
+    if (!onMount && !isMountedRef.current) {
+      isMountedRef.current = true;
       return;
     }
 
-    console.log("setTimeout");
     const timer = setTimeout(() => setDebouncedValue(value), timeout);
     return () => clearTimeout(timer);
   }, [value, timeout, onMount]);
 
-  useUnmount(() => {
-    isMounted.current = false;
-  });
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   return debouncedValue;
 }

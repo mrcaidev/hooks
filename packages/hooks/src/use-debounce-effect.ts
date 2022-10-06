@@ -4,38 +4,41 @@ import {
   type DependencyList,
   type EffectCallback,
 } from "react";
-import { useUnmount } from "./use-unmount";
-import type { TimeoutOptions } from "./utils/timeout";
+
+interface Options {
+  timeout?: number;
+  onMount?: boolean;
+}
 
 /**
- * Debounce a side effect.
- * @param effect - The effect callback to be debounced.
- * @param deps - Dependencies to be passed to the effect callback, defaults to `[]`.
- * @param options - An object that specifies the behavior of debounce,
- *                  defaults to `{}`.
+ * Debounce an effect.
  */
 export function useDebounceEffect(
   effect: EffectCallback,
   deps: DependencyList = [],
-  options: TimeoutOptions = {}
+  options: Options = {}
 ) {
   const { timeout = 500, onMount = false } = options;
 
-  const isMounted = useRef(false);
+  const isMountedRef = useRef(false);
+  const effectRef = useRef(effect);
+  effectRef.current = effect;
 
   useEffect(() => {
-    if (!onMount && !isMounted.current) {
-      isMounted.current = true;
+    if (!onMount && !isMountedRef.current) {
+      isMountedRef.current = true;
       return;
     }
 
-    const timer = setTimeout(effect, timeout);
+    const timer = setTimeout(effectRef.current, timeout);
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, timeout, onMount]);
 
-  useUnmount(() => {
-    isMounted.current = false;
-  });
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 }

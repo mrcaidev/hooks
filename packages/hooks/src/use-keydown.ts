@@ -1,26 +1,14 @@
 import { useEffect, useRef } from "react";
-import { off, on } from "./utils/event";
 
-/** Modifier keys. */
-export interface ModifierKeys {
-  /** `true` if "Ctrl" should be pressed, defaults to `false`. */
+interface ModifierKeys {
   ctrl?: boolean;
-
-  /** `true` if "Shift" should be pressed, defaults to `false`. */
   shift?: boolean;
-
-  /** `true` if "Alt" should be pressed, defaults to `false`. */
   alt?: boolean;
-
-  /** `true` if "Meta" should be pressed, defaults to `false`. */
   meta?: boolean;
 }
 
 /**
- * Watch for key down events.
- * @param code - Code of the key to watch for.
- * @param callback - A callback to call on key down events.
- * @param modifier - Modifier keys that should be pressed at the same time, defaults to `{}`.
+ * Listen for keydown events.
  */
 export function useKeydown(
   code: string,
@@ -35,17 +23,18 @@ export function useKeydown(
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (
-        e.code === code &&
-        e.ctrlKey === ctrl &&
-        e.shiftKey === shift &&
-        e.altKey === alt &&
-        e.metaKey === meta
+        e.code !== code ||
+        e.ctrlKey !== ctrl ||
+        e.shiftKey !== shift ||
+        e.altKey !== alt ||
+        e.metaKey !== meta
       ) {
-        callbackRef.current(e);
+        return;
       }
+      callbackRef.current(e);
     };
 
-    on(document, "keydown", listener);
-    return () => off(document, "keydown", listener);
+    document.addEventListener("keydown", listener);
+    return () => document.removeEventListener("keydown", listener);
   }, [code, ctrl, shift, alt, meta]);
 }

@@ -2,11 +2,9 @@ import { useState } from "react";
 
 /**
  * Use a boolean value.
- * @param initialValue - Initial boolean value, defaults to `false`.
- * @returns The boolean value, and some functions to update it.
  */
-export function useBoolean(initialValue = false) {
-  const [value, setValue] = useState(initialValue);
+export function useBoolean(defaultValue = false) {
+  const [value, setValue] = useState(defaultValue);
 
   const toggle = () => setValue((value) => !value);
   const on = () => setValue(true);

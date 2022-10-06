@@ -6,7 +6,7 @@ describe("useKeydown", () => {
     const addEventListener = jest.spyOn(document, "addEventListener");
     const removeEventListener = jest.spyOn(document, "removeEventListener");
 
-    const { unmount } = renderHook(() => useKeydown("Tab", () => {}));
+    const { unmount } = renderHook(() => useKeydown("Tab", jest.fn()));
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
 

@@ -11,7 +11,7 @@ describe("useDebounceEffect", () => {
     const setTimeout = jest.spyOn(window, "setTimeout");
     const clearTimeout = jest.spyOn(window, "clearTimeout");
 
-    const { unmount } = renderHook(() => useDebounceEffect(() => {}));
+    const { unmount } = renderHook(() => useDebounceEffect(jest.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(0);
     expect(clearTimeout).toHaveBeenCalledTimes(0);
 

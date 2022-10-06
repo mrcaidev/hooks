@@ -13,7 +13,7 @@ describe("useHover", () => {
     const addEventListener = jest.spyOn(target, "addEventListener");
     const removeEventListener = jest.spyOn(target, "removeEventListener");
 
-    const { result, unmount } = renderHook(() => useHover(target));
+    const { result, unmount } = renderHook(() => useHover({ current: target }));
     expect(result.current).toBe(false);
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
@@ -26,7 +26,7 @@ describe("useHover", () => {
   it("responds to hover state changes", () => {
     const target = screen.getByTestId("target");
 
-    const { result } = renderHook(() => useHover(target));
+    const { result } = renderHook(() => useHover({ current: target }));
     expect(result.current).toEqual(false);
 
     fireEvent.mouseEnter(target);

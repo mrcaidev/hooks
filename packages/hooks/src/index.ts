@@ -1,8 +1,3 @@
-/**
- * A collection of React utility hooks.
- * @packageDocumentation
- */
-
 export { useBoolean } from "./use-boolean";
 export { useClickOutside } from "./use-click-outside";
 export { useConst } from "./use-const";
@@ -14,20 +9,14 @@ export { useDelayEffect } from "./use-delay-effect";
 export { useEventListener } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover } from "./use-hover";
-export { useKeydown, type ModifierKeys } from "./use-keydown";
+export { useKeydown } from "./use-keydown";
 export { useLatest } from "./use-latest";
-export {
-  useLocalStorage,
-  type UseLocalStorageOptions,
-} from "./use-local-storage";
+export { useLocalStorage } from "./use-local-storage";
 export { useMediaQuery } from "./use-media-query";
 export { useMount } from "./use-mount";
 export { useRerender } from "./use-rerender";
-export {
-  useSessionStorage,
-  type UseSessionStorageOptions,
-} from "./use-session-storage";
-export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
+export { useSessionStorage } from "./use-session-storage";
+export { useTheme } from "./use-theme";
 export { useThrottle } from "./use-throttle";
 export { useThrottleEffect } from "./use-throttle-effect";
 export { useTitle } from "./use-title";
@@ -35,5 +24,3 @@ export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
 export { useUpdate } from "./use-update";
 export { useWindowSize } from "./use-window-size";
-export { type EventMap, type Target, type WithRef } from "./utils/event";
-export { type TimeoutOptions } from "./utils/timeout";

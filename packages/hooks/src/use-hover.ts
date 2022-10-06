@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
-import { getTarget, off, on, type WithRef } from "./utils/event";
+import { useEffect, useState, type RefObject } from "react";
 
 /**
- * Watch for hover events on an element.
- * @param withRefElement - The element to watch, or a ref object of that element.
- * @returns `true` if mouse is hovering on the element, or `false` otherwise.
+ * Listen for hover events on an element.
  */
-export function useHover(withRefElement: WithRef<HTMLElement>) {
+export function useHover(ref: RefObject<HTMLElement>) {
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    const element = getTarget(withRefElement);
-    const enterListener = () => setIsHovering(true);
-    const leaveListener = () => setIsHovering(false);
+    const target = ref.current;
+    if (!target) {
+      return;
+    }
 
-    on(element, "mouseenter", enterListener);
-    on(element, "mouseleave", leaveListener);
+    const handleEnter = () => setIsHovering(true);
+    const handleLeave = () => setIsHovering(false);
+
+    target.addEventListener("mouseenter", handleEnter);
+    target.addEventListener("mouseleave", handleLeave);
 
     return () => {
-      off(element, "mouseenter", enterListener);
-      off(element, "mouseleave", leaveListener);
+      target.removeEventListener("mouseenter", handleEnter);
+      target.removeEventListener("mouseleave", handleLeave);
     };
-  }, [withRefElement]);
+  }, [ref]);
 
   return isHovering;
 }

@@ -16,7 +16,7 @@ beforeAll(() => {
       matches: device[query] ?? false,
       addEventListener,
       removeEventListener,
-    } as any as MediaQueryList);
+    } as unknown as MediaQueryList);
 });
 
 describe("useMediaQuery", () => {

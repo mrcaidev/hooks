@@ -10,7 +10,7 @@ describe("useThrottleEffect", () => {
   it("correctly sets up and tears down", () => {
     const setTimeout = jest.spyOn(window, "setTimeout");
 
-    const { unmount } = renderHook(() => useThrottleEffect(() => {}));
+    const { unmount } = renderHook(() => useThrottleEffect(jest.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(0);
 
     unmount();

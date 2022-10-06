@@ -1,22 +1,30 @@
 import { useEffect, useState } from "react";
-import { off, on } from "./utils/event";
 
 /**
- * Use window's inner width and height.
- * @returns Window's inner width and height.
+ * Use the inner width and height of the window.
  */
 export function useWindowSize() {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(() => {
+    if (typeof window === "undefined") {
+      return 0;
+    }
+    return innerWidth;
+  });
+  const [height, setHeight] = useState(() => {
+    if (typeof window === "undefined") {
+      return 0;
+    }
+    return innerHeight;
+  });
 
   useEffect(() => {
     const listener = () => {
       setWidth(innerWidth);
       setHeight(innerHeight);
     };
-    listener();
-    on(window, "resize", listener);
-    return () => off(window, "resize", listener);
+
+    window.addEventListener("resize", listener);
+    return () => window.removeEventListener("resize", listener);
   }, []);
 
   return { width, height };

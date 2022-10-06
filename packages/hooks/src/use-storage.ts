@@ -1,51 +1,31 @@
-import { useEffect, useState } from "react";
-import {
-  getItem,
-  getStorage,
-  removeItem,
-  setItem,
-  type StorageType,
-} from "./utils/storage";
+import { useState } from "react";
 
-/** Options to interact with storage objects. */
-export interface UseStorageOptions<T> {
-  /** Type of storage. */
+interface Options<T> {
   storageType: StorageType;
-
-  /** Default state if the item does not yet exist. */
   defaultValue?: T;
-
-  /** A function to serialize value T into string. */
   serializer?: (value: T) => string;
-
-  /** A function to deserialize string into value T. */
   deserializer?: (value: string) => T;
 }
 
 /**
- * Use storage.
- * @param key - Key of storage item.
- * @param options - Options to interact with storage.
- * @returns The value of storage item, and a function to update it.
+ * Manage storage.
  */
-export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
+export function useStorage<T>(key: string, options: Options<T>) {
   const {
     storageType,
-    defaultValue = undefined as any as T,
+    defaultValue = undefined as unknown as T,
     serializer = JSON.stringify,
     deserializer = JSON.parse,
   } = options;
 
   const storage = getStorage(storageType);
 
-  const [value, setValue] = useState(defaultValue);
-
-  useEffect(() => {
-    const storedValue = getItem(key, { storage, defaultValue, deserializer });
-    setValue(storedValue);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  const [value, setValue] = useState(() => {
+    if (typeof window === "undefined") {
+      return defaultValue;
+    }
+    return getItem<T>(key, { storage, defaultValue, deserializer });
+  });
 
   const setValueWrapper: typeof setValue = (action) => {
     const newValue = action instanceof Function ? action(value) : action;
@@ -54,9 +34,80 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
   };
 
   const remove = () => {
-    setValue(undefined as any as T);
+    setValue(undefined as unknown as T);
     removeItem(key, { storage });
   };
 
   return { value, set: setValueWrapper, remove };
+}
+
+type StorageType = "localStorage" | "sessionStorage";
+
+function getStorage(type: StorageType) {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+
+  try {
+    switch (type) {
+      case "localStorage":
+        return localStorage;
+      case "sessionStorage":
+        return sessionStorage;
+      default:
+        return undefined;
+    }
+  } catch {
+    return undefined;
+  }
+}
+
+interface GetItemOptions<T> {
+  storage: Storage | undefined;
+  defaultValue: T;
+  deserializer: (value: string) => T;
+}
+
+function getItem<T>(key: string, options: GetItemOptions<T>) {
+  const { storage, defaultValue, deserializer } = options;
+
+  try {
+    const value = storage?.getItem(key) ?? null;
+    return value === null ? defaultValue : deserializer(value);
+  } catch {
+    return defaultValue;
+  }
+}
+
+interface SetItemOptions<T> {
+  storage: Storage | undefined;
+  serializer: (value: T) => string;
+}
+
+function setItem<T>(key: string, value: T, options: SetItemOptions<T>) {
+  const { storage, serializer } = options;
+
+  try {
+    if (value === undefined) {
+      storage?.removeItem(key);
+    } else {
+      storage?.setItem(key, serializer(value));
+    }
+  } catch {
+    return;
+  }
+}
+
+interface RemoveItemOptions {
+  storage: Storage | undefined;
+}
+
+function removeItem(key: string, options: RemoveItemOptions) {
+  const { storage } = options;
+
+  try {
+    storage?.removeItem(key);
+  } catch (err) {
+    return;
+  }
 }
