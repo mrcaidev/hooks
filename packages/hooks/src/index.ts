@@ -23,5 +23,6 @@ export { useThrottleEffect } from "./use-throttle-effect";
 export { useTitle } from "./use-title";
 export { useToggle } from "./use-toggle";
 export { useUnmount } from "./use-unmount";
+export { useUnsafeOnceEffect } from "./use-unsafe-once-effect";
 export { useUpdate } from "./use-update";
 export { useWindowSize } from "./use-window-size";
