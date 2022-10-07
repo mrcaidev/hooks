@@ -16,6 +16,7 @@ export { useLocalStorage } from "./use-local-storage";
 export { useMediaQuery } from "./use-media-query";
 export { useMount } from "./use-mount";
 export { useRerender } from "./use-rerender";
+export { useSafeLayoutEffect } from "./use-safe-layout-effect";
 export { useSessionStorage } from "./use-session-storage";
 export { useTheme } from "./use-theme";
 export { useThrottle } from "./use-throttle";
