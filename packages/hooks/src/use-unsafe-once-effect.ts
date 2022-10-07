@@ -10,8 +10,8 @@ export function useUnsafeOnceEffect(effect: EffectCallback) {
       return;
     }
 
-    effectRef.current();
-
     isExecutedRef.current = true;
+
+    return effectRef.current();
   }, []);
 }
