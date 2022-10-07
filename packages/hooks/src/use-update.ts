@@ -10,6 +10,8 @@ import {
  */
 export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
   const isMountedRef = useRef(false);
+  const effectRef = useRef(effect);
+  effectRef.current = effect;
 
   useEffect(() => {
     return () => {
@@ -22,7 +24,7 @@ export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
       isMountedRef.current = true;
       return;
     }
-    return effect();
+    return effectRef.current();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
