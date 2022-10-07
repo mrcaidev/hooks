@@ -36,10 +36,10 @@ describe("useClickOutside", () => {
     renderHook(() => useClickOutside({ current: target }, fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(outside);
+    fireEvent.mouseDown(outside);
     expect(fn).toHaveBeenCalledTimes(1);
 
-    fireEvent.click(outside);
+    fireEvent.mouseDown(outside);
     expect(fn).toHaveBeenCalledTimes(2);
   });
 
@@ -51,10 +51,10 @@ describe("useClickOutside", () => {
     renderHook(() => useClickOutside({ current: target }, fn));
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(inside);
+    fireEvent.mouseDown(inside);
     expect(fn).toHaveBeenCalledTimes(0);
 
-    fireEvent.click(inside);
+    fireEvent.mouseDown(inside);
     expect(fn).toHaveBeenCalledTimes(0);
   });
 });
