@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Options<T> {
   storageType: StorageType;
@@ -20,12 +20,14 @@ export function useStorage<T>(key: string, options: Options<T>) {
 
   const storage = getStorage(storageType);
 
-  const [value, setValue] = useState(() => {
-    if (typeof window === "undefined") {
-      return defaultValue;
-    }
-    return getItem<T>(key, { storage, defaultValue, deserializer });
-  });
+  const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    const storedValue = getItem(key, { storage, defaultValue, deserializer });
+    setValue(storedValue);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, defaultValue]);
 
   const setValueWrapper: typeof setValue = (action) => {
     const newValue = action instanceof Function ? action(value) : action;
