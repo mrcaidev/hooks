@@ -1,21 +1,11 @@
-import { forwardRef, useEffect, useState } from "react";
+import { useTheme, useUpdate } from "@mrcaidev/hooks";
+import { forwardRef } from "react";
 import { Moon, Sun } from "react-feather";
 
 const ThemeToggler = forwardRef<HTMLButtonElement>((_, ref) => {
-  const [theme, setTheme] = useState(() => {
-    if (import.meta.env.SSR) {
-      return undefined;
-    }
-    if (typeof localStorage !== undefined && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    if (matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-    return "light";
-  });
+  const { theme, toggle } = useTheme();
 
-  useEffect(() => {
+  useUpdate(() => {
     const root = document.documentElement;
     if (theme === "light") {
       root.classList.remove("dark");
@@ -24,12 +14,6 @@ const ThemeToggler = forwardRef<HTMLButtonElement>((_, ref) => {
     }
   }, [theme]);
 
-  const toggle = () =>
-    setTheme((theme) => {
-      const nextTheme = theme === "light" ? "dark" : "light";
-      localStorage.setItem("theme", nextTheme);
-      return nextTheme;
-    });
   const ThemeIcon = theme === "light" ? Moon : Sun;
 
   return (
