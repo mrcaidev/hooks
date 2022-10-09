@@ -35,7 +35,7 @@
     "clean": "rm -rf dist *.tsbuildinfo"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": ">=16.8"
   },
   "devDependencies": {
     "@mrcaidev/tsconfig": "^0.1.0",
