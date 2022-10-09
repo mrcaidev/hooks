@@ -43,11 +43,11 @@ describe("useTheme", () => {
   });
 
   it("reads user theme", () => {
-    localStorage.setItem("theme", '"light"');
+    localStorage.setItem("theme", "light");
 
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("theme")).toEqual('"light"');
+    expect(localStorage.getItem("theme")).toEqual("light");
   });
 
   it("can specify storage key", () => {
@@ -57,7 +57,7 @@ describe("useTheme", () => {
 
     act(() => result.current.toggle());
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("test")).toEqual('"light"');
+    expect(localStorage.getItem("test")).toEqual("light");
   });
 
   it("can set", () => {
@@ -67,19 +67,19 @@ describe("useTheme", () => {
 
     act(() => result.current.set("light"));
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("theme")).toEqual('"light"');
+    expect(localStorage.getItem("theme")).toEqual("light");
 
     act(() => result.current.set("light"));
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("theme")).toEqual('"light"');
+    expect(localStorage.getItem("theme")).toEqual("light");
 
     act(() => result.current.set("dark"));
     expect(result.current.theme).toEqual("dark");
-    expect(localStorage.getItem("theme")).toEqual('"dark"');
+    expect(localStorage.getItem("theme")).toEqual("dark");
 
     act(() => result.current.set("dark"));
     expect(result.current.theme).toEqual("dark");
-    expect(localStorage.getItem("theme")).toEqual('"dark"');
+    expect(localStorage.getItem("theme")).toEqual("dark");
   });
 
   it("can toggle theme", () => {
@@ -89,11 +89,11 @@ describe("useTheme", () => {
 
     act(() => result.current.toggle());
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("theme")).toEqual('"light"');
+    expect(localStorage.getItem("theme")).toEqual("light");
 
     act(() => result.current.toggle());
     expect(result.current.theme).toEqual("dark");
-    expect(localStorage.getItem("theme")).toEqual('"dark"');
+    expect(localStorage.getItem("theme")).toEqual("dark");
   });
 
   it("can set to light", () => {
@@ -103,11 +103,11 @@ describe("useTheme", () => {
 
     act(() => result.current.setLight());
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("theme")).toEqual('"light"');
+    expect(localStorage.getItem("theme")).toEqual("light");
 
     act(() => result.current.setLight());
     expect(result.current.theme).toEqual("light");
-    expect(localStorage.getItem("theme")).toEqual('"light"');
+    expect(localStorage.getItem("theme")).toEqual("light");
   });
 
   it("can set to dark", () => {
@@ -117,10 +117,10 @@ describe("useTheme", () => {
 
     act(() => result.current.setDark());
     expect(result.current.theme).toEqual("dark");
-    expect(localStorage.getItem("theme")).toEqual('"dark"');
+    expect(localStorage.getItem("theme")).toEqual("dark");
 
     act(() => result.current.setDark());
     expect(result.current.theme).toEqual("dark");
-    expect(localStorage.getItem("theme")).toEqual('"dark"');
+    expect(localStorage.getItem("theme")).toEqual("dark");
   });
 });

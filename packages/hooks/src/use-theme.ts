@@ -1,7 +1,4 @@
-import { useLocalStorage } from "./use-local-storage";
-import { useMediaQuery } from "./use-media-query";
-
-const DEFAULT_STORAGE_KEY = "theme";
+import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -14,18 +11,45 @@ interface Options {
  * Use current theme.
  */
 export function useTheme(options: Options = {}) {
-  const { defaultTheme, storageKey = DEFAULT_STORAGE_KEY } = options;
+  const { defaultTheme, storageKey = "theme" } = options;
 
-  const isDarkPreferred = useMediaQuery("(prefers-color-scheme: dark)");
-  const osTheme = isDarkPreferred ? "dark" : "light";
-  const { value: userTheme, set: setUserTheme } =
-    useLocalStorage<Theme>(storageKey);
+  const [theme, setTheme] = useState<Theme>("dark");
 
-  const theme = userTheme ?? defaultTheme ?? osTheme;
+  useEffect(() => {
+    const userTheme = getUserTheme(storageKey);
+    if (userTheme) {
+      setTheme(userTheme);
+      return;
+    }
+    if (defaultTheme) {
+      setTheme(defaultTheme);
+      return;
+    }
+    if (matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
+      return;
+    }
+    setTheme("light");
+  }, [defaultTheme, storageKey]);
 
-  const toggle = () => setUserTheme(theme === "light" ? "dark" : "light");
-  const setDark = () => setUserTheme("dark");
-  const setLight = () => setUserTheme("light");
+  const set: typeof setTheme = (action) => {
+    const nextTheme = action instanceof Function ? action(theme) : action;
+    localStorage.setItem(storageKey, nextTheme);
+    setTheme(nextTheme);
+  };
 
-  return { theme, set: setUserTheme, toggle, setLight, setDark };
+  const toggle = () => set((theme) => (theme === "light" ? "dark" : "light"));
+  const setLight = () => set("light");
+  const setDark = () => set("dark");
+
+  return { theme, set, toggle, setLight, setDark };
+}
+
+function getUserTheme(storageKey: string) {
+  try {
+    const userTheme = localStorage.getItem(storageKey);
+    return userTheme === "light" || userTheme === "dark" ? userTheme : null;
+  } catch {
+    return null;
+  }
 }
