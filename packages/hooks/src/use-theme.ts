@@ -16,7 +16,7 @@ export function useTheme(options: Options = {}) {
   const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    const userTheme = getUserTheme(storageKey);
+    const userTheme = getStoredTheme(storageKey);
     if (userTheme) {
       setTheme(userTheme);
       return;
@@ -34,7 +34,7 @@ export function useTheme(options: Options = {}) {
 
   const set: typeof setTheme = (action) => {
     const nextTheme = action instanceof Function ? action(theme) : action;
-    localStorage.setItem(storageKey, nextTheme);
+    setStoredTheme(storageKey, nextTheme);
     setTheme(nextTheme);
   };
 
@@ -45,11 +45,19 @@ export function useTheme(options: Options = {}) {
   return { theme, set, toggle, setLight, setDark };
 }
 
-function getUserTheme(storageKey: string) {
+function getStoredTheme(key: string) {
   try {
-    const userTheme = localStorage.getItem(storageKey);
+    const userTheme = localStorage.getItem(key);
     return userTheme === "light" || userTheme === "dark" ? userTheme : null;
   } catch {
     return null;
+  }
+}
+
+function setStoredTheme(key: string, value: string) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    return;
   }
 }
