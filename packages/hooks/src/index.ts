@@ -10,6 +10,7 @@ export { useDocument } from "./use-document";
 export { useEventListener } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
 export { useHover } from "./use-hover";
+export { useInterval } from "./use-interval";
 export { useKeydown } from "./use-keydown";
 export { useLatest } from "./use-latest";
 export { useLocalStorage } from "./use-local-storage";
