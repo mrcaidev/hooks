@@ -1,16 +1,16 @@
 import { renderHook } from "@testing-library/react";
-import { useDelayEffect } from "../src/use-delay-effect";
+import { useTimeout } from "../src/use-timeout";
 
 beforeAll(() => jest.useFakeTimers());
 afterAll(() => jest.useRealTimers());
 afterEach(() => jest.clearAllTimers());
 
-describe("useDelayEffect", () => {
+describe("useTimeout", () => {
   it("correctly sets up and tears down", () => {
     const setTimeout = jest.spyOn(window, "setTimeout");
     const clearTimeout = jest.spyOn(window, "clearTimeout");
 
-    const { unmount } = renderHook(() => useDelayEffect(jest.fn()));
+    const { unmount } = renderHook(() => useTimeout(jest.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(clearTimeout).toHaveBeenCalledTimes(0);
 
@@ -22,8 +22,11 @@ describe("useDelayEffect", () => {
   it("calls the effect after the timeout", () => {
     const effect = jest.fn();
 
-    renderHook(() => useDelayEffect(effect, 500));
+    renderHook(() => useTimeout(effect));
     expect(effect).toHaveBeenCalledTimes(0);
+
+    jest.advanceTimersByTime(500);
+    expect(effect).toHaveBeenCalledTimes(1);
 
     jest.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(1);

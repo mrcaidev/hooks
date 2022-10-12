@@ -1,9 +1,9 @@
 import { useEffect, useRef, type EffectCallback } from "react";
 
 /**
- * Delay an effect.
+ * Run an effect after a timeout.
  */
-export function useDelayEffect(effect: EffectCallback, timeout = 500) {
+export function useTimeout(effect: EffectCallback, timeout = 500) {
   const effectRef = useRef(effect);
   effectRef.current = effect;
 
