@@ -15,6 +15,7 @@ export { useLatest } from "./use-latest";
 export { useLocalStorage } from "./use-local-storage";
 export { useMediaQuery } from "./use-media-query";
 export { useMount } from "./use-mount";
+export { usePrevious } from "./use-previous";
 export { useRerender } from "./use-rerender";
 export { useSafeLayoutEffect } from "./use-safe-layout-effect";
 export { useSessionStorage } from "./use-session-storage";
