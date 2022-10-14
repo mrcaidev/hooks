@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "ESNext",
     "rootDir": "src",
-    "outDir": "dist/esm"
+    "outDir": "dist/esm",
+    "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
   },
   "include": ["src"]
 }
