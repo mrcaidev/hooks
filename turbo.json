@@ -7,10 +7,6 @@
     },
     "dev": {
       "cache": false
-    },
-    "test": {
-      "inputs": ["{src,tests}/**/*.{ts,tsx}"],
-      "outputs": []
     }
   }
 }

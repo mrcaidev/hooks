@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react";
-import { useMount } from "../src/use-mount";
+import { useMount } from "src/use-mount";
 
 describe("useMount", () => {
   it("only runs on mount", () => {
-    const cleanup = jest.fn();
-    const effect = jest.fn();
+    const cleanup = vi.fn();
+    const effect = vi.fn();
 
     const { rerender, unmount } = renderHook(() =>
       useMount(() => {

@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useCounter } from "../src/use-counter";
+import { useCounter } from "src/use-counter";
 
 describe("useCounter", () => {
   it("correctly sets up and tears down", () => {

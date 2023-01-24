@@ -1,14 +1,20 @@
 import { act, renderHook } from "@testing-library/react";
 import { useState } from "react";
-import { useThrottle } from "../src/use-throttle";
+import { useThrottle } from "src/use-throttle";
 
-beforeAll(() => jest.useFakeTimers());
-afterAll(() => jest.useRealTimers());
-afterEach(() => jest.clearAllTimers());
+beforeAll(() => {
+  vi.useFakeTimers();
+});
+afterAll(() => {
+  vi.useRealTimers();
+});
+afterEach(() => {
+  vi.clearAllTimers();
+});
 
 describe("useThrottle", () => {
   it("correctly sets up and tears down", () => {
-    const setTimeout = jest.spyOn(window, "setTimeout");
+    const setTimeout = vi.spyOn(window, "setTimeout");
 
     const { result, unmount } = renderHook(() => useThrottle(0));
     expect(result.current).toEqual(0);
@@ -32,10 +38,10 @@ describe("useThrottle", () => {
     act(() => result.current.setCount((count) => count + 1));
     expect(result.current.throttledCount).toEqual(1);
 
-    jest.advanceTimersByTime(499);
+    vi.advanceTimersByTime(499);
     expect(result.current.throttledCount).toEqual(1);
 
-    jest.advanceTimersByTime(1);
+    vi.advanceTimersByTime(1);
     expect(result.current.throttledCount).toEqual(1);
 
     act(() => result.current.setCount((count) => count + 1));
@@ -56,7 +62,7 @@ describe("useThrottle", () => {
     act(() => result.current.setCount((count) => count + 1));
     expect(result.current.throttledCount).toEqual(1);
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
     expect(result.current.throttledCount).toEqual(1);
 
     act(() => result.current.setCount((count) => count + 1));
@@ -74,7 +80,7 @@ describe("useThrottle", () => {
     act(() => result.current.setCount((count) => count + 1));
     expect(result.current.throttledCount).toEqual(0);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(result.current.throttledCount).toEqual(0);
 
     act(() => result.current.setCount((count) => count + 1));

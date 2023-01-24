@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useEventListener } from "../src/use-event-listener";
+import { useEventListener } from "src/use-event-listener";
 
 beforeAll(() => {
   document.body.innerHTML = `
@@ -9,11 +9,11 @@ beforeAll(() => {
 
 describe("useEventListener", () => {
   it("correctly sets up and tears down", () => {
-    const addEventListener = jest.spyOn(document, "addEventListener");
-    const removeEventListener = jest.spyOn(document, "removeEventListener");
+    const addEventListener = vi.spyOn(document, "addEventListener");
+    const removeEventListener = vi.spyOn(document, "removeEventListener");
 
     const { unmount } = renderHook(() =>
-      useEventListener({ current: document }, "click", jest.fn())
+      useEventListener({ current: document }, "click", vi.fn())
     );
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
@@ -24,7 +24,7 @@ describe("useEventListener", () => {
   });
 
   it("responds to document events", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useEventListener({ current: document }, "click", fn));
     expect(fn).toHaveBeenCalledTimes(0);
@@ -38,7 +38,7 @@ describe("useEventListener", () => {
 
   it("responds to element events", () => {
     const target = screen.getByTestId("target");
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useEventListener({ current: target }, "click", fn));
     expect(fn).toHaveBeenCalledTimes(0);
@@ -51,7 +51,7 @@ describe("useEventListener", () => {
   });
 
   it("responds to window events", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useEventListener({ current: window }, "click", fn));
     expect(fn).toHaveBeenCalledTimes(0);
@@ -66,8 +66,8 @@ describe("useEventListener", () => {
   it("works with capture option", () => {
     const target = screen.getByTestId("target");
     const callOrder: string[] = [];
-    const documentFn = jest.fn(() => callOrder.push("document"));
-    const targetFn = jest.fn(() => callOrder.push("ref"));
+    const documentFn = vi.fn(() => callOrder.push("document"));
+    const targetFn = vi.fn(() => callOrder.push("ref"));
 
     renderHook(() =>
       useEventListener({ current: document }, "click", documentFn, {
@@ -86,7 +86,7 @@ describe("useEventListener", () => {
   });
 
   it("works with passive option", () => {
-    const fn = jest.fn((e: MouseEvent) => e.preventDefault());
+    const fn = vi.fn((e: MouseEvent) => e.preventDefault());
 
     renderHook(() =>
       useEventListener({ current: document }, "click", fn, { passive: true })
@@ -99,7 +99,7 @@ describe("useEventListener", () => {
   });
 
   it("works with once option", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() =>
       useEventListener({ current: document }, "click", fn, { once: true })

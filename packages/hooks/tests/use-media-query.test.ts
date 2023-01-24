@@ -1,8 +1,8 @@
 import { renderHook } from "@testing-library/react";
-import { useMediaQuery } from "../src/use-media-query";
+import { useMediaQuery } from "src/use-media-query";
 
-const addEventListener = jest.fn();
-const removeEventListener = jest.fn();
+const addEventListener = vi.fn();
+const removeEventListener = vi.fn();
 
 beforeAll(() => {
   // Mock device environment: Dark preferred.

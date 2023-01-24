@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { useState } from "react";
-import { useTitle } from "../src/use-title";
+import { useTitle } from "src/use-title";
 
 describe("useTitle", () => {
   it("correctly sets up and tears down", () => {

@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { useState } from "react";
-import { usePrevious } from "../src/use-previous";
+import { usePrevious } from "src/use-previous";
 
 describe("usePrevious", () => {
   it("can save previous state", () => {

@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useFocusTrap } from "../src/use-focus-trap";
+import { useFocusTrap } from "src/use-focus-trap";
 
 beforeAll(() => {
   document.body.innerHTML = `
@@ -13,8 +13,8 @@ describe("useFocusTrap", () => {
   it("correctly sets up and tears down", () => {
     const first = screen.getByTestId("first");
     const last = screen.getByTestId("last");
-    const addEventListener = jest.spyOn(document, "addEventListener");
-    const removeEventListener = jest.spyOn(document, "removeEventListener");
+    const addEventListener = vi.spyOn(document, "addEventListener");
+    const removeEventListener = vi.spyOn(document, "removeEventListener");
 
     const { unmount } = renderHook(() =>
       useFocusTrap({ current: first }, { current: last })

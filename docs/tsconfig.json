@@ -1,5 +1,4 @@
 {
-  "extends": "@mrcaidev/tsconfig/frontend.json",
   "compilerOptions": {
     "baseUrl": "src",
     "target": "ESNext"

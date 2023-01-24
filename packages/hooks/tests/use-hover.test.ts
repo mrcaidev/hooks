@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useHover } from "../src/use-hover";
+import { useHover } from "src/use-hover";
 
 beforeAll(() => {
   document.body.innerHTML = `
@@ -10,8 +10,8 @@ beforeAll(() => {
 describe("useHover", () => {
   it("correctly sets up and tears down", () => {
     const target = screen.getByTestId("target");
-    const addEventListener = jest.spyOn(target, "addEventListener");
-    const removeEventListener = jest.spyOn(target, "removeEventListener");
+    const addEventListener = vi.spyOn(target, "addEventListener");
+    const removeEventListener = vi.spyOn(target, "removeEventListener");
 
     const { result, unmount } = renderHook(() => useHover({ current: target }));
     expect(result.current).toBe(false);

@@ -1,17 +1,23 @@
 import { act, renderHook } from "@testing-library/react";
 import { useState } from "react";
-import { useDebounceEffect } from "../src/use-debounce-effect";
+import { useDebounceEffect } from "src/use-debounce-effect";
 
-beforeAll(() => jest.useFakeTimers());
-afterAll(() => jest.useRealTimers());
-afterEach(() => jest.clearAllTimers());
+beforeAll(() => {
+  vi.useFakeTimers();
+});
+afterAll(() => {
+  vi.useRealTimers();
+});
+afterEach(() => {
+  vi.clearAllTimers();
+});
 
 describe("useDebounceEffect", () => {
   it("correctly sets up and tears down", () => {
-    const setTimeout = jest.spyOn(window, "setTimeout");
-    const clearTimeout = jest.spyOn(window, "clearTimeout");
+    const setTimeout = vi.spyOn(window, "setTimeout");
+    const clearTimeout = vi.spyOn(window, "clearTimeout");
 
-    const { unmount } = renderHook(() => useDebounceEffect(jest.fn()));
+    const { unmount } = renderHook(() => useDebounceEffect(vi.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(0);
     expect(clearTimeout).toHaveBeenCalledTimes(0);
 
@@ -21,7 +27,7 @@ describe("useDebounceEffect", () => {
   });
 
   it("defaults to 500ms, not on mount", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     const { result } = renderHook(() => {
       const [count, setCount] = useState(0);
@@ -30,21 +36,21 @@ describe("useDebounceEffect", () => {
     });
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(0);
 
     act(() => result.current.setCount((count) => count + 1));
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(499);
+    vi.advanceTimersByTime(499);
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(1);
+    vi.advanceTimersByTime(1);
     expect(effect).toHaveBeenCalledTimes(1);
   });
 
   it("can specify timeout", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     const { result } = renderHook(() => {
       const [count, setCount] = useState(0);
@@ -56,17 +62,17 @@ describe("useDebounceEffect", () => {
     act(() => result.current.setCount((count) => count + 1));
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
     expect(effect).toHaveBeenCalledTimes(1);
   });
 
   it("can run on mount", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     renderHook(() => useDebounceEffect(effect, [], { onMount: true }));
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(1);
   });
 });

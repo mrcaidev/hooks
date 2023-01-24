@@ -1,16 +1,22 @@
 import { act, renderHook } from "@testing-library/react";
 import { useState } from "react";
-import { useThrottleEffect } from "../src/use-throttle-effect";
+import { useThrottleEffect } from "src/use-throttle-effect";
 
-beforeAll(() => jest.useFakeTimers());
-afterAll(() => jest.useRealTimers());
-afterEach(() => jest.clearAllTimers());
+beforeAll(() => {
+  vi.useFakeTimers();
+});
+afterAll(() => {
+  vi.useRealTimers();
+});
+afterEach(() => {
+  vi.clearAllTimers();
+});
 
 describe("useThrottleEffect", () => {
   it("correctly sets up and tears down", () => {
-    const setTimeout = jest.spyOn(window, "setTimeout");
+    const setTimeout = vi.spyOn(window, "setTimeout");
 
-    const { unmount } = renderHook(() => useThrottleEffect(jest.fn()));
+    const { unmount } = renderHook(() => useThrottleEffect(vi.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(0);
 
     unmount();
@@ -18,7 +24,7 @@ describe("useThrottleEffect", () => {
   });
 
   it("defaults to 500ms, not on mount", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     const { result } = renderHook(() => {
       const [count, setCount] = useState(0);
@@ -27,7 +33,7 @@ describe("useThrottleEffect", () => {
     });
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(0);
 
     act(() => result.current.setCount((count) => count + 1));
@@ -36,7 +42,7 @@ describe("useThrottleEffect", () => {
     act(() => result.current.setCount((count) => count + 1));
     expect(effect).toHaveBeenCalledTimes(1);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(1);
 
     act(() => result.current.setCount((count) => count + 1));
@@ -44,7 +50,7 @@ describe("useThrottleEffect", () => {
   });
 
   it("can specify timeout", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     const { result } = renderHook(() => {
       const [count, setCount] = useState(0);
@@ -59,7 +65,7 @@ describe("useThrottleEffect", () => {
     act(() => result.current.setCount((count) => count + 1));
     expect(effect).toHaveBeenCalledTimes(1);
 
-    jest.advanceTimersByTime(100);
+    vi.advanceTimersByTime(100);
     expect(effect).toHaveBeenCalledTimes(1);
 
     act(() => result.current.setCount((count) => count + 1));
@@ -67,7 +73,7 @@ describe("useThrottleEffect", () => {
   });
 
   it("can run on mount", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     const { result } = renderHook(() => {
       const [count, setCount] = useState(0);

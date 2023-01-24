@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useConstFn } from "../src/use-const-fn";
+import { useConstFn } from "src/use-const-fn";
 
 describe("useConstFn", () => {
   it("correctly sets up and tears down", () => {
@@ -8,7 +8,7 @@ describe("useConstFn", () => {
   });
 
   it("stays the same across re-renders", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     const { result, rerender } = renderHook(() => useConstFn(fn));
     expect(result.current).toEqual(fn);

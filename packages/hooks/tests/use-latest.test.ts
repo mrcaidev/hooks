@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useLatest } from "../src/use-latest";
+import { useLatest } from "src/use-latest";
 
 describe("useLatest", () => {
   it("correctly sets up and tears down", () => {

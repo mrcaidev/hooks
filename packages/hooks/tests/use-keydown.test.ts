@@ -1,12 +1,12 @@
 import { fireEvent, renderHook } from "@testing-library/react";
-import { useKeydown } from "../src/use-keydown";
+import { useKeydown } from "src/use-keydown";
 
 describe("useKeydown", () => {
   it("correctly sets up and tears down", () => {
-    const addEventListener = jest.spyOn(document, "addEventListener");
-    const removeEventListener = jest.spyOn(document, "removeEventListener");
+    const addEventListener = vi.spyOn(document, "addEventListener");
+    const removeEventListener = vi.spyOn(document, "removeEventListener");
 
-    const { unmount } = renderHook(() => useKeydown("Tab", jest.fn()));
+    const { unmount } = renderHook(() => useKeydown("Tab", vi.fn()));
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
 
@@ -16,7 +16,7 @@ describe("useKeydown", () => {
   });
 
   it("responds to target keydown", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useKeydown("Tab", fn));
     expect(fn).toHaveBeenCalledTimes(0);
@@ -29,7 +29,7 @@ describe("useKeydown", () => {
   });
 
   it("does not respond to irrelevant keydown", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useKeydown("Tab", fn));
     expect(fn).toHaveBeenCalledTimes(0);
@@ -42,7 +42,7 @@ describe("useKeydown", () => {
   });
 
   it("recognizes modifier keys", () => {
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useKeydown("Tab", fn, { ctrl: true, shift: true }));
     expect(fn).toHaveBeenCalledTimes(0);

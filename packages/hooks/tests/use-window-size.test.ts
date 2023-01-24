@@ -1,5 +1,5 @@
 import { fireEvent, renderHook } from "@testing-library/react";
-import { useWindowSize } from "../src/use-window-size";
+import { useWindowSize } from "src/use-window-size";
 
 beforeEach(() => {
   window.innerWidth = 1000;

@@ -1,9 +1,9 @@
 {
-  "extends": "@mrcaidev/tsconfig/library.json",
+  "extends": "typescript-config-custom/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "typeRoots": ["node_modules/@types", "src/types"]
+    "types": ["node", "react", "vitest/globals"]
   },
   "include": ["src", "tests"]
 }

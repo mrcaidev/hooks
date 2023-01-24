@@ -1,26 +1,23 @@
 {
-  "name": "hooks",
+  "name": "root",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "test": "turbo run test",
     "lint": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
     "format": "prettier . --write --cache --plugin-search-dir=.",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.1.2",
-    "@commitlint/config-conventional": "^17.1.0",
-    "@mrcaidev/eslint-config-astro-react": "^0.1.1",
-    "@mrcaidev/prettier-config-astro": "^0.1.0",
-    "eslint": "^8.25.0",
-    "eslint-config-turbo": "^0.0.3",
-    "eslint-plugin-jest": "^27.1.1",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "turbo": "^1.5.5"
+    "commitlint": "^17.4.2",
+    "commitlint-config-custom": "workspace:^0.0.0",
+    "eslint": "^8.32.0",
+    "eslint-config-custom": "workspace:^0.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.3",
+    "prettier-config-custom": "workspace:^0.0.0",
+    "turbo": "^1.7.0"
   }
 }

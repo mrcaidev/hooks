@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useTheme } from "../src/use-theme";
+import { useTheme } from "src/use-theme";
 
 beforeEach(() => {
   // Mock device environment: Dark preferred.
@@ -11,8 +11,8 @@ beforeEach(() => {
   window.matchMedia = (query: string) => {
     return {
       matches: device[query] ?? false,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
     } as unknown as MediaQueryList;
   };
 });

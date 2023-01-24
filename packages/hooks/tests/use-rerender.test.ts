@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { useEffect } from "react";
-import { useRerender } from "../src/use-rerender";
+import { useRerender } from "src/use-rerender";
 
 describe("useRerender", () => {
   it("correctly sets up and tears down", () => {
@@ -9,7 +9,7 @@ describe("useRerender", () => {
   });
 
   it("can force a re-render", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     const { result } = renderHook(() => {
       useEffect(effect);

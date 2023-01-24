@@ -1,5 +1,5 @@
 import { renderHook, screen } from "@testing-library/react";
-import { useSafeLayoutEffect } from "../src/use-safe-layout-effect";
+import { useSafeLayoutEffect } from "src/use-safe-layout-effect";
 
 beforeAll(() => {
   document.body.innerHTML = `

@@ -1,14 +1,20 @@
 import { renderHook } from "@testing-library/react";
-import { useDebounce } from "../src/use-debounce";
+import { useDebounce } from "src/use-debounce";
 
-beforeAll(() => jest.useFakeTimers());
-afterAll(() => jest.useRealTimers());
-afterEach(() => jest.clearAllTimers());
+beforeAll(() => {
+  vi.useFakeTimers();
+});
+afterAll(() => {
+  vi.useRealTimers();
+});
+afterEach(() => {
+  vi.clearAllTimers();
+});
 
 describe("useDebounce", () => {
   it("correctly sets up and tears down", () => {
-    const setTimeout = jest.spyOn(window, "setTimeout");
-    const clearTimeout = jest.spyOn(window, "clearTimeout");
+    const setTimeout = vi.spyOn(window, "setTimeout");
+    const clearTimeout = vi.spyOn(window, "clearTimeout");
 
     const { result, unmount } = renderHook(() => useDebounce(0));
     expect(result.current).toEqual(0);

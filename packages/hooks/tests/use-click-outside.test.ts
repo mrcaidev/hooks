@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useClickOutside } from "../src/use-click-outside";
+import { useClickOutside } from "src/use-click-outside";
 
 beforeAll(() => {
   document.body.innerHTML = `
@@ -14,11 +14,11 @@ beforeAll(() => {
 describe("useClickOutside", () => {
   it("correctly sets up and tears down", () => {
     const target = screen.getByTestId("target");
-    const addEventListener = jest.spyOn(document, "addEventListener");
-    const removeEventListener = jest.spyOn(document, "removeEventListener");
+    const addEventListener = vi.spyOn(document, "addEventListener");
+    const removeEventListener = vi.spyOn(document, "removeEventListener");
 
     const { unmount } = renderHook(() =>
-      useClickOutside({ current: target }, jest.fn())
+      useClickOutside({ current: target }, vi.fn())
     );
     expect(addEventListener).toHaveBeenCalledTimes(2);
     expect(removeEventListener).toHaveBeenCalledTimes(0);
@@ -31,7 +31,7 @@ describe("useClickOutside", () => {
   it("responds to outside clicks", () => {
     const target = screen.getByTestId("target");
     const outside = screen.getByTestId("outside");
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useClickOutside({ current: target }, fn));
     expect(fn).toHaveBeenCalledTimes(0);
@@ -46,7 +46,7 @@ describe("useClickOutside", () => {
   it("does not respond to inside clicks", () => {
     const target = screen.getByTestId("target");
     const inside = screen.getByTestId("inside");
-    const fn = jest.fn();
+    const fn = vi.fn();
 
     renderHook(() => useClickOutside({ current: target }, fn));
     expect(fn).toHaveBeenCalledTimes(0);

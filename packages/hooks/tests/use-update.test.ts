@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react";
-import { useUpdate } from "../src/use-update";
+import { useUpdate } from "src/use-update";
 
 describe("useUpdate", () => {
   it("only runs on dependency update", () => {
-    const cleanup = jest.fn();
-    const effect = jest.fn();
+    const cleanup = vi.fn();
+    const effect = vi.fn();
 
     const { rerender, unmount } = renderHook(
       ({ count }) =>
@@ -35,8 +35,8 @@ describe("useUpdate", () => {
   });
 
   it("never runs without dependency", () => {
-    const cleanup = jest.fn();
-    const effect = jest.fn();
+    const cleanup = vi.fn();
+    const effect = vi.fn();
 
     const { rerender, unmount } = renderHook(() =>
       useUpdate(() => {

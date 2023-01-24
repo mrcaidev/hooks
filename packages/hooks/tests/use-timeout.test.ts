@@ -1,16 +1,22 @@
 import { renderHook } from "@testing-library/react";
-import { useTimeout } from "../src/use-timeout";
+import { useTimeout } from "src/use-timeout";
 
-beforeAll(() => jest.useFakeTimers());
-afterAll(() => jest.useRealTimers());
-afterEach(() => jest.clearAllTimers());
+beforeAll(() => {
+  vi.useFakeTimers();
+});
+afterAll(() => {
+  vi.useRealTimers();
+});
+afterEach(() => {
+  vi.clearAllTimers();
+});
 
 describe("useTimeout", () => {
   it("correctly sets up and tears down", () => {
-    const setTimeout = jest.spyOn(window, "setTimeout");
-    const clearTimeout = jest.spyOn(window, "clearTimeout");
+    const setTimeout = vi.spyOn(window, "setTimeout");
+    const clearTimeout = vi.spyOn(window, "clearTimeout");
 
-    const { unmount } = renderHook(() => useTimeout(jest.fn()));
+    const { unmount } = renderHook(() => useTimeout(vi.fn()));
     expect(setTimeout).toHaveBeenCalledTimes(1);
     expect(clearTimeout).toHaveBeenCalledTimes(0);
 
@@ -20,15 +26,15 @@ describe("useTimeout", () => {
   });
 
   it("calls the effect after the timeout", () => {
-    const effect = jest.fn();
+    const effect = vi.fn();
 
     renderHook(() => useTimeout(effect));
     expect(effect).toHaveBeenCalledTimes(0);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(1);
 
-    jest.advanceTimersByTime(500);
+    vi.advanceTimersByTime(500);
     expect(effect).toHaveBeenCalledTimes(1);
   });
 });
