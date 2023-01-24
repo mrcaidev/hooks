@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 
-interface ModifierKeys {
+type ModifierKeys = {
   ctrl?: boolean;
   shift?: boolean;
   alt?: boolean;
   meta?: boolean;
-}
+};
 
 /**
  * Listen for keydown events.

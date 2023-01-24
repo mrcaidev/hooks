@@ -1,10 +1,10 @@
 import { useStorage } from "./use-storage";
 
-interface Options<T> {
+type Options<T> = {
   defaultValue?: T;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
-}
+};
 
 /**
  * Manage session storage.

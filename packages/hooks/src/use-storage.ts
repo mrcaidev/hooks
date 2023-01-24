@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-interface Options<T> {
+type Options<T> = {
   storageType: StorageType;
   defaultValue?: T;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
-}
+};
 
 /**
  * Manage storage.
@@ -64,11 +64,11 @@ function getStorage(type: StorageType) {
   }
 }
 
-interface GetItemOptions<T> {
+type GetItemOptions<T> = {
   storage: Storage | undefined;
   defaultValue: T;
   deserializer: (value: string) => T;
-}
+};
 
 function getItem<T>(key: string, options: GetItemOptions<T>) {
   const { storage, defaultValue, deserializer } = options;
@@ -81,10 +81,10 @@ function getItem<T>(key: string, options: GetItemOptions<T>) {
   }
 }
 
-interface SetItemOptions<T> {
+type SetItemOptions<T> = {
   storage: Storage | undefined;
   serializer: (value: T) => string;
-}
+};
 
 function setItem<T>(key: string, value: T, options: SetItemOptions<T>) {
   const { storage, serializer } = options;
@@ -100,9 +100,9 @@ function setItem<T>(key: string, value: T, options: SetItemOptions<T>) {
   }
 }
 
-interface RemoveItemOptions {
+type RemoveItemOptions = {
   storage: Storage | undefined;
-}
+};
 
 function removeItem(key: string, options: RemoveItemOptions) {
   const { storage } = options;

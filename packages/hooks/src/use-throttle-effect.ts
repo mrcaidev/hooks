@@ -5,10 +5,10 @@ import {
   type EffectCallback,
 } from "react";
 
-interface Options {
+type Options = {
   timeout?: number;
   onMount?: boolean;
-}
+};
 
 /**
  * Throttle an effect.

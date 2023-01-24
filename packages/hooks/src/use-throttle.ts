@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-interface Options {
+type Options = {
   timeout?: number;
   onMount?: boolean;
-}
+};
 
 /**
  * Throttle a value.

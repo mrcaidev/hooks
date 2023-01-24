@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
-interface Options {
+type Options = {
   defaultTheme?: Theme;
   storageKey?: string;
-}
+};
 
 /**
  * Use current theme.
