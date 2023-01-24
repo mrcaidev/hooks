@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "types": ["node", "react", "vitest/globals"]
+    "types": ["node", "react", "react-dom", "vitest/globals"]
   },
   "include": ["src", "tests"]
 }

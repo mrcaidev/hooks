@@ -96,8 +96,10 @@ importers:
       '@testing-library/react': ^13.4.0
       '@types/node': ^18.8.3
       '@types/react': ^18.0.21
+      '@types/react-dom': ^18.0.6
       jsdom: ^21.1.0
       react: ^18.2.0
+      react-dom: ^18.2.0
       typescript: ^4.9.4
       typescript-config-custom: workspace:^0.0.0
       vite: ^4.0.4
@@ -105,11 +107,13 @@ importers:
       vite-tsconfig-paths: ^4.0.5
       vitest: ^0.28.1
     devDependencies:
-      '@testing-library/react': 13.4.0_react@18.2.0
+      '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
       '@types/node': 18.11.18
       '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
       jsdom: 21.1.0
       react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       typescript: 4.9.4
       typescript-config-custom: link:../typescript-config-custom
       vite: 4.0.4_@types+node@18.11.18
@@ -1170,7 +1174,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/react/13.4.0_react@18.2.0:
+  /@testing-library/react/13.4.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-sXOGON+WNTh3MLE9rve97ftaZukN3oNf2KjDy7YTx6hcTO2uuLHuCGynMDhFwGw/jYf4OJ2Qk0i4i79qMNNkyw==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -1181,6 +1185,7 @@ packages:
       '@testing-library/dom': 8.20.0
       '@types/react-dom': 18.0.6
       react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: true
 
   /@tootallnate/once/2.0.0:
@@ -5769,7 +5774,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
 
   /react-feather/2.0.10_react@18.2.0:
     resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
@@ -6153,7 +6157,6 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /section-matter/1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
