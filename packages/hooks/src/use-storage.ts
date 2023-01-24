@@ -46,7 +46,7 @@ export function useStorage<T>(key: string, options: Options<T>) {
 type StorageType = "localStorage" | "sessionStorage";
 
 function getStorage(type: StorageType) {
-  if (typeof window === "undefined") {
+  if (typeof document === "undefined") {
     return undefined;
   }
 
