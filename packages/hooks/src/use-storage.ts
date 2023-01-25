@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import { useLatest } from "./use-latest";
+import { useUpdate } from "./use-update";
 
-type Options<T> = {
-  storageType: StorageType;
-  defaultValue?: T;
+type StorageName = "localStorage" | "sessionStorage";
+
+export type UseStorageOptions<T> = {
+  storageName: StorageName;
+  defaultValue?: T | undefined;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
 };
@@ -10,55 +14,44 @@ type Options<T> = {
 /**
  * Manage storage.
  */
-export function useStorage<T>(key: string, options: Options<T>) {
+export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
   const {
-    storageType,
-    defaultValue = undefined as unknown as T,
+    storageName,
+    defaultValue = undefined,
     serializer = JSON.stringify,
     deserializer = JSON.parse,
   } = options;
 
-  const storage = getStorage(storageType);
+  const storage = getStorage(storageName);
 
   const [value, setValue] = useState(defaultValue);
+  const serializerRef = useLatest(serializer);
+  const deserializerRef = useLatest(deserializer);
 
   useEffect(() => {
-    const storedValue = getItem(key, { storage, defaultValue, deserializer });
-    setValue(storedValue);
+    const storedValue = getItem<T>(key, {
+      storage,
+      deserializer: deserializerRef.current,
+    });
+    setValue(storedValue ?? defaultValue);
+  }, [key, storage, defaultValue, deserializerRef]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key, defaultValue]);
+  useUpdate(() => {
+    setItem(key, value, {
+      storage,
+      serializer: serializerRef.current,
+    });
+  }, [value, key, storage, serializerRef]);
 
-  const setValueWrapper: typeof setValue = (action) => {
-    const newValue = action instanceof Function ? action(value) : action;
-    setValue(newValue);
-    setItem(key, newValue, { storage, serializer });
-  };
+  const remove = () => setValue(undefined);
 
-  const remove = () => {
-    setValue(undefined as unknown as T);
-    removeItem(key, { storage });
-  };
-
-  return { value, set: setValueWrapper, remove };
+  return { value, set: setValue, remove };
 }
 
-type StorageType = "localStorage" | "sessionStorage";
-
-function getStorage(type: StorageType) {
-  if (typeof document === "undefined") {
-    return undefined;
-  }
-
+function getStorage(storageName: StorageName) {
   try {
-    switch (type) {
-      case "localStorage":
-        return localStorage;
-      case "sessionStorage":
-        return sessionStorage;
-      default:
-        return undefined;
-    }
+    const map = { localStorage, sessionStorage };
+    return map[storageName];
   } catch {
     return undefined;
   }
@@ -66,18 +59,24 @@ function getStorage(type: StorageType) {
 
 type GetItemOptions<T> = {
   storage: Storage | undefined;
-  defaultValue: T;
   deserializer: (value: string) => T;
 };
 
 function getItem<T>(key: string, options: GetItemOptions<T>) {
-  const { storage, defaultValue, deserializer } = options;
+  const { storage, deserializer } = options;
+
+  if (!storage) {
+    return null;
+  }
 
   try {
-    const value = storage?.getItem(key) ?? null;
-    return value === null ? defaultValue : deserializer(value);
+    const value = storage.getItem(key);
+    if (value === null) {
+      return null;
+    }
+    return deserializer(value);
   } catch {
-    return defaultValue;
+    return null;
   }
 }
 
@@ -89,27 +88,17 @@ type SetItemOptions<T> = {
 function setItem<T>(key: string, value: T, options: SetItemOptions<T>) {
   const { storage, serializer } = options;
 
-  try {
-    if (value === undefined) {
-      storage?.removeItem(key);
-    } else {
-      storage?.setItem(key, serializer(value));
-    }
-  } catch {
+  if (!storage) {
     return;
   }
-}
-
-type RemoveItemOptions = {
-  storage: Storage | undefined;
-};
-
-function removeItem(key: string, options: RemoveItemOptions) {
-  const { storage } = options;
 
   try {
-    storage?.removeItem(key);
-  } catch (err) {
+    if (value === undefined) {
+      storage.removeItem(key);
+      return;
+    }
+    storage.setItem(key, serializer(value));
+  } catch {
     return;
   }
 }

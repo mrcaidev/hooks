@@ -1,17 +1,13 @@
-import { useStorage } from "./use-storage";
+import { useStorage, type UseStorageOptions } from "./use-storage";
 
-type Options<T> = {
-  defaultValue?: T;
-  serializer?: (value: T) => string;
-  deserializer?: (value: string) => T;
-};
+type Options<T> = Omit<UseStorageOptions<T>, "storageName">;
 
 /**
  * Manage session storage.
  */
 export function useSessionStorage<T>(key: string, options?: Options<T>) {
   return useStorage<T>(key, {
-    storageType: "sessionStorage",
+    storageName: "sessionStorage",
     ...(options ?? {}),
   });
 }
