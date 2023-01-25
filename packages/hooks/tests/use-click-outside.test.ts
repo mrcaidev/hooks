@@ -40,3 +40,18 @@ it("does not respond to clicks inside", () => {
   fireEvent.mouseDown(inside);
   expect(callback).toHaveBeenCalledTimes(0);
 });
+
+it("does not throw with null ref", () => {
+  const outside = screen.getByTestId("outside");
+  const inside = screen.getByTestId("inside");
+  const callback = vi.fn();
+
+  renderHook(() => useClickOutside({ current: null }, callback));
+  expect(callback).toHaveBeenCalledTimes(0);
+
+  fireEvent.mouseDown(inside);
+  expect(callback).toHaveBeenCalledTimes(0);
+
+  fireEvent.mouseDown(outside);
+  expect(callback).toHaveBeenCalledTimes(0);
+});

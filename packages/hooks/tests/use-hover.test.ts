@@ -19,3 +19,16 @@ it("responds to hover events", () => {
   fireEvent.mouseLeave(target);
   expect(result.current).toEqual(false);
 });
+
+it("does not throw with null ref", () => {
+  const target = screen.getByTestId("target");
+
+  const { result } = renderHook(() => useHover({ current: null }));
+  expect(result.current).toEqual(false);
+
+  fireEvent.mouseEnter(target);
+  expect(result.current).toEqual(false);
+
+  fireEvent.mouseLeave(target);
+  expect(result.current).toEqual(false);
+});

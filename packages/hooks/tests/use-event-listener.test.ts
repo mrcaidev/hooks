@@ -96,3 +96,14 @@ it("works with once option", () => {
   fireEvent.click(document.body);
   expect(fn).toHaveBeenCalledTimes(1);
 });
+
+it("does not throw with null ref", () => {
+  const fn = vi.fn();
+
+  // @ts-expect-error: Edge situation.
+  renderHook(() => useEventListener({ current: null }, "click", fn));
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  fireEvent.click(document.body);
+  expect(fn).toHaveBeenCalledTimes(0);
+});

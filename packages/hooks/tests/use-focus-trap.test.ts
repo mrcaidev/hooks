@@ -23,3 +23,29 @@ it("traps the focus", () => {
   fireEvent.keyDown(document, { code: "Tab" });
   expect(document.activeElement).toEqual(first);
 });
+
+it("does not throw on other keydown events", () => {
+  const first = screen.getByTestId("first");
+  const last = screen.getByTestId("last");
+  first.focus();
+
+  renderHook(() => useFocusTrap({ current: first }, { current: last }));
+  expect(document.activeElement).toEqual(first);
+
+  fireEvent.keyDown(document, { code: "Enter" });
+  expect(document.activeElement).toEqual(first);
+
+  fireEvent.keyDown(document, { code: "Escape" });
+  expect(document.activeElement).toEqual(first);
+});
+
+it("does not throw with null ref", () => {
+  const last = screen.getByTestId("last");
+  last.focus();
+
+  renderHook(() => useFocusTrap({ current: null }, { current: null }));
+  expect(document.activeElement).toEqual(last);
+
+  fireEvent.keyDown(document, { code: "Tab" });
+  expect(document.activeElement).toEqual(last);
+});
