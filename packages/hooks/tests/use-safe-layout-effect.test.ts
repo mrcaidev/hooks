@@ -7,14 +7,12 @@ beforeAll(() => {
   `;
 });
 
-describe("useSafeLayoutEffect", () => {
-  it("runs exactly as useLayoutEffect", () => {
-    const target = screen.getByTestId("target");
-    renderHook(() =>
-      useSafeLayoutEffect(() => {
-        target.innerHTML = "foo";
-      })
-    );
-    expect(target.innerHTML).toEqual("foo");
-  });
+it("runs exactly as useLayoutEffect", () => {
+  const target = screen.getByTestId("target");
+  renderHook(() =>
+    useSafeLayoutEffect(() => {
+      target.innerHTML = "foo";
+    })
+  );
+  expect(target.innerHTML).toEqual("foo");
 });

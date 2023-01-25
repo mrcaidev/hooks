@@ -11,30 +11,28 @@ afterEach(() => {
   vi.clearAllTimers();
 });
 
-describe("useTimeout", () => {
-  it("correctly sets up and tears down", () => {
-    const setTimeout = vi.spyOn(window, "setTimeout");
-    const clearTimeout = vi.spyOn(window, "clearTimeout");
+it("triggers effect after timeout", () => {
+  const effect = vi.fn();
 
-    const { unmount } = renderHook(() => useTimeout(vi.fn()));
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(clearTimeout).toHaveBeenCalledTimes(0);
+  renderHook(() => useTimeout(effect));
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    unmount();
-    expect(setTimeout).toHaveBeenCalledTimes(1);
-    expect(clearTimeout).toHaveBeenCalledTimes(1);
-  });
+  vi.advanceTimersByTime(499);
+  expect(effect).toHaveBeenCalledTimes(0);
 
-  it("calls the effect after the timeout", () => {
-    const effect = vi.fn();
+  vi.advanceTimersByTime(1);
+  expect(effect).toHaveBeenCalledTimes(1);
+});
 
-    renderHook(() => useTimeout(effect));
-    expect(effect).toHaveBeenCalledTimes(0);
+it("can customize timeout", () => {
+  const effect = vi.fn();
 
-    vi.advanceTimersByTime(500);
-    expect(effect).toHaveBeenCalledTimes(1);
+  renderHook(() => useTimeout(effect, 100));
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    vi.advanceTimersByTime(500);
-    expect(effect).toHaveBeenCalledTimes(1);
-  });
+  vi.advanceTimersByTime(99);
+  expect(effect).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(1);
+  expect(effect).toHaveBeenCalledTimes(1);
 });

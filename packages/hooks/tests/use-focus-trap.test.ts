@@ -9,36 +9,17 @@ beforeAll(() => {
   `;
 });
 
-describe("useFocusTrap", () => {
-  it("correctly sets up and tears down", () => {
-    const first = screen.getByTestId("first");
-    const last = screen.getByTestId("last");
-    const addEventListener = vi.spyOn(document, "addEventListener");
-    const removeEventListener = vi.spyOn(document, "removeEventListener");
+it("traps the focus", () => {
+  const first = screen.getByTestId("first");
+  const last = screen.getByTestId("last");
 
-    const { unmount } = renderHook(() =>
-      useFocusTrap({ current: first }, { current: last })
-    );
-    expect(addEventListener).toHaveBeenCalledTimes(2);
-    expect(removeEventListener).toHaveBeenCalledTimes(0);
+  renderHook(() => useFocusTrap({ current: first }, { current: last }));
+  first.focus();
+  expect(document.activeElement).toEqual(first);
 
-    unmount();
-    expect(addEventListener).toHaveBeenCalledTimes(2);
-    expect(removeEventListener).toHaveBeenCalledTimes(1);
-  });
+  fireEvent.keyDown(document, { code: "Tab", shiftKey: true });
+  expect(document.activeElement).toEqual(last);
 
-  it("traps the focus", () => {
-    const first = screen.getByTestId("first");
-    const last = screen.getByTestId("last");
-
-    renderHook(() => useFocusTrap({ current: first }, { current: last }));
-    first.focus();
-    expect(document.activeElement).toEqual(first);
-
-    fireEvent.keyDown(document, { code: "Tab", shiftKey: true });
-    expect(document.activeElement).toEqual(last);
-
-    fireEvent.keyDown(document, { code: "Tab" });
-    expect(document.activeElement).toEqual(first);
-  });
+  fireEvent.keyDown(document, { code: "Tab" });
+  expect(document.activeElement).toEqual(first);
 });

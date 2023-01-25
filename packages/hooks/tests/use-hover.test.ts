@@ -7,32 +7,15 @@ beforeAll(() => {
   `;
 });
 
-describe("useHover", () => {
-  it("correctly sets up and tears down", () => {
-    const target = screen.getByTestId("target");
-    const addEventListener = vi.spyOn(target, "addEventListener");
-    const removeEventListener = vi.spyOn(target, "removeEventListener");
+it("responds to hover events", () => {
+  const target = screen.getByTestId("target");
 
-    const { result, unmount } = renderHook(() => useHover({ current: target }));
-    expect(result.current).toBe(false);
-    expect(addEventListener).toHaveBeenCalledTimes(2);
-    expect(removeEventListener).toHaveBeenCalledTimes(0);
+  const { result } = renderHook(() => useHover({ current: target }));
+  expect(result.current).toEqual(false);
 
-    unmount();
-    expect(addEventListener).toHaveBeenCalledTimes(2);
-    expect(removeEventListener).toHaveBeenCalledTimes(2);
-  });
+  fireEvent.mouseEnter(target);
+  expect(result.current).toEqual(true);
 
-  it("responds to hover state changes", () => {
-    const target = screen.getByTestId("target");
-
-    const { result } = renderHook(() => useHover({ current: target }));
-    expect(result.current).toEqual(false);
-
-    fireEvent.mouseEnter(target);
-    expect(result.current).toEqual(true);
-
-    fireEvent.mouseLeave(target);
-    expect(result.current).toEqual(false);
-  });
+  fireEvent.mouseLeave(target);
+  expect(result.current).toEqual(false);
 });

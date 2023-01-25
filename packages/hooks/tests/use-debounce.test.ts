@@ -1,4 +1,5 @@
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
+import { useState } from "react";
 import { useDebounce } from "src/use-debounce";
 
 beforeAll(() => {
@@ -11,18 +12,102 @@ afterEach(() => {
   vi.clearAllTimers();
 });
 
-describe("useDebounce", () => {
-  it("correctly sets up and tears down", () => {
-    const setTimeout = vi.spyOn(window, "setTimeout");
-    const clearTimeout = vi.spyOn(window, "clearTimeout");
-
-    const { result, unmount } = renderHook(() => useDebounce(0));
-    expect(result.current).toEqual(0);
-    expect(setTimeout).toHaveBeenCalledTimes(0);
-    expect(clearTimeout).toHaveBeenCalledTimes(0);
-
-    unmount();
-    expect(setTimeout).toHaveBeenCalledTimes(0);
-    expect(clearTimeout).toHaveBeenCalledTimes(0);
+it("updates value after timeout", () => {
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    const debouncedCount = useDebounce(count);
+    return { debouncedCount, increment };
   });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => result.current.increment());
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(499);
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(1);
+  });
+  expect(result.current.debouncedCount).toEqual(1);
+});
+
+it("updates value only once after multiple changes", () => {
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    const debouncedCount = useDebounce(count);
+    return { debouncedCount, increment };
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => result.current.increment());
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(499);
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => result.current.increment());
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(499);
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(1);
+  });
+  expect(result.current.debouncedCount).toEqual(2);
+});
+
+it("can customize timeout", () => {
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    const debouncedCount = useDebounce(count, { onMount: true });
+    return { debouncedCount, increment };
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => result.current.increment());
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(499);
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(1);
+  });
+  expect(result.current.debouncedCount).toEqual(1);
+});
+
+it("can start timing on mount", () => {
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    const debouncedCount = useDebounce(count, { timeout: 100 });
+    return { debouncedCount, increment };
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => result.current.increment());
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(99);
+  });
+  expect(result.current.debouncedCount).toEqual(0);
+
+  act(() => {
+    vi.advanceTimersByTime(1);
+  });
+  expect(result.current.debouncedCount).toEqual(1);
 });

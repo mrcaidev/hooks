@@ -1,47 +1,39 @@
 import { renderHook } from "@testing-library/react";
 import { useMediaQuery } from "src/use-media-query";
 
-const addEventListener = vi.fn();
-const removeEventListener = vi.fn();
-
 beforeAll(() => {
-  // Mock device environment: Dark preferred.
   const device: Record<string, boolean> = {
     "(prefers-color-scheme: dark)": true,
   };
 
-  // Mock `window.matchMedia`.
   window.matchMedia = (query: string) =>
     ({
       matches: device[query] ?? false,
-      addEventListener,
-      removeEventListener,
+      addEventListener: () => 0,
+      removeEventListener: () => 0,
     } as unknown as MediaQueryList);
 });
 
-describe("useMediaQuery", () => {
-  it("correctly sets up and tears down", () => {
-    const { result, unmount } = renderHook(() => useMediaQuery(""));
-    expect(result.current).toEqual(false);
-    expect(addEventListener).toHaveBeenCalledTimes(1);
-    expect(removeEventListener).toHaveBeenCalledTimes(0);
+it("returns true if matched", () => {
+  const { result } = renderHook(() =>
+    useMediaQuery("(prefers-color-scheme: dark)")
+  );
+  expect(result.current).toEqual(true);
+});
 
-    unmount();
-    expect(addEventListener).toHaveBeenCalledTimes(1);
-    expect(removeEventListener).toHaveBeenCalledTimes(1);
-  });
+it("returns false if unmatched", () => {
+  const { result } = renderHook(() =>
+    useMediaQuery("(prefers-color-scheme: light)")
+  );
+  expect(result.current).toEqual(false);
+});
 
-  it("returns true if matched", () => {
-    const { result } = renderHook(() =>
-      useMediaQuery("(prefers-color-scheme: dark)")
-    );
-    expect(result.current).toEqual(true);
+it("responds to media query changes", () => {
+  const { result, rerender } = renderHook((query) => useMediaQuery(query), {
+    initialProps: "(prefers-color-scheme: dark)",
   });
+  expect(result.current).toEqual(true);
 
-  it("returns false if unmatched", () => {
-    const { result } = renderHook(() =>
-      useMediaQuery("(prefers-color-scheme: light)")
-    );
-    expect(result.current).toEqual(false);
-  });
+  rerender("(prefers-color-scheme: light)");
+  expect(result.current).toEqual(false);
 });

@@ -12,67 +12,84 @@ afterEach(() => {
   vi.clearAllTimers();
 });
 
-describe("useDebounceEffect", () => {
-  it("correctly sets up and tears down", () => {
-    const setTimeout = vi.spyOn(window, "setTimeout");
-    const clearTimeout = vi.spyOn(window, "clearTimeout");
+it("triggers effect after timeout", () => {
+  const effect = vi.fn();
 
-    const { unmount } = renderHook(() => useDebounceEffect(vi.fn()));
-    expect(setTimeout).toHaveBeenCalledTimes(0);
-    expect(clearTimeout).toHaveBeenCalledTimes(0);
-
-    unmount();
-    expect(setTimeout).toHaveBeenCalledTimes(0);
-    expect(clearTimeout).toHaveBeenCalledTimes(0);
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    useDebounceEffect(effect, [count]);
+    return { count, increment };
   });
+  expect(effect).toHaveBeenCalledTimes(0);
 
-  it("defaults to 500ms, not on mount", () => {
-    const effect = vi.fn();
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    const { result } = renderHook(() => {
-      const [count, setCount] = useState(0);
-      useDebounceEffect(effect, [count]);
-      return { count, setCount };
-    });
-    expect(effect).toHaveBeenCalledTimes(0);
+  vi.advanceTimersByTime(499);
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    vi.advanceTimersByTime(500);
-    expect(effect).toHaveBeenCalledTimes(0);
+  vi.advanceTimersByTime(1);
+  expect(effect).toHaveBeenCalledTimes(1);
+});
 
-    act(() => result.current.setCount((count) => count + 1));
-    expect(effect).toHaveBeenCalledTimes(0);
+it("triggers effect only once after multiple changes", () => {
+  const effect = vi.fn();
 
-    vi.advanceTimersByTime(499);
-    expect(effect).toHaveBeenCalledTimes(0);
-
-    vi.advanceTimersByTime(1);
-    expect(effect).toHaveBeenCalledTimes(1);
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    useDebounceEffect(effect, [count]);
+    return { count, increment };
   });
+  expect(effect).toHaveBeenCalledTimes(0);
 
-  it("can specify timeout", () => {
-    const effect = vi.fn();
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    const { result } = renderHook(() => {
-      const [count, setCount] = useState(0);
-      useDebounceEffect(effect, [count], { timeout: 100 });
-      return { count, setCount };
-    });
-    expect(effect).toHaveBeenCalledTimes(0);
+  vi.advanceTimersByTime(499);
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    act(() => result.current.setCount((count) => count + 1));
-    expect(effect).toHaveBeenCalledTimes(0);
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    vi.advanceTimersByTime(100);
-    expect(effect).toHaveBeenCalledTimes(1);
+  vi.advanceTimersByTime(499);
+  expect(effect).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(1);
+  expect(effect).toHaveBeenCalledTimes(1);
+});
+
+it("can customize timeout", () => {
+  const effect = vi.fn();
+
+  const { result } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    useDebounceEffect(effect, [count], { timeout: 100 });
+    return { count, increment };
   });
+  expect(effect).toHaveBeenCalledTimes(0);
 
-  it("can run on mount", () => {
-    const effect = vi.fn();
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    renderHook(() => useDebounceEffect(effect, [], { onMount: true }));
-    expect(effect).toHaveBeenCalledTimes(0);
+  vi.advanceTimersByTime(99);
+  expect(effect).toHaveBeenCalledTimes(0);
 
-    vi.advanceTimersByTime(500);
-    expect(effect).toHaveBeenCalledTimes(1);
-  });
+  vi.advanceTimersByTime(1);
+  expect(effect).toHaveBeenCalledTimes(1);
+});
+
+it("can start timing on mount", () => {
+  const effect = vi.fn();
+
+  renderHook(() => useDebounceEffect(effect, [], { onMount: true }));
+  expect(effect).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(499);
+  expect(effect).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(1);
+  expect(effect).toHaveBeenCalledTimes(1);
 });

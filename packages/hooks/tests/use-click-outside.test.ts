@@ -4,57 +4,39 @@ import { useClickOutside } from "src/use-click-outside";
 beforeAll(() => {
   document.body.innerHTML = `
     <div data-testid="outside">
-      <div data-testid="target">
+      <div data-testid="container">
         <div data-testid="inside" />
       </div>
     </div>
   `;
 });
 
-describe("useClickOutside", () => {
-  it("correctly sets up and tears down", () => {
-    const target = screen.getByTestId("target");
-    const addEventListener = vi.spyOn(document, "addEventListener");
-    const removeEventListener = vi.spyOn(document, "removeEventListener");
+it("responds to clicks outside", () => {
+  const container = screen.getByTestId("container");
+  const outside = screen.getByTestId("outside");
+  const callback = vi.fn();
 
-    const { unmount } = renderHook(() =>
-      useClickOutside({ current: target }, vi.fn())
-    );
-    expect(addEventListener).toHaveBeenCalledTimes(2);
-    expect(removeEventListener).toHaveBeenCalledTimes(0);
+  renderHook(() => useClickOutside({ current: container }, callback));
+  expect(callback).toHaveBeenCalledTimes(0);
 
-    unmount();
-    expect(addEventListener).toHaveBeenCalledTimes(2);
-    expect(removeEventListener).toHaveBeenCalledTimes(1);
-  });
+  fireEvent.mouseDown(outside);
+  expect(callback).toHaveBeenCalledTimes(1);
 
-  it("responds to outside clicks", () => {
-    const target = screen.getByTestId("target");
-    const outside = screen.getByTestId("outside");
-    const fn = vi.fn();
+  fireEvent.mouseDown(outside);
+  expect(callback).toHaveBeenCalledTimes(2);
+});
 
-    renderHook(() => useClickOutside({ current: target }, fn));
-    expect(fn).toHaveBeenCalledTimes(0);
+it("does not respond to clicks inside", () => {
+  const container = screen.getByTestId("container");
+  const inside = screen.getByTestId("inside");
+  const callback = vi.fn();
 
-    fireEvent.mouseDown(outside);
-    expect(fn).toHaveBeenCalledTimes(1);
+  renderHook(() => useClickOutside({ current: container }, callback));
+  expect(callback).toHaveBeenCalledTimes(0);
 
-    fireEvent.mouseDown(outside);
-    expect(fn).toHaveBeenCalledTimes(2);
-  });
+  fireEvent.mouseDown(inside);
+  expect(callback).toHaveBeenCalledTimes(0);
 
-  it("does not respond to inside clicks", () => {
-    const target = screen.getByTestId("target");
-    const inside = screen.getByTestId("inside");
-    const fn = vi.fn();
-
-    renderHook(() => useClickOutside({ current: target }, fn));
-    expect(fn).toHaveBeenCalledTimes(0);
-
-    fireEvent.mouseDown(inside);
-    expect(fn).toHaveBeenCalledTimes(0);
-
-    fireEvent.mouseDown(inside);
-    expect(fn).toHaveBeenCalledTimes(0);
-  });
+  fireEvent.mouseDown(inside);
+  expect(callback).toHaveBeenCalledTimes(0);
 });

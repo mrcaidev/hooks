@@ -1,58 +1,65 @@
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
+import { useState } from "react";
 import { useUpdate } from "src/use-update";
 
-describe("useUpdate", () => {
-  it("only runs on dependency update", () => {
-    const cleanup = vi.fn();
-    const effect = vi.fn();
+it("only runs on dependency update", () => {
+  const cleanup = vi.fn();
+  const effect = vi.fn();
 
-    const { rerender, unmount } = renderHook(
-      ({ count }) =>
-        useUpdate(() => {
-          effect();
-          return cleanup;
-        }, [count]),
-      { initialProps: { count: 0 } }
-    );
-    expect(effect).toHaveBeenCalledTimes(0);
-    expect(cleanup).toHaveBeenCalledTimes(0);
-
-    rerender({ count: 1 });
-    expect(effect).toHaveBeenCalledTimes(1);
-    expect(cleanup).toHaveBeenCalledTimes(0);
-
-    rerender({ count: 2 });
-    expect(effect).toHaveBeenCalledTimes(2);
-    expect(cleanup).toHaveBeenCalledTimes(1);
-
-    rerender({ count: 2 });
-    expect(effect).toHaveBeenCalledTimes(2);
-    expect(cleanup).toHaveBeenCalledTimes(1);
-
-    unmount();
-    expect(effect).toHaveBeenCalledTimes(2);
-    expect(cleanup).toHaveBeenCalledTimes(2);
+  const { result, rerender, unmount } = renderHook(() => {
+    const [count, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    useUpdate(() => {
+      effect();
+      return cleanup;
+    }, [count]);
+    return { increment };
   });
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
 
-  it("never runs without dependency", () => {
-    const cleanup = vi.fn();
-    const effect = vi.fn();
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(1);
+  expect(cleanup).toHaveBeenCalledTimes(0);
 
-    const { rerender, unmount } = renderHook(() =>
-      useUpdate(() => {
-        effect();
-        return cleanup;
-      })
-    );
-    expect(effect).toHaveBeenCalledTimes(0);
-    expect(cleanup).toHaveBeenCalledTimes(0);
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(2);
+  expect(cleanup).toHaveBeenCalledTimes(1);
 
-    rerender();
-    expect(effect).toHaveBeenCalledTimes(0);
-    expect(cleanup).toHaveBeenCalledTimes(0);
+  rerender();
+  expect(effect).toHaveBeenCalledTimes(2);
+  expect(cleanup).toHaveBeenCalledTimes(1);
 
-    unmount();
-    expect(effect).toHaveBeenCalledTimes(0);
-    expect(cleanup).toHaveBeenCalledTimes(0);
+  unmount();
+  expect(effect).toHaveBeenCalledTimes(2);
+  expect(cleanup).toHaveBeenCalledTimes(2);
+});
+
+it("never runs without dependency", () => {
+  const cleanup = vi.fn();
+  const effect = vi.fn();
+
+  const { result, rerender, unmount } = renderHook(() => {
+    const [, setCount] = useState(0);
+    const increment = () => setCount((count) => count + 1);
+    useUpdate(() => {
+      effect();
+      return cleanup;
+    }, []);
+    return { increment };
   });
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+
+  act(() => result.current.increment());
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+
+  rerender();
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+
+  unmount();
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
 });
