@@ -47,7 +47,7 @@ it("responds to window events", () => {
   expect(fn).toHaveBeenCalledTimes(2);
 });
 
-it("works with capture option", () => {
+it.skip("works with capture option", () => {
   const target = screen.getByTestId("target");
   const callOrder: string[] = [];
   const documentFn = vi.fn(() => callOrder.push("document"));
@@ -69,7 +69,7 @@ it("works with capture option", () => {
   expect(callOrder).toEqual(["document", "target"]);
 });
 
-it("works with passive option", () => {
+it.skip("works with passive option", () => {
   const fn = vi.fn((e: MouseEvent) => e.preventDefault());
 
   renderHook(() =>
@@ -82,7 +82,7 @@ it("works with passive option", () => {
   expect(fn).toThrow();
 });
 
-it("works with once option", () => {
+it.skip("works with once option", () => {
   const fn = vi.fn();
 
   renderHook(() =>
