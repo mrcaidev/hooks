@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Fn = (...args: any) => any;
-
+// TODO: Add more event map mapping.
 type EventMap<T> = T extends Document
   ? DocumentEventMap
   : T extends HTMLElement
@@ -11,4 +9,4 @@ type EventMap<T> = T extends Document
   ? MediaQueryListEventMap
   : unknown;
 
-type EventType<T> = Exclude<keyof EventMap<T>, number | symbol>;
+type EventType<T> = Extract<keyof EventMap<T>, string>;

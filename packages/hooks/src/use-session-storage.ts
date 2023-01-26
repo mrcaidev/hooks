@@ -5,9 +5,6 @@ type Options<T> = Omit<UseStorageOptions<T>, "storageName">;
 /**
  * Manage session storage.
  */
-export function useSessionStorage<T>(key: string, options?: Options<T>) {
-  return useStorage<T>(key, {
-    storageName: "sessionStorage",
-    ...(options ?? {}),
-  });
+export function useSessionStorage<T>(key: string, options: Options<T> = {}) {
+  return useStorage<T>(key, { storageName: "sessionStorage", ...options });
 }

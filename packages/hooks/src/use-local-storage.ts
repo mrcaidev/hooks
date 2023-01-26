@@ -5,9 +5,6 @@ type Options<T> = Omit<UseStorageOptions<T>, "storageName">;
 /**
  * Manage local storage.
  */
-export function useLocalStorage<T>(key: string, options?: Options<T>) {
-  return useStorage<T>(key, {
-    storageName: "localStorage",
-    ...(options ?? {}),
-  });
+export function useLocalStorage<T>(key: string, options: Options<T> = {}) {
+  return useStorage<T>(key, { storageName: "localStorage", ...options });
 }

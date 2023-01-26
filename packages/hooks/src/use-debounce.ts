@@ -12,23 +12,17 @@ export function useDebounce<T>(value: T, options: Options = {}) {
   const { timeout = 500, onMount = false } = options;
 
   const [debouncedValue, setDebouncedValue] = useState(value);
-  const isMountedRef = useRef(false);
+  const isJustMountedRef = useRef(true);
 
   useEffect(() => {
-    if (!onMount && !isMountedRef.current) {
-      isMountedRef.current = true;
+    if (!onMount && isJustMountedRef.current) {
+      isJustMountedRef.current = false;
       return;
     }
 
     const timer = setTimeout(() => setDebouncedValue(value), timeout);
     return () => clearTimeout(timer);
   }, [value, timeout, onMount]);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
 
   return debouncedValue;
 }

@@ -1,4 +1,7 @@
-import { useEffect, useRef, type RefObject } from "react";
+import type { RefObject } from "react";
+import { useDocument } from "./use-document";
+import { useEventListener } from "./use-event-listener";
+import { useLatest } from "./use-latest";
 
 /**
  * Listen for click events outside of an element.
@@ -7,25 +10,20 @@ export function useClickOutside(
   ref: RefObject<HTMLElement>,
   callback: (e: MouseEvent) => void
 ) {
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const callbackRef = useLatest(callback);
+  const documentRef = useDocument();
 
-  useEffect(() => {
-    const listener = (e: MouseEvent) => {
-      const container = ref.current;
-      if (!container) {
-        return;
-      }
+  useEventListener(documentRef, "mousedown", (e) => {
+    const container = ref.current;
+    if (!container) {
+      return;
+    }
 
-      const isClickInside = container.contains(e.target as Node);
-      if (isClickInside) {
-        return;
-      }
+    const isClickInside = container.contains(e.target as Node);
+    if (isClickInside) {
+      return;
+    }
 
-      callbackRef.current(e);
-    };
-
-    document.addEventListener("mousedown", listener);
-    return () => document.removeEventListener("mousedown", listener);
-  }, [ref]);
+    callbackRef.current(e);
+  });
 }

@@ -1,6 +1,8 @@
 import { renderHook } from "@testing-library/react";
 import { useMediaQuery } from "src/use-media-query";
 
+// TODO: Use width query to test this hook.
+
 beforeAll(() => {
   const device: Record<string, boolean> = {
     "(prefers-color-scheme: dark)": true,

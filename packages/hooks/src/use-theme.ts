@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useLocalStorage } from "./use-local-storage";
+import { useMediaQuery } from "./use-media-query";
 
 type Theme = "light" | "dark";
 
@@ -13,51 +14,21 @@ type Options = {
 export function useTheme(options: Options = {}) {
   const { defaultTheme, storageKey = "theme" } = options;
 
-  const [theme, setTheme] = useState<Theme>("dark");
+  const isDarkOs = useMediaQuery("(prefers-color-scheme: dark)");
+  const osTheme = isDarkOs ? "dark" : "light";
 
-  useEffect(() => {
-    const userTheme = getStoredTheme(storageKey);
-    if (userTheme) {
-      setTheme(userTheme);
-      return;
+  const { value: storedTheme, set: setStoredTheme } = useLocalStorage<Theme>(
+    storageKey,
+    {
+      serializer: (value) => value,
+      deserializer: (value) => value as Theme,
     }
-    if (defaultTheme) {
-      setTheme(defaultTheme);
-      return;
-    }
-    if (matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-      return;
-    }
-    setTheme("light");
-  }, [defaultTheme, storageKey]);
+  );
 
-  const set: typeof setTheme = (action) => {
-    const nextTheme = action instanceof Function ? action(theme) : action;
-    setStoredTheme(storageKey, nextTheme);
-    setTheme(nextTheme);
-  };
+  const theme = storedTheme ?? defaultTheme ?? osTheme;
+  const toggle = () => setStoredTheme(theme === "light" ? "dark" : "light");
+  const setLight = () => setStoredTheme("light");
+  const setDark = () => setStoredTheme("dark");
 
-  const toggle = () => set((theme) => (theme === "light" ? "dark" : "light"));
-  const setLight = () => set("light");
-  const setDark = () => set("dark");
-
-  return { theme, set, toggle, setLight, setDark };
-}
-
-function getStoredTheme(key: string) {
-  try {
-    const userTheme = localStorage.getItem(key);
-    return userTheme === "light" || userTheme === "dark" ? userTheme : null;
-  } catch {
-    return null;
-  }
-}
-
-function setStoredTheme(key: string, value: string) {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    return;
-  }
+  return { theme, set: setStoredTheme, toggle, setLight, setDark };
 }

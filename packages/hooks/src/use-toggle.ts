@@ -4,11 +4,11 @@ import { useState } from "react";
  * Use an either-or value.
  */
 export function useToggle<L, R>(left: L, right: R) {
-  const [isLeft, setIsLeft] = useState(true);
+  const [value, setValue] = useState<L | R>(left);
 
-  const toggle = () => setIsLeft((isLeft) => !isLeft);
-  const setLeft = () => setIsLeft(true);
-  const setRight = () => setIsLeft(false);
+  const toggle = () => setValue((value) => (value === left ? right : left));
+  const setLeft = () => setValue(left);
+  const setRight = () => setValue(right);
 
-  return { value: isLeft ? left : right, toggle, setLeft, setRight };
+  return { value, set: setValue, toggle, setLeft, setRight };
 }

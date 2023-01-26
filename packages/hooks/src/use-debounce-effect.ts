@@ -4,6 +4,7 @@ import {
   type DependencyList,
   type EffectCallback,
 } from "react";
+import { useLatest } from "./use-latest";
 
 type Options = {
   timeout?: number;
@@ -20,13 +21,12 @@ export function useDebounceEffect(
 ) {
   const { timeout = 500, onMount = false } = options;
 
-  const isMountedRef = useRef(false);
-  const effectRef = useRef(effect);
-  effectRef.current = effect;
+  const effectRef = useLatest(effect);
+  const isJustMountedRef = useRef(true);
 
   useEffect(() => {
-    if (!onMount && !isMountedRef.current) {
-      isMountedRef.current = true;
+    if (!onMount && isJustMountedRef.current) {
+      isJustMountedRef.current = false;
       return;
     }
 
@@ -34,11 +34,5 @@ export function useDebounceEffect(
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...deps, timeout, onMount]);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
+  }, [effectRef, ...deps, timeout, onMount]);
 }

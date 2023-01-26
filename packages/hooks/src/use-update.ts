@@ -4,28 +4,29 @@ import {
   type DependencyList,
   type EffectCallback,
 } from "react";
+import { useLatest } from "./use-latest";
+import { useUnmount } from "./use-unmount";
 
 /**
  * Use update phase.
  */
 export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
-  const isMountedRef = useRef(false);
-  const effectRef = useRef(effect);
-  effectRef.current = effect;
+  const effectRef = useLatest(effect);
+  const shouldSkipRef = useRef(true);
 
   useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isMountedRef.current) {
-      isMountedRef.current = true;
+    if (shouldSkipRef.current) {
+      shouldSkipRef.current = false;
       return;
     }
-    return effectRef.current();
+
+    const cleanup = effectRef.current();
+    return cleanup;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [effectRef, ...deps]);
+
+  useUnmount(() => {
+    shouldSkipRef.current = true;
+  });
 }

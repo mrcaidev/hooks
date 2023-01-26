@@ -17,10 +17,10 @@ it("traps the focus", () => {
   first.focus();
   expect(document.activeElement).toEqual(first);
 
-  fireEvent.keyDown(document, { code: "Tab", shiftKey: true });
+  fireEvent.keyDown(first, { code: "Tab", shiftKey: true });
   expect(document.activeElement).toEqual(last);
 
-  fireEvent.keyDown(document, { code: "Tab" });
+  fireEvent.keyDown(last, { code: "Tab" });
   expect(document.activeElement).toEqual(first);
 });
 
@@ -32,10 +32,10 @@ it("does not throw on other keydown events", () => {
   renderHook(() => useFocusTrap({ current: first }, { current: last }));
   expect(document.activeElement).toEqual(first);
 
-  fireEvent.keyDown(document, { code: "Enter" });
+  fireEvent.keyDown(first, { code: "Enter" });
   expect(document.activeElement).toEqual(first);
 
-  fireEvent.keyDown(document, { code: "Escape" });
+  fireEvent.keyDown(last, { code: "Escape" });
   expect(document.activeElement).toEqual(first);
 });
 
@@ -46,6 +46,6 @@ it("does not throw with null ref", () => {
   renderHook(() => useFocusTrap({ current: null }, { current: null }));
   expect(document.activeElement).toEqual(last);
 
-  fireEvent.keyDown(document, { code: "Tab" });
+  fireEvent.keyDown(last, { code: "Tab" });
   expect(document.activeElement).toEqual(last);
 });

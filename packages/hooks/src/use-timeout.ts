@@ -1,14 +1,14 @@
-import { useEffect, useRef, type EffectCallback } from "react";
+import { useEffect, type EffectCallback } from "react";
+import { useLatest } from "./use-latest";
 
 /**
  * Run an effect after a timeout.
  */
 export function useTimeout(effect: EffectCallback, timeout = 500) {
-  const effectRef = useRef(effect);
-  effectRef.current = effect;
+  const effectRef = useLatest(effect);
 
   useEffect(() => {
     const timer = setTimeout(effectRef.current, timeout);
     return () => clearTimeout(timer);
-  }, [timeout]);
+  }, [effectRef, timeout]);
 }

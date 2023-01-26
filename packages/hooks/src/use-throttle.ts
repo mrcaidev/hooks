@@ -11,13 +11,13 @@ type Options = {
 export function useThrottle<T>(value: T, options: Options = {}) {
   const { timeout = 500, onMount = false } = options;
 
-  const isMountedRef = useRef(false);
+  const isJustMountedRef = useRef(true);
   const isCoolingDownRef = useRef(false);
   const [throttledValue, setThrottledValue] = useState(value);
 
   useEffect(() => {
-    if (!onMount && !isMountedRef.current) {
-      isMountedRef.current = true;
+    if (!onMount && isJustMountedRef.current) {
+      isJustMountedRef.current = false;
       return;
     }
 
@@ -32,12 +32,6 @@ export function useThrottle<T>(value: T, options: Options = {}) {
       isCoolingDownRef.current = false;
     }, timeout);
   }, [value, timeout, onMount]);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
 
   return throttledValue;
 }

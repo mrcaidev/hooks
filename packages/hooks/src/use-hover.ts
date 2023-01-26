@@ -1,4 +1,5 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useState, type RefObject } from "react";
+import { useEventListener } from "./use-event-listener";
 
 /**
  * Listen for hover events on an element.
@@ -6,23 +7,8 @@ import { useEffect, useState, type RefObject } from "react";
 export function useHover(ref: RefObject<HTMLElement>) {
   const [isHovering, setIsHovering] = useState(false);
 
-  useEffect(() => {
-    const target = ref.current;
-    if (!target) {
-      return;
-    }
-
-    const handleEnter = () => setIsHovering(true);
-    const handleLeave = () => setIsHovering(false);
-
-    target.addEventListener("mouseenter", handleEnter);
-    target.addEventListener("mouseleave", handleLeave);
-
-    return () => {
-      target.removeEventListener("mouseenter", handleEnter);
-      target.removeEventListener("mouseleave", handleLeave);
-    };
-  }, [ref]);
+  useEventListener(ref, "mouseenter", () => setIsHovering(true));
+  useEventListener(ref, "mouseleave", () => setIsHovering(false));
 
   return isHovering;
 }

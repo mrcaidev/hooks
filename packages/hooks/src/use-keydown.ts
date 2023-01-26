@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useDocument } from "./use-document";
+import { useEventListener } from "./use-event-listener";
+import { useLatest } from "./use-latest";
 
 type ModifierKeys = {
   ctrl?: boolean;
@@ -17,11 +19,13 @@ export function useKeydown(
 ) {
   const { ctrl = false, shift = false, alt = false, meta = false } = modifier;
 
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const callbackRef = useLatest(callback);
+  const documentRef = useDocument();
 
-  useEffect(() => {
-    const listener = (e: KeyboardEvent) => {
+  useEventListener(
+    documentRef,
+    "keydown",
+    (e) => {
       if (
         e.code !== code ||
         e.ctrlKey !== ctrl ||
@@ -32,9 +36,7 @@ export function useKeydown(
         return;
       }
       callbackRef.current(e);
-    };
-
-    document.addEventListener("keydown", listener);
-    return () => document.removeEventListener("keydown", listener);
-  }, [code, ctrl, shift, alt, meta]);
+    },
+    { extraDeps: [code, ctrl, shift, alt, meta] }
+  );
 }

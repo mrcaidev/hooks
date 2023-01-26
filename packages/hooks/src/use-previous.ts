@@ -1,24 +1,22 @@
 import { useEffect, useRef } from "react";
+import { useLatest } from "./use-latest";
 
 /**
  * Use the previous value of a state.
  */
-export function usePrevious<T>(
-  value: T,
-  shouldUpdate = (a: T, b: T) => a !== b
-) {
+export function usePrevious<T>(value: T, equalFn = (a: T, b: T) => a === b) {
   const previousRef = useRef<T | undefined>(undefined);
   const currentRef = useRef(value);
-  const shouldUpdateRef = useRef(shouldUpdate);
-  shouldUpdateRef.current = shouldUpdate;
+  const equalFnRef = useLatest(equalFn);
 
   useEffect(() => {
-    if (!shouldUpdateRef.current(value, currentRef.current)) {
+    if (equalFnRef.current(value, currentRef.current)) {
       return;
     }
+
     previousRef.current = currentRef.current;
     currentRef.current = value;
-  }, [value]);
+  }, [value, equalFnRef]);
 
   return previousRef;
 }

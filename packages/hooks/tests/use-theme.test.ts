@@ -20,6 +20,7 @@ afterEach(() => localStorage.clear());
 it("detects OS theme", () => {
   const { result } = renderHook(() => useTheme());
   expect(result.current.theme).toEqual("dark");
+  expect(localStorage.getItem("theme")).toEqual(null);
 });
 
 it("prefers default theme to OS theme", () => {
@@ -40,6 +41,7 @@ it("prefers user theme to default theme", () => {
 });
 
 it("can customize storage key", () => {
+  expect(localStorage.getItem("test")).toEqual(null);
   const { result } = renderHook(() => useTheme({ storageKey: "test" }));
   expect(result.current.theme).toEqual("dark");
   expect(localStorage.getItem("test")).toEqual(null);

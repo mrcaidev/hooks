@@ -4,6 +4,7 @@ import {
   type DependencyList,
   type EffectCallback,
 } from "react";
+import { useLatest } from "./use-latest";
 
 type Options = {
   timeout?: number;
@@ -20,14 +21,13 @@ export function useThrottleEffect(
 ) {
   const { timeout = 500, onMount = false } = options;
 
-  const isMountedRef = useRef(false);
+  const effectRef = useLatest(effect);
+  const isJustMountedRef = useRef(true);
   const isCoolingDownRef = useRef(false);
-  const effectRef = useRef(effect);
-  effectRef.current = effect;
 
   useEffect(() => {
-    if (!onMount && !isMountedRef.current) {
-      isMountedRef.current = true;
+    if (!onMount && isJustMountedRef.current) {
+      isJustMountedRef.current = false;
       return;
     }
 
@@ -43,11 +43,5 @@ export function useThrottleEffect(
     }, timeout);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...deps, timeout, onMount]);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
+  }, [effectRef, ...deps, timeout, onMount]);
 }

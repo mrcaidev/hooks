@@ -1,4 +1,9 @@
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, type DependencyList, type RefObject } from "react";
+import { useLatest } from "./use-latest";
+
+type Options = AddEventListenerOptions & {
+  extraDeps?: DependencyList;
+};
 
 /**
  * Listen for any events.
@@ -7,12 +12,16 @@ export function useEventListener<T extends EventTarget, K extends EventType<T>>(
   ref: RefObject<T>,
   type: K,
   callback: (e: EventMap<T>[K]) => void,
-  options: AddEventListenerOptions = {}
+  options: Options = {}
 ) {
-  const { capture = false, once = false, passive = false } = options;
+  const {
+    capture = false,
+    once = false,
+    passive = false,
+    extraDeps = [],
+  } = options;
 
-  const callbackRef = useRef(callback);
-  callbackRef.current = callback;
+  const callbackRef = useLatest(callback);
 
   useEffect(() => {
     const target = ref.current;
@@ -24,5 +33,7 @@ export function useEventListener<T extends EventTarget, K extends EventType<T>>(
 
     target.addEventListener(type, listener, { capture, once, passive });
     return () => target.removeEventListener(type, listener);
-  }, [ref, type, capture, once, passive]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref, type, callbackRef, capture, once, passive, ...extraDeps]);
 }

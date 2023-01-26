@@ -22,12 +22,12 @@ it("saves previous state", () => {
   expect(result.current.previousCountRef.current).toEqual(1);
 });
 
-it("can customize shouldUpdate", () => {
+it("can customize equal function", () => {
   const { result } = renderHook(() => {
     const [count, setCount] = useState(0);
     const increment = () => setCount((count) => count + 1);
 
-    const previousCountRef = usePrevious(count, () => false);
+    const previousCountRef = usePrevious(count, () => true);
     return { previousCountRef, count, increment };
   });
 
