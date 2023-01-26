@@ -1,18 +1,12 @@
 import { act, renderHook } from "@testing-library/react";
 import { useTheme } from "src/use-theme";
+import { matchMedia } from "./utils/match-media";
 
 beforeAll(() => {
-  const device: Record<string, boolean> = {
-    "(prefers-color-scheme: dark)": true,
-  };
-
-  window.matchMedia = (query: string) => {
-    return {
-      matches: device[query] ?? false,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-    } as unknown as MediaQueryList;
-  };
+  vi.stubGlobal("matchMedia", matchMedia);
+});
+afterAll(() => {
+  vi.unstubAllGlobals();
 });
 
 afterEach(() => localStorage.clear());
