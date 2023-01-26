@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLatest } from "./use-latest";
-import { useUpdate } from "./use-update";
 
 type StorageName = "localStorage" | "sessionStorage";
 
@@ -25,7 +24,6 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
   const storage = getStorage(storageName);
 
   const [value, setValue] = useState(defaultValue);
-  const serializerRef = useLatest(serializer);
   const deserializerRef = useLatest(deserializer);
 
   useEffect(() => {
@@ -36,16 +34,15 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
     setValue(storedValue ?? defaultValue);
   }, [key, storage, defaultValue, deserializerRef]);
 
-  useUpdate(() => {
-    setItem(key, value, {
-      storage,
-      serializer: serializerRef.current,
-    });
-  }, [value, key, storage, serializerRef]);
+  const set: typeof setValue = (action) => {
+    const newValue = action instanceof Function ? action(value) : action;
+    setItem(key, newValue, { storage, serializer });
+    setValue(newValue);
+  };
 
-  const remove = () => setValue(undefined);
+  const remove = () => set(undefined);
 
-  return { value, set: setValue, remove };
+  return { value, set, remove };
 }
 
 function getStorage(storageName: StorageName) {
