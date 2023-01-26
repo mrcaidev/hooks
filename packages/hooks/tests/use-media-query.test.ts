@@ -1,41 +1,22 @@
 import { renderHook } from "@testing-library/react";
 import { useMediaQuery } from "src/use-media-query";
 
-// TODO: Use width query to test this hook.
-
-beforeAll(() => {
-  const device: Record<string, boolean> = {
-    "(prefers-color-scheme: dark)": true,
-  };
-
-  window.matchMedia = (query: string) =>
-    ({
-      matches: device[query] ?? false,
-      addEventListener: () => 0,
-      removeEventListener: () => 0,
-    } as unknown as MediaQueryList);
-});
-
 it("returns true if matched", () => {
-  const { result } = renderHook(() =>
-    useMediaQuery("(prefers-color-scheme: dark)")
-  );
+  const { result } = renderHook(() => useMediaQuery("(max-width: 1200px)"));
   expect(result.current).toEqual(true);
 });
 
 it("returns false if unmatched", () => {
-  const { result } = renderHook(() =>
-    useMediaQuery("(prefers-color-scheme: light)")
-  );
+  const { result } = renderHook(() => useMediaQuery("(max-width: 640px)"));
   expect(result.current).toEqual(false);
 });
 
-it("responds to media query changes", () => {
+it("responds to stateful query string", () => {
   const { result, rerender } = renderHook((query) => useMediaQuery(query), {
-    initialProps: "(prefers-color-scheme: dark)",
+    initialProps: "max-width: 1200px",
   });
   expect(result.current).toEqual(true);
 
-  rerender("(prefers-color-scheme: light)");
+  rerender("max-width: 640px");
   expect(result.current).toEqual(false);
 });
