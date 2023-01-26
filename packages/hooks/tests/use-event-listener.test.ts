@@ -100,7 +100,6 @@ it("works with once option", () => {
 it("does not throw with null ref", () => {
   const fn = vi.fn();
 
-  // @ts-expect-error: Edge situation.
   renderHook(() => useEventListener({ current: null }, "click", fn));
   expect(fn).toHaveBeenCalledTimes(0);
 
