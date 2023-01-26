@@ -22,12 +22,12 @@ export function useThrottleEffect(
   const { timeout = 500, onMount = false } = options;
 
   const effectRef = useLatest(effect);
-  const isJustMountedRef = useRef(true);
+  const shouldSkipRef = useRef(true);
   const isCoolingDownRef = useRef(false);
 
   useEffect(() => {
-    if (!onMount && isJustMountedRef.current) {
-      isJustMountedRef.current = false;
+    if (!onMount && shouldSkipRef.current) {
+      shouldSkipRef.current = false;
       return;
     }
 

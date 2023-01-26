@@ -12,11 +12,11 @@ export function useDebounce<T>(value: T, options: UseDebounceOptions = {}) {
   const { timeout = 500, onMount = false } = options;
 
   const [debouncedValue, setDebouncedValue] = useState(value);
-  const isJustMountedRef = useRef(true);
+  const shouldSkipRef = useRef(true);
 
   useEffect(() => {
-    if (!onMount && isJustMountedRef.current) {
-      isJustMountedRef.current = false;
+    if (!onMount && shouldSkipRef.current) {
+      shouldSkipRef.current = false;
       return;
     }
 
