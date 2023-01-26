@@ -1,7 +1,7 @@
 import { useLocalStorage } from "./use-local-storage";
 import { useMediaQuery } from "./use-media-query";
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 type Options = {
   defaultTheme?: Theme;
@@ -17,18 +17,16 @@ export function useTheme(options: Options = {}) {
   const isDarkOs = useMediaQuery("(prefers-color-scheme: dark)");
   const osTheme = isDarkOs ? "dark" : "light";
 
-  const { value: storedTheme, set: setStoredTheme } = useLocalStorage<Theme>(
-    storageKey,
-    {
-      serializer: (value) => value,
-      deserializer: (value) => value as Theme,
-    }
-  );
+  const { value: theme, set } = useLocalStorage<Theme>(storageKey, {
+    defaultValue: defaultTheme ?? osTheme,
+    serializer: (value) => value,
+    deserializer: (value) => value as Theme,
+  });
 
-  const theme = storedTheme ?? defaultTheme ?? osTheme;
-  const toggle = () => setStoredTheme(theme === "light" ? "dark" : "light");
-  const setLight = () => setStoredTheme("light");
-  const setDark = () => setStoredTheme("dark");
+  const toggle = () => set((theme) => (theme === "dark" ? "light" : "dark"));
+  const setLight = () => set("light");
+  const setDark = () => set("dark");
 
-  return { theme, set: setStoredTheme, toggle, setLight, setDark };
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return { theme: theme!, set, toggle, setLight, setDark };
 }
