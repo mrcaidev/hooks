@@ -14,9 +14,12 @@ export function useMediaQuery(query: string) {
     setIsMatched(mediaQueryList.matches);
   }, [query]);
 
-  useEventListener(mediaQueryListRef, "change", (e) => {
-    setIsMatched(e.matches);
-  });
+  useEventListener(
+    mediaQueryListRef,
+    "change",
+    (e) => setIsMatched(e.matches),
+    { extraDeps: [query] }
+  );
 
   return isMatched;
 }
