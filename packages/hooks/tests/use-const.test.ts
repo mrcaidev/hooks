@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useConst } from "src/use-const";
+import { useConst } from "src";
 
 it("remembers the value", () => {
   const { result } = renderHook(() => useConst(() => 1));

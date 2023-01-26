@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useLatest } from "src/use-latest";
+import { useLatest } from "src";
 
 it("returns latest primitive", () => {
   const { result, rerender } = renderHook((count) => useLatest(count), {

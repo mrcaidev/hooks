@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useIsMounted } from "src/use-is-mounted";
+import { useIsMounted } from "src";
 
 it("returns true on mount", () => {
   const { result } = renderHook(() => useIsMounted());

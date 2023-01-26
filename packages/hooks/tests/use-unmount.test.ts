@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useUnmount } from "src/use-unmount";
+import { useUnmount } from "src";
 
 it("only runs on unmount", () => {
   const cleanup = vi.fn();

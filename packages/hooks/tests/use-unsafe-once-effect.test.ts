@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useUnsafeOnceEffect } from "src/use-unsafe-once-effect";
+import { useUnsafeOnceEffect } from "src";
 
 it("runs exactly once", () => {
   const effect = vi.fn();

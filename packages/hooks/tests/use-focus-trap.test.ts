@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useFocusTrap } from "src/use-focus-trap";
+import { useFocusTrap } from "src";
 
 beforeAll(() => {
   document.body.innerHTML = `

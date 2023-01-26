@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useUpdate } from "src/use-update";
+import { useUpdate } from "src";
 
 it("runs on dependency update", () => {
   const cleanup = vi.fn();

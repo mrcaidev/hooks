@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useConstFn } from "src/use-const-fn";
+import { useConstFn } from "src";
 
 it("remembers the function", () => {
   const { result } = renderHook(() => useConstFn(() => 1));

@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useBoolean } from "src/use-boolean";
+import { useBoolean } from "src";
 
 it("defaults to false", () => {
   const { result } = renderHook(() => useBoolean());

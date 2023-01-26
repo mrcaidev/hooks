@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useEventListener } from "src/use-event-listener";
+import { useEventListener } from "src";
 
 beforeAll(() => {
   document.body.innerHTML = `

@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useMount } from "src/use-mount";
+import { useMount } from "src";
 
 it("only runs on mount", () => {
   const cleanup = vi.fn();

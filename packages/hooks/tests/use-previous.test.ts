@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { usePrevious } from "src/use-previous";
+import { usePrevious } from "src";
 
 it("stores previous state", () => {
   const { result, rerender } = renderHook((count) => usePrevious(count), {

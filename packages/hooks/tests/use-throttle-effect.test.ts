@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useThrottleEffect } from "src/use-throttle-effect";
+import { useThrottleEffect } from "src";
 
 beforeAll(() => {
   vi.useFakeTimers();

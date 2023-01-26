@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useInterval } from "src/use-interval";
+import { useInterval } from "src";
 
 beforeAll(() => {
   vi.useFakeTimers();

@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useToggle } from "src/use-toggle";
+import { useToggle } from "src";
 
 it("defaults to left-side value", () => {
   const { result } = renderHook(() => useToggle("hello", "world"));

@@ -1,5 +1,5 @@
 import { fireEvent, renderHook } from "@testing-library/react";
-import { useKeydown } from "src/use-keydown";
+import { useKeydown } from "src";
 
 it("responds to target keydown", () => {
   const callback = vi.fn();

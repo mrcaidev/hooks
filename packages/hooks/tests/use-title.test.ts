@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useTitle } from "src/use-title";
+import { useTitle } from "src";
 
 it("responds to stateful title", () => {
   const { rerender } = renderHook((title) => useTitle(title), {

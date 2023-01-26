@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useDebounceEffect } from "src/use-debounce-effect";
+import { useDebounceEffect } from "src";
 
 beforeAll(() => {
   vi.useFakeTimers();

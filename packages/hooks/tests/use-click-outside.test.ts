@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useClickOutside } from "src/use-click-outside";
+import { useClickOutside } from "src";
 
 beforeAll(() => {
   document.body.innerHTML = `

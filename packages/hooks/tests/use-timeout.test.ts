@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useTimeout } from "src/use-timeout";
+import { useTimeout } from "src";
 
 beforeAll(() => {
   vi.useFakeTimers();

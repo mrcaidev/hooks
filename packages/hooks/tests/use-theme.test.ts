@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useTheme, type Theme } from "src/use-theme";
+import { useTheme, type Theme } from "src";
 import { matchMedia } from "./utils/match-media";
 
 beforeAll(() => {

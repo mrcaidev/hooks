@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useDocument } from "src/use-document";
+import { useDocument } from "src";
 
 it("returns document", () => {
   const { result } = renderHook(() => useDocument());

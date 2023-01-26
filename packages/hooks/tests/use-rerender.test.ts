@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { useEffect } from "react";
-import { useRerender } from "src/use-rerender";
+import { useRerender } from "src";
 
 it("can force a re-render", () => {
   const effect = vi.fn();

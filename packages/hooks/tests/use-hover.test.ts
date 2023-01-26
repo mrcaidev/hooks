@@ -1,5 +1,5 @@
 import { fireEvent, renderHook, screen } from "@testing-library/react";
-import { useHover } from "src/use-hover";
+import { useHover } from "src";
 
 beforeAll(() => {
   document.body.innerHTML = `

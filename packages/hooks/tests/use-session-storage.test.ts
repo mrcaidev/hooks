@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useSessionStorage } from "src/use-session-storage";
+import { useSessionStorage } from "src";
 
 afterEach(() => sessionStorage.clear());
 

@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useMediaQuery } from "src/use-media-query";
+import { useMediaQuery } from "src";
 import { matchMedia } from "./utils/match-media";
 
 beforeAll(() => {
