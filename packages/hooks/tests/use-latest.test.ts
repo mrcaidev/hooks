@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { useLatest } from "src/use-latest";
 
-it("returns latest primitive value", () => {
+it("returns latest primitive", () => {
   const { result, rerender } = renderHook((count) => useLatest(count), {
     initialProps: 0,
   });
@@ -14,7 +14,7 @@ it("returns latest primitive value", () => {
   expect(result.current.current).toEqual(2);
 });
 
-it("returns latest object value", () => {
+it("returns latest object", () => {
   const { result, rerender } = renderHook((obj) => useLatest(obj), {
     initialProps: { a: 1 },
   });

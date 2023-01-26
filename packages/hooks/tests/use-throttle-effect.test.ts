@@ -1,5 +1,4 @@
-import { act, renderHook } from "@testing-library/react";
-import { useState } from "react";
+import { renderHook } from "@testing-library/react";
 import { useThrottleEffect } from "src/use-throttle-effect";
 
 beforeAll(() => {
@@ -15,60 +14,68 @@ afterEach(() => {
 it("triggers effect only once in a period", () => {
   const effect = vi.fn();
 
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    useThrottleEffect(effect, [count]);
-    return { count, increment };
-  });
+  const { rerender } = renderHook(
+    (count) => useThrottleEffect(effect, [count]),
+    { initialProps: 0 }
+  );
   expect(effect).toHaveBeenCalledTimes(0);
 
-  act(() => result.current.increment());
+  rerender(1);
   expect(effect).toHaveBeenCalledTimes(1);
 
   vi.advanceTimersByTime(499);
-  expect(effect).toHaveBeenCalledTimes(1);
-
-  act(() => result.current.increment());
+  rerender(2);
+  rerender(3);
+  rerender(4);
   expect(effect).toHaveBeenCalledTimes(1);
 
   vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
-
-  act(() => result.current.increment());
+  rerender(5);
   expect(effect).toHaveBeenCalledTimes(2);
 });
 
 it("can customize timeout", () => {
   const effect = vi.fn();
 
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    useThrottleEffect(effect, [count], { timeout: 100 });
-    return { count, increment };
-  });
+  const { rerender } = renderHook(
+    (count) => useThrottleEffect(effect, [count], { timeout: 100 }),
+    { initialProps: 0 }
+  );
   expect(effect).toHaveBeenCalledTimes(0);
 
-  act(() => result.current.increment());
+  rerender(1);
   expect(effect).toHaveBeenCalledTimes(1);
 
   vi.advanceTimersByTime(99);
-  expect(effect).toHaveBeenCalledTimes(1);
-
-  act(() => result.current.increment());
+  rerender(2);
+  rerender(3);
+  rerender(4);
   expect(effect).toHaveBeenCalledTimes(1);
 
   vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
-
-  act(() => result.current.increment());
+  rerender(5);
   expect(effect).toHaveBeenCalledTimes(2);
 });
 
 it("can start timing on mount", () => {
   const effect = vi.fn();
 
-  renderHook(() => useThrottleEffect(effect, [], { onMount: true }));
+  const { rerender } = renderHook(
+    (count) => useThrottleEffect(effect, [count], { onMount: true }),
+    { initialProps: 0 }
+  );
   expect(effect).toHaveBeenCalledTimes(1);
+
+  rerender(1);
+  expect(effect).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(499);
+  rerender(2);
+  rerender(3);
+  rerender(4);
+  expect(effect).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(1);
+  rerender(5);
+  expect(effect).toHaveBeenCalledTimes(2);
 });

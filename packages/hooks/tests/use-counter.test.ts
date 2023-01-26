@@ -6,23 +6,23 @@ it("defaults to 0", () => {
   expect(result.current.count).toEqual(0);
 });
 
-it("can default to any number", () => {
+it("can customize default value", () => {
   const { result } = renderHook(() => useCounter(1));
   expect(result.current.count).toEqual(1);
 });
 
-it("can set to any number", () => {
+it("can set value", () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current.count).toEqual(0);
 
   act(() => result.current.set(1));
   expect(result.current.count).toEqual(1);
 
-  act(() => result.current.set(2));
-  expect(result.current.count).toEqual(2);
+  act(() => result.current.set(-1));
+  expect(result.current.count).toEqual(-1);
 });
 
-it("can increment by 1", () => {
+it("can increment value by 1", () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current.count).toEqual(0);
 
@@ -33,7 +33,7 @@ it("can increment by 1", () => {
   expect(result.current.count).toEqual(2);
 });
 
-it("can increment by any number", () => {
+it("can increment value by any number", () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current.count).toEqual(0);
 
@@ -44,7 +44,7 @@ it("can increment by any number", () => {
   expect(result.current.count).toEqual(4);
 });
 
-it("can decrement by 1", () => {
+it("can decrement value by 1", () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current.count).toEqual(0);
 
@@ -55,7 +55,7 @@ it("can decrement by 1", () => {
   expect(result.current.count).toEqual(-2);
 });
 
-it("can decrement by any number", () => {
+it("can decrement value by any number", () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current.count).toEqual(0);
 
@@ -66,7 +66,7 @@ it("can decrement by any number", () => {
   expect(result.current.count).toEqual(-4);
 });
 
-it("can reset", () => {
+it("can reset value", () => {
   const { result } = renderHook(() => useCounter());
   expect(result.current.count).toEqual(0);
 

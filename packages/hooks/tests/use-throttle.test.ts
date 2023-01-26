@@ -1,5 +1,4 @@
-import { act, renderHook } from "@testing-library/react";
-import { useState } from "react";
+import { renderHook } from "@testing-library/react";
 import { useThrottle } from "src/use-throttle";
 
 beforeAll(() => {
@@ -13,64 +12,63 @@ afterEach(() => {
 });
 
 it("updates value only once in a period", () => {
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    const throttledCount = useThrottle(count);
-    return { throttledCount, increment };
+  const { result, rerender } = renderHook((count) => useThrottle(count), {
+    initialProps: 0,
   });
-  expect(result.current.throttledCount).toEqual(0);
+  expect(result.current).toEqual(0);
 
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(1);
+  rerender(1);
+  expect(result.current).toEqual(1);
 
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(1);
+  vi.advanceTimersByTime(499);
+  rerender(2);
+  rerender(3);
+  rerender(4);
+  expect(result.current).toEqual(1);
 
-  vi.advanceTimersByTime(500);
-  expect(result.current.throttledCount).toEqual(1);
-
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(3);
+  vi.advanceTimersByTime(1);
+  rerender(5);
+  expect(result.current).toEqual(5);
 });
 
 it("can customize timeout", () => {
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    const throttledCount = useThrottle(count, { timeout: 100 });
-    return { throttledCount, increment };
-  });
-  expect(result.current.throttledCount).toEqual(0);
+  const { result, rerender } = renderHook(
+    (count) => useThrottle(count, { timeout: 100 }),
+    { initialProps: 0 }
+  );
+  expect(result.current).toEqual(0);
 
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(1);
+  rerender(1);
+  expect(result.current).toEqual(1);
 
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(1);
+  vi.advanceTimersByTime(99);
+  rerender(2);
+  rerender(3);
+  rerender(4);
+  expect(result.current).toEqual(1);
 
-  vi.advanceTimersByTime(100);
-  expect(result.current.throttledCount).toEqual(1);
-
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(3);
+  vi.advanceTimersByTime(1);
+  rerender(5);
+  expect(result.current).toEqual(5);
 });
 
 it("can start timing on mount", () => {
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    const throttledCount = useThrottle(count, { onMount: true });
-    return { throttledCount, increment };
-  });
-  expect(result.current.throttledCount).toEqual(0);
+  const { result, rerender } = renderHook(
+    (count) => useThrottle(count, { onMount: true }),
+    { initialProps: 0 }
+  );
+  expect(result.current).toEqual(0);
 
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(0);
+  rerender(1);
+  expect(result.current).toEqual(0);
 
-  vi.advanceTimersByTime(500);
-  expect(result.current.throttledCount).toEqual(0);
+  vi.advanceTimersByTime(499);
+  rerender(2);
+  rerender(3);
+  rerender(4);
+  expect(result.current).toEqual(0);
 
-  act(() => result.current.increment());
-  expect(result.current.throttledCount).toEqual(2);
+  vi.advanceTimersByTime(1);
+  rerender(5);
+  expect(result.current).toEqual(5);
 });

@@ -12,9 +12,9 @@ beforeAll(() => {
 it("traps the focus", () => {
   const first = screen.getByTestId("first");
   const last = screen.getByTestId("last");
+  first.focus();
 
   renderHook(() => useFocusTrap({ current: first }, { current: last }));
-  first.focus();
   expect(document.activeElement).toEqual(first);
 
   fireEvent.keyDown(first, { code: "Tab", shiftKey: true });

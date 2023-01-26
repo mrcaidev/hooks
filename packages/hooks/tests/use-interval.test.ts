@@ -11,7 +11,7 @@ afterEach(() => {
   vi.clearAllTimers();
 });
 
-it("triggers effect after timeout", () => {
+it("triggers effect after every timeout", () => {
   const effect = vi.fn();
 
   renderHook(() => useInterval(effect));

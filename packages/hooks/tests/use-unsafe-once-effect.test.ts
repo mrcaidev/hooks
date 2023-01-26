@@ -2,8 +2,8 @@ import { renderHook } from "@testing-library/react";
 import { useUnsafeOnceEffect } from "src/use-unsafe-once-effect";
 
 it("runs exactly once", () => {
-  const cleanup = vi.fn();
   const effect = vi.fn();
+  const cleanup = vi.fn();
 
   const { rerender, unmount } = renderHook(() =>
     useUnsafeOnceEffect(() => {

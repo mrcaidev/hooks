@@ -9,6 +9,7 @@ beforeAll(() => {
 
 it("runs exactly as useLayoutEffect", () => {
   const target = screen.getByTestId("target");
+
   renderHook(() =>
     useSafeLayoutEffect(() => {
       target.innerHTML = "foo";

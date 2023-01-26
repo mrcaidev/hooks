@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { useTheme } from "src/use-theme";
+import { useTheme, type Theme } from "src/use-theme";
 import { matchMedia } from "./utils/match-media";
 
 beforeAll(() => {
@@ -8,10 +8,9 @@ beforeAll(() => {
 afterAll(() => {
   vi.unstubAllGlobals();
 });
-
 afterEach(() => localStorage.clear());
 
-it("detects OS theme", () => {
+it("defaults to device theme", () => {
   const { result } = renderHook(() => useTheme());
   expect(result.current.theme).toEqual("dark");
   expect(localStorage.getItem("theme")).toEqual(null);
@@ -20,22 +19,30 @@ it("detects OS theme", () => {
 it("prefers default theme to OS theme", () => {
   const { result } = renderHook(() => useTheme({ defaultTheme: "light" }));
   expect(result.current.theme).toEqual("light");
+  expect(localStorage.getItem("theme")).toEqual(null);
 });
 
-it("does not persist default theme", () => {
-  renderHook(() => useTheme({ defaultTheme: "light" }));
+it("responds to stateful default theme", () => {
+  const { result, rerender } = renderHook(
+    (defaultTheme: Theme) => useTheme({ defaultTheme }),
+    { initialProps: "light" }
+  );
+  expect(result.current.theme).toEqual("light");
+  expect(localStorage.getItem("theme")).toEqual(null);
+
+  rerender("dark");
+  expect(result.current.theme).toEqual("dark");
   expect(localStorage.getItem("theme")).toEqual(null);
 });
 
 it("prefers user theme to default theme", () => {
-  localStorage.setItem("theme", "dark");
+  localStorage.setItem("theme", "light");
 
-  const { result } = renderHook(() => useTheme({ defaultTheme: "light" }));
-  expect(result.current.theme).toEqual("dark");
+  const { result } = renderHook(() => useTheme({ defaultTheme: "dark" }));
+  expect(result.current.theme).toEqual("light");
 });
 
 it("can customize storage key", () => {
-  expect(localStorage.getItem("test")).toEqual(null);
   const { result } = renderHook(() => useTheme({ storageKey: "test" }));
   expect(result.current.theme).toEqual("dark");
   expect(localStorage.getItem("test")).toEqual(null);
@@ -45,7 +52,23 @@ it("can customize storage key", () => {
   expect(localStorage.getItem("test")).toEqual("light");
 });
 
-it("can set to either theme", () => {
+it("responds to stateful storage key", () => {
+  localStorage.setItem("test", "light");
+  localStorage.setItem("theme", "dark");
+
+  const { result, rerender } = renderHook(
+    (storageKey: string) => useTheme({ storageKey }),
+    { initialProps: "test" }
+  );
+  expect(result.current.theme).toEqual("light");
+  expect(localStorage.getItem("test")).toEqual("light");
+
+  rerender("theme");
+  expect(result.current.theme).toEqual("dark");
+  expect(localStorage.getItem("theme")).toEqual("dark");
+});
+
+it("can set theme", () => {
   const { result } = renderHook(() => useTheme());
   expect(result.current.theme).toEqual("dark");
   expect(localStorage.getItem("theme")).toEqual(null);
@@ -73,7 +96,7 @@ it("can toggle theme", () => {
   expect(localStorage.getItem("theme")).toEqual("dark");
 });
 
-it("can set to light", () => {
+it("can set theme to light", () => {
   const { result } = renderHook(() => useTheme({ defaultTheme: "dark" }));
   expect(result.current.theme).toEqual("dark");
   expect(localStorage.getItem("theme")).toEqual(null);
@@ -83,7 +106,7 @@ it("can set to light", () => {
   expect(localStorage.getItem("theme")).toEqual("light");
 });
 
-it("can set to dark", () => {
+it("can set theme to dark", () => {
   const { result } = renderHook(() => useTheme({ defaultTheme: "light" }));
   expect(result.current.theme).toEqual("light");
   expect(localStorage.getItem("theme")).toEqual(null);

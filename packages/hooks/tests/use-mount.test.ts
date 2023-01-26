@@ -8,7 +8,7 @@ it("only runs on mount", () => {
   const { rerender, unmount } = renderHook(() =>
     useMount(() => {
       effect();
-      return () => cleanup();
+      return cleanup;
     })
   );
   expect(effect).toHaveBeenCalledTimes(1);

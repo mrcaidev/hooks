@@ -1,5 +1,4 @@
-import { act, renderHook } from "@testing-library/react";
-import { useState } from "react";
+import { renderHook } from "@testing-library/react";
 import { useDebounceEffect } from "src/use-debounce-effect";
 
 beforeAll(() => {
@@ -12,47 +11,20 @@ afterEach(() => {
   vi.clearAllTimers();
 });
 
-it("triggers effect after timeout", () => {
+it("triggers effect only once after continuous updates", () => {
   const effect = vi.fn();
 
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    useDebounceEffect(effect, [count]);
-    return { count, increment };
-  });
+  const { rerender } = renderHook(
+    (count) => useDebounceEffect(effect, [count]),
+    { initialProps: 0 }
+  );
   expect(effect).toHaveBeenCalledTimes(0);
 
-  act(() => result.current.increment());
-  expect(effect).toHaveBeenCalledTimes(0);
-
+  rerender(1);
   vi.advanceTimersByTime(499);
-  expect(effect).toHaveBeenCalledTimes(0);
-
-  vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
-});
-
-it("triggers effect only once after multiple changes", () => {
-  const effect = vi.fn();
-
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    useDebounceEffect(effect, [count]);
-    return { count, increment };
-  });
-  expect(effect).toHaveBeenCalledTimes(0);
-
-  act(() => result.current.increment());
-  expect(effect).toHaveBeenCalledTimes(0);
-
+  rerender(2);
   vi.advanceTimersByTime(499);
-  expect(effect).toHaveBeenCalledTimes(0);
-
-  act(() => result.current.increment());
-  expect(effect).toHaveBeenCalledTimes(0);
-
+  rerender(3);
   vi.advanceTimersByTime(499);
   expect(effect).toHaveBeenCalledTimes(0);
 
@@ -63,17 +35,17 @@ it("triggers effect only once after multiple changes", () => {
 it("can customize timeout", () => {
   const effect = vi.fn();
 
-  const { result } = renderHook(() => {
-    const [count, setCount] = useState(0);
-    const increment = () => setCount((count) => count + 1);
-    useDebounceEffect(effect, [count], { timeout: 100 });
-    return { count, increment };
-  });
+  const { rerender } = renderHook(
+    (count) => useDebounceEffect(effect, [count], { timeout: 100 }),
+    { initialProps: 0 }
+  );
   expect(effect).toHaveBeenCalledTimes(0);
 
-  act(() => result.current.increment());
-  expect(effect).toHaveBeenCalledTimes(0);
-
+  rerender(1);
+  vi.advanceTimersByTime(99);
+  rerender(2);
+  vi.advanceTimersByTime(99);
+  rerender(3);
   vi.advanceTimersByTime(99);
   expect(effect).toHaveBeenCalledTimes(0);
 

@@ -1,10 +1,4 @@
-type Device = {
-  isDark?: boolean;
-};
-
-export function matchMedia(query: string, device: Device = {}) {
-  const { isDark = true } = device;
-
+export function matchMedia(query: string) {
   const defaultMediaQueryList = getDefaultMediaQueryList();
 
   const widthQueryResult = getWidthQueryResult(query);
@@ -15,7 +9,7 @@ export function matchMedia(query: string, device: Device = {}) {
     };
   }
 
-  const themeQueryResult = getThemeQueryResult(query, isDark);
+  const themeQueryResult = getThemeQueryResult(query);
   if (themeQueryResult !== undefined) {
     return {
       ...defaultMediaQueryList,
@@ -52,7 +46,7 @@ function getWidthQueryResult(query: string) {
     : window.innerWidth >= width;
 }
 
-function getThemeQueryResult(query: string, isDarkDevice: boolean) {
+function getThemeQueryResult(query: string) {
   const regex = /prefers-color-scheme:\s*(light|dark)/;
   const regexResult = query.match(regex);
   if (!regexResult) {
@@ -64,6 +58,5 @@ function getThemeQueryResult(query: string, isDarkDevice: boolean) {
     return undefined;
   }
 
-  const deviceTheme = isDarkDevice ? "dark" : "light";
-  return theme === deviceTheme;
+  return theme === "dark";
 }
