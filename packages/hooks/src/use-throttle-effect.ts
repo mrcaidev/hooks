@@ -6,7 +6,7 @@ import {
 } from "react";
 import { useLatest } from "./use-latest";
 
-type Options = {
+export type UseThrottleEffectOptions = {
   timeout?: number;
   onMount?: boolean;
 };
@@ -17,7 +17,7 @@ type Options = {
 export function useThrottleEffect(
   effect: EffectCallback,
   deps: DependencyList = [],
-  options: Options = {}
+  options: UseThrottleEffectOptions = {}
 ) {
   const { timeout = 500, onMount = false } = options;
 

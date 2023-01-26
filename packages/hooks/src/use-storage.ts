@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLatest } from "./use-latest";
 
-type StorageName = "localStorage" | "sessionStorage";
+export type StorageName = "localStorage" | "sessionStorage";
 
 export type UseStorageOptions<T> = {
   storageName: StorageName;

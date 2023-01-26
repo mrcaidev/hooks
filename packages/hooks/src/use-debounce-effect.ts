@@ -6,7 +6,7 @@ import {
 } from "react";
 import { useLatest } from "./use-latest";
 
-type Options = {
+export type UseDebounceEffectOptions = {
   timeout?: number;
   onMount?: boolean;
 };
@@ -17,7 +17,7 @@ type Options = {
 export function useDebounceEffect(
   effect: EffectCallback,
   deps: DependencyList = [],
-  options: Options = {}
+  options: UseDebounceEffectOptions = {}
 ) {
   const { timeout = 500, onMount = false } = options;
 

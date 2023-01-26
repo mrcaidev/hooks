@@ -1,7 +1,7 @@
 import { useEffect, type DependencyList, type RefObject } from "react";
 import { useLatest } from "./use-latest";
 
-type Options = AddEventListenerOptions & {
+export type UseEventListenerOptions = AddEventListenerOptions & {
   extraDeps?: DependencyList;
 };
 
@@ -12,7 +12,7 @@ export function useEventListener<T extends EventTarget, K extends EventType<T>>(
   ref: RefObject<T>,
   type: K,
   callback: (e: EventMap<T>[K]) => void,
-  options: Options = {}
+  options: UseEventListenerOptions = {}
 ) {
   const {
     capture = false,

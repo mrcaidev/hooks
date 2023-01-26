@@ -3,7 +3,7 @@ import { useMediaQuery } from "./use-media-query";
 
 export type Theme = "light" | "dark";
 
-type Options = {
+export type UseThemeOptions = {
   defaultTheme?: Theme;
   storageKey?: string;
 };
@@ -11,7 +11,7 @@ type Options = {
 /**
  * Use current theme.
  */
-export function useTheme(options: Options = {}) {
+export function useTheme(options: UseThemeOptions = {}) {
   const { defaultTheme, storageKey = "theme" } = options;
 
   const isDarkOs = useMediaQuery("(prefers-color-scheme: dark)");

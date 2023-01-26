@@ -2,7 +2,7 @@ import { useDocument } from "./use-document";
 import { useEventListener } from "./use-event-listener";
 import { useLatest } from "./use-latest";
 
-type ModifierKeys = {
+export type ModifierKeys = {
   ctrl?: boolean;
   shift?: boolean;
   alt?: boolean;

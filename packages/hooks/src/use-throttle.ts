@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type Options = {
+export type UseThrottleOptions = {
   timeout?: number;
   onMount?: boolean;
 };
@@ -8,7 +8,7 @@ type Options = {
 /**
  * Throttle a value.
  */
-export function useThrottle<T>(value: T, options: Options = {}) {
+export function useThrottle<T>(value: T, options: UseThrottleOptions = {}) {
   const { timeout = 500, onMount = false } = options;
 
   const isJustMountedRef = useRef(true);

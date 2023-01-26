@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type Options = {
+export type UseDebounceOptions = {
   timeout?: number;
   onMount?: boolean;
 };
@@ -8,7 +8,7 @@ type Options = {
 /**
  * Debounce a value.
  */
-export function useDebounce<T>(value: T, options: Options = {}) {
+export function useDebounce<T>(value: T, options: UseDebounceOptions = {}) {
   const { timeout = 500, onMount = false } = options;
 
   const [debouncedValue, setDebouncedValue] = useState(value);
