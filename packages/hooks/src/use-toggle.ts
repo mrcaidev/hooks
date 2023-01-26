@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// TODO: Add `const` modifier on `L` and `R`.
+// See: https://github.com/microsoft/TypeScript/pull/51865
+
 /**
  * Use an either-or value.
  */
