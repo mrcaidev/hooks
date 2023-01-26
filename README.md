@@ -13,11 +13,10 @@
 
 **@mrcaidev/hooks** is a collection of useful React hooks.
 
-It is:
-
 - **Highly customizable:** Good defaults, with easy customization.
-- **100% in TypeScript:** Unleash the full power of type system.
-- **Ready for SSR:** You love SSG/SSR. We've got your back.
+- **100% in TypeScript:** Unleash the full power of typing system.
+- **Ready for SSG/SSR:** Works on both server and browser.
+- **Tiny and treeshakable**: <3KB gzipped. Tree-shaking supported.
 
 ## 🚀 Getting started
 
@@ -29,34 +28,34 @@ yarn add @mrcaidev/hooks  # Use yarn
 pnpm add @mrcaidev/hooks  # Use pnpm
 ```
 
-Please see the [documentation](https://hooks.mrcai.dev) for more information on hooks and types.
+And then import the hook you want to use:
+
+```ts
+import { useBoolean } from "@mrcaidev/hooks";
+
+const Component = () => {
+  const { value, toggle } = useBoolean();
+  return ...;
+};
+```
+
+Please see the [documentation](https://hooks.mrcai.dev) for more information.
 
 ## 🧰 Built with
 
-[![React](https://shields.io/badge/react-20232a?style=for-the-badge&logo=react)](https://reactjs.org)
-[![TypeScript](https://shields.io/badge/typescript-fff?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Jest](https://shields.io/badge/Jest-df162b?style=for-the-badge&logo=jest)](https://jestjs.io/)
-[![Testing Library](https://shields.io/badge/testing%20library-1c1e21?style=for-the-badge&logo=testinglibrary)](https://testing-library.com/)
-
+[![TypeScript](https://img.shields.io/badge/typescript-3178c6?style=for-the-badge&logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/react-23272f?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Vitest](https://img.shields.io/badge/vitest-6da13f?style=for-the-badge&logo=vitest&logoColor=ffffff)](https://vitest.dev/)
+[![Testing Library](https://shields.io/badge/testing%20library-e33433?style=for-the-badge&logo=testinglibrary&logoColor=ffffff)](https://testing-library.com/)
+[![pnpm](https://img.shields.io/badge/pnpm-f69220?style=for-the-badge&logo=pnpm&logoColor=ffffff)](https://pnpm.io/)
+[![Vite](https://img.shields.io/badge/vite-646cff?style=for-the-badge&logo=vite&logoColor=ffffff)](https://vitejs.dev/)
+[![Turborepo](https://img.shields.io/badge/turborepo-000000?style=for-the-badge&logo=turborepo)](https://turbo.build/repo)
+[![ESLint](https://shields.io/badge/eslint-4b32c3?style=for-the-badge&logo=eslint&logoColor=ffffff)](https://eslint.org/)
 [![Prettier](https://shields.io/badge/prettier-24292e?style=for-the-badge&logo=prettier)](https://prettier.io/)
-[![ESLint](https://shields.io/badge/eslint-4b32c3?style=for-the-badge&logo=eslint)](https://eslint.org/)
-[![Commitlint](https://shields.io/badge/commitlint-121212?style=for-the-badge&logo=commitlint)](https://commitlint.js.org/#/)
-
-## 🤝 Contributing
-
-All contributions are welcome and greatly appreciated.
-
-### Bug Report
-
-If something goes wrong, please [file a bug report](https://github.com/mrcaidev/hooks/issues), with a description of the problem and your expectations, as well as a minimal example for reproduction.
-
-### Feature Request
-
-If you have an idea of a new feature, please fork this repository and [submit a pull request](https://github.com/mrcaidev/hooks/pulls).
-
-### Other Feedback
-
-You can always [open an issue](https://github.com/mrcaidev/hooks/issues), or contact the author directly via [mrcaidev@gmail.com](mailto:mrcaidev@gmail.com).
+[![Commitlint](https://shields.io/badge/commitlint-121212?style=for-the-badge&logo=commitlint&logoColor=ffffff)](https://commitlint.js.org/#/)
+[![EditorConfig](https://shields.io/badge/editorconfig-000?style=for-the-badge&logo=editorconfig&logoColor=ffffff)](https://editorconfig.org/)
+[![Husky](https://shields.io/badge/husky-42b983?style=for-the-badge&logo=git&logoColor=ffffff)](https://typicode.github.io/husky/#/)
+[![Lint staged](https://shields.io/badge/lint%20staged-f54d27?style=for-the-badge&logo=git&logoColor=ffffff)](https://github.com/okonet/lint-staged#readme)
 
 ## 📜 License
 
