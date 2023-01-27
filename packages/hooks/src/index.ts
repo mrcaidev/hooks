@@ -1,3 +1,4 @@
+export { useAsyncEffect, type AsyncEffectCallback } from "./use-async-effect";
 export { useBoolean } from "./use-boolean";
 export { useClickOutside } from "./use-click-outside";
 export { useConst } from "./use-const";
