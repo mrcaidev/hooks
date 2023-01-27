@@ -57,7 +57,7 @@ it("does not run when dependency stays the same", () => {
   expect(cleanup).toHaveBeenCalledTimes(0);
 });
 
-it("never runs without dependency", () => {
+it("never runs with empty dependency list", () => {
   const cleanup = vi.fn();
   const effect = vi.fn();
 
@@ -66,6 +66,32 @@ it("never runs without dependency", () => {
       effect();
       return cleanup;
     }, [])
+  );
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+
+  rerender();
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+
+  rerender();
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+
+  unmount();
+  expect(effect).toHaveBeenCalledTimes(0);
+  expect(cleanup).toHaveBeenCalledTimes(0);
+});
+
+it("never runs without dependency argument", () => {
+  const cleanup = vi.fn();
+  const effect = vi.fn();
+
+  const { rerender, unmount } = renderHook(() =>
+    useUpdate(() => {
+      effect();
+      return cleanup;
+    })
   );
   expect(effect).toHaveBeenCalledTimes(0);
   expect(cleanup).toHaveBeenCalledTimes(0);
