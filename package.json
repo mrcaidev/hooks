@@ -9,7 +9,7 @@
     "dev": "turbo run dev --parallel",
     "lint": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
     "format": "prettier . --write --cache --plugin-search-dir=.",
-    "publish": "pnpm publish --filter @mrcaidev/hooks --dry-run --no-git-checks",
+    "publish": "pnpm publish --filter @mrcaidev/hooks",
     "prepare": "husky install"
   },
   "devDependencies": {
