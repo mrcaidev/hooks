@@ -11,6 +11,8 @@ export {
 export { useDocument } from "./use-document";
 export {
   useEventListener,
+  type EventMap,
+  type EventType,
   type UseEventListenerOptions,
 } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
