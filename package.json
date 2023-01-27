@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:package": "turbo run build --filter @mrcaidev/hooks",
+    "build:docs": "turbo run build --filter docs",
     "dev": "turbo run dev --parallel",
     "lint": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
     "format": "prettier . --write --cache --plugin-search-dir=.",
+    "publish": "pnpm publish --filter @mrcaidev/hooks --dry-run --no-git-checks",
     "prepare": "husky install"
   },
   "devDependencies": {

@@ -1,0 +1,35 @@
+name: Publish on Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Build package
+        run: pnpm run build:package
+
+      - name: Publish to NPM
+        run: pnpm publish --filter @mrcaidev/hooks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
