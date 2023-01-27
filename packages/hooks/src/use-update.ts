@@ -5,6 +5,7 @@ import {
   type EffectCallback,
 } from "react";
 import { useLatest } from "./use-latest";
+import { useUnmount } from "./use-unmount";
 
 /**
  * Use update phase.
@@ -19,9 +20,12 @@ export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
       return;
     }
 
-    const cleanup = effectRef.current();
-    return cleanup;
+    return effectRef.current();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [effectRef, ...deps]);
+
+  useUnmount(() => {
+    shouldSkipRef.current = true;
+  });
 }
