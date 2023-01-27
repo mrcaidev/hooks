@@ -1,6 +1,6 @@
 {
   "name": "@mrcaidev/hooks",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "React utility hooks",
   "keywords": [
     "react",
@@ -21,7 +21,7 @@
   "type": "module",
   "main": "./dist/index.umd.cjs",
   "module": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
