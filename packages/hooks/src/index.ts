@@ -1,3 +1,4 @@
+export type { EventMap, EventType } from "./types/events";
 export { useAsyncEffect, type AsyncEffectCallback } from "./use-async-effect";
 export { useBoolean } from "./use-boolean";
 export { useClickOutside } from "./use-click-outside";
@@ -12,8 +13,6 @@ export {
 export { useDocument } from "./use-document";
 export {
   useEventListener,
-  type EventMap,
-  type EventType,
   type UseEventListenerOptions,
 } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
