@@ -78,29 +78,3 @@ it("never runs with empty dependency list", () => {
   expect(effect).toHaveBeenCalledTimes(0);
   expect(cleanup).toHaveBeenCalledTimes(0);
 });
-
-it("never runs without dependency argument", () => {
-  const cleanup = vi.fn();
-  const effect = vi.fn();
-
-  const { rerender, unmount } = renderHook(() =>
-    useUpdateDeps(() => {
-      effect();
-      return cleanup;
-    })
-  );
-  expect(effect).toHaveBeenCalledTimes(0);
-  expect(cleanup).toHaveBeenCalledTimes(0);
-
-  rerender();
-  expect(effect).toHaveBeenCalledTimes(0);
-  expect(cleanup).toHaveBeenCalledTimes(0);
-
-  rerender();
-  expect(effect).toHaveBeenCalledTimes(0);
-  expect(cleanup).toHaveBeenCalledTimes(0);
-
-  unmount();
-  expect(effect).toHaveBeenCalledTimes(0);
-  expect(cleanup).toHaveBeenCalledTimes(0);
-});

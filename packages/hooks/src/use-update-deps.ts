@@ -10,10 +10,7 @@ import { useUnmount } from "./use-unmount";
 /**
  * Trigger effect after given dependencies are updated.
  */
-export function useUpdateDeps(
-  effect: EffectCallback,
-  deps: DependencyList = []
-) {
+export function useUpdateDeps(effect: EffectCallback, deps: DependencyList) {
   const effectRef = useLatest(effect);
   const shouldSkipRef = useRef(true);
 
