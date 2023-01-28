@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 /**
- * Force a component to re-render.
+ * Force the component to re-render.
  */
 export function useRerender() {
   const [, setState] = useState({});

@@ -8,7 +8,7 @@ import { useLatest } from "./use-latest";
 import { useUnmount } from "./use-unmount";
 
 /**
- * Use update phase caused by given dependencies.
+ * Trigger effect after given dependencies are updated.
  */
 export function useUpdateDeps(
   effect: EffectCallback,

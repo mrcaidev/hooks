@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 /**
- * Run only on unmount.
+ * Trigger effect before the component is unmounted.
  */
 export function useUnmount(cleanup: () => void) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
