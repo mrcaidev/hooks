@@ -2,15 +2,10 @@ import { renderHook } from "@testing-library/react";
 import { useUnsafeOnceEffect } from "src";
 
 it("runs exactly once", () => {
-  const effect = vi.fn();
   const cleanup = vi.fn();
+  const effect = vi.fn(() => cleanup);
 
-  const { rerender, unmount } = renderHook(() =>
-    useUnsafeOnceEffect(() => {
-      effect();
-      return cleanup;
-    })
-  );
+  const { rerender, unmount } = renderHook(() => useUnsafeOnceEffect(effect));
   expect(effect).toHaveBeenCalledTimes(1);
   expect(cleanup).toHaveBeenCalledTimes(0);
 

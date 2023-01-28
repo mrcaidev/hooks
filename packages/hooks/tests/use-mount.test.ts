@@ -3,14 +3,9 @@ import { useMount } from "src";
 
 it("only runs on mount", () => {
   const cleanup = vi.fn();
-  const effect = vi.fn();
+  const effect = vi.fn(() => cleanup);
 
-  const { rerender, unmount } = renderHook(() =>
-    useMount(() => {
-      effect();
-      return cleanup;
-    })
-  );
+  const { rerender, unmount } = renderHook(() => useMount(effect));
   expect(effect).toHaveBeenCalledTimes(1);
   expect(cleanup).toHaveBeenCalledTimes(0);
 
