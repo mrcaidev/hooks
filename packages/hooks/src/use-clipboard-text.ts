@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDocument } from "./use-document";
 import { useEventListener } from "./use-event-listener";
 import { toError } from "./utils";
@@ -13,7 +13,7 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const [text, setText] = useState("");
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const read = useCallback(async () => {
+  const read = async () => {
     try {
       setError(undefined);
       const text = await navigator.clipboard.readText();
@@ -21,20 +21,9 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
     } catch (err) {
       setError(toError(err));
     }
-  }, []);
+  };
 
-  useEffect(() => {
-    if (!readOnMount) {
-      return;
-    }
-    read();
-  }, [readOnMount, read]);
-
-  const documentRef = useDocument();
-  useEventListener(documentRef, "cut", read);
-  useEventListener(documentRef, "copy", read);
-
-  const copy = async (text: string) => {
+  const write = async (text: string) => {
     try {
       setError(undefined);
       await navigator.clipboard.writeText(text);
@@ -44,5 +33,16 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
     }
   };
 
-  return { text, error, copy };
+  useEffect(() => {
+    if (!readOnMount) {
+      return;
+    }
+    read();
+  }, [readOnMount]);
+
+  const documentRef = useDocument();
+  useEventListener(documentRef, "cut", read);
+  useEventListener(documentRef, "copy", read);
+
+  return { text, error, read, write };
 }
