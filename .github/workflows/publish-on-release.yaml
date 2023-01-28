@@ -31,6 +31,6 @@ jobs:
         run: pnpm run build:package
 
       - name: Publish to NPM
-        run: pnpm publish --filter @mrcaidev/hooks
+        run: pnpm publish --filter @mrcaidev/hooks --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
