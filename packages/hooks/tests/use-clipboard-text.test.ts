@@ -1,4 +1,4 @@
-import { fireEvent, renderHook, waitFor } from "@testing-library/react";
+import { act, fireEvent, renderHook, waitFor } from "@testing-library/react";
 import { useClipboardText } from "src";
 
 let clipboard = "hello";
@@ -61,6 +61,20 @@ it("returns error when read fails", async () => {
   expect(result.current.text).toEqual("");
 });
 
+it("recovers from error on any successful read", async () => {
+  readText.mockImplementationOnce(async () => {
+    throw new Error("fail");
+  });
+
+  const { result } = renderHook(() => useClipboardText());
+  await waitFor(() => expect(result.current.error).not.toEqual(undefined));
+
+  clipboard = "world";
+  fireEvent.copy(document);
+  await waitFor(() => expect(result.current.text).toEqual("world"));
+  expect(result.current.error).toEqual(undefined);
+});
+
 it("returns error when write fails", async () => {
   const error = new Error("write failed");
   writeText.mockImplementationOnce(async () => {
@@ -71,9 +85,22 @@ it("returns error when write fails", async () => {
   await waitFor(() => expect(result.current.text).toEqual("hello"));
   expect(result.current.error).toEqual(undefined);
 
-  await result.current.copy("world");
+  await act(async () => await result.current.copy("world"));
   await waitFor(() => expect(result.current.error).toEqual(error));
   expect(result.current.text).toEqual("hello");
+});
+
+it("recovers from error on any successful write", async () => {
+  readText.mockImplementationOnce(async () => {
+    throw new Error("fail");
+  });
+
+  const { result } = renderHook(() => useClipboardText());
+  await waitFor(() => expect(result.current.error).not.toEqual(undefined));
+
+  await act(async () => await result.current.copy("world"));
+  await waitFor(() => expect(result.current.text).toEqual("world"));
+  expect(result.current.error).toEqual(undefined);
 });
 
 it("can disable read on mount", async () => {
@@ -107,7 +134,7 @@ it("can manually copy text", async () => {
   await waitFor(() => expect(result.current.text).toEqual("hello"));
   expect(result.current.error).toEqual(undefined);
 
-  await result.current.copy("world");
+  await act(async () => await result.current.copy("world"));
   await waitFor(() => expect(result.current.text).toEqual("world"));
   expect(result.current.error).toEqual(undefined);
 });
