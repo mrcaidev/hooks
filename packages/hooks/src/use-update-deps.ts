@@ -8,9 +8,12 @@ import { useLatest } from "./use-latest";
 import { useUnmount } from "./use-unmount";
 
 /**
- * Use update phase.
+ * Use update phase caused by given dependencies.
  */
-export function useUpdate(effect: EffectCallback, deps: DependencyList = []) {
+export function useUpdateDeps(
+  effect: EffectCallback,
+  deps: DependencyList = []
+) {
   const effectRef = useLatest(effect);
   const shouldSkipRef = useRef(true);
 
