@@ -2,6 +2,10 @@ export type { EventMap, EventType } from "./types/events";
 export { useAsyncEffect, type AsyncEffectCallback } from "./use-async-effect";
 export { useBoolean } from "./use-boolean";
 export { useClickOutside } from "./use-click-outside";
+export {
+  useClipboardText,
+  type UseClipboardTextOptions,
+} from "./use-clipboard-text";
 export { useConst } from "./use-const";
 export { useConstFn } from "./use-const-fn";
 export { useCounter } from "./use-counter";
