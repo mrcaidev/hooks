@@ -1,6 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/eslintrc",
-  "extends": ["eslint:recommended", "turbo", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:astro/recommended",
+    "plugin:astro/jsx-a11y-recommended",
+    "turbo",
+    "prettier"
+  ],
   "env": {
     "browser": true,
     "node": true,
@@ -9,29 +17,5 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended"
-      ]
-    },
-    {
-      "files": ["*.tsx"],
-      "extends": [
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:jsx-a11y/recommended"
-      ]
-    },
-    {
-      "files": ["*.astro"],
-      "extends": [
-        "plugin:astro/recommended",
-        "plugin:astro/jsx-a11y-recommended"
-      ]
-    }
-  ]
+  }
 }
