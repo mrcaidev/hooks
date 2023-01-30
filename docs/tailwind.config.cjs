@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "src/{components,layouts,pages}/**/*.astro",
-    "src/plugins/autolink-headings-options.ts",
+    "src/plugins/autolink-headings.ts",
   ],
   darkMode: "class",
   theme: {
