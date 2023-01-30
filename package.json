@@ -2,6 +2,7 @@
   "name": "root",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "build:package": "turbo run build --filter @mrcaidev/hooks",
@@ -10,6 +11,7 @@
     "lint": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
     "format": "prettier . --write --cache --plugin-search-dir=.",
     "publish": "pnpm publish --filter @mrcaidev/hooks",
+    "docs:nav": "node scripts/generate-navigation-json.js > docs/src/data/navigation.json",
     "prepare": "husky install"
   },
   "devDependencies": {

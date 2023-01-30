@@ -16,12 +16,20 @@
     "section": "Hooks",
     "links": [
       {
+        "name": "useAsyncEffect",
+        "href": "/use-async-effect"
+      },
+      {
         "name": "useBoolean",
         "href": "/use-boolean"
       },
       {
         "name": "useClickOutside",
         "href": "/use-click-outside"
+      },
+      {
+        "name": "useClipboardText",
+        "href": "/use-clipboard-text"
       },
       {
         "name": "useConstFn",
@@ -44,8 +52,12 @@
         "href": "/use-debounce"
       },
       {
-        "name": "useDelayEffect",
-        "href": "/use-delay-effect"
+        "name": "useDocument",
+        "href": "/use-document"
+      },
+      {
+        "name": "useElementSize",
+        "href": "/use-element-size"
       },
       {
         "name": "useEventListener",
@@ -58,6 +70,14 @@
       {
         "name": "useHover",
         "href": "/use-hover"
+      },
+      {
+        "name": "useInterval",
+        "href": "/use-interval"
+      },
+      {
+        "name": "useIsMounted",
+        "href": "/use-is-mounted"
       },
       {
         "name": "useKeydown",
@@ -80,8 +100,20 @@
         "href": "/use-mount"
       },
       {
+        "name": "usePrevious",
+        "href": "/use-previous"
+      },
+      {
         "name": "useRerender",
         "href": "/use-rerender"
+      },
+      {
+        "name": "useSafeLayoutEffect",
+        "href": "/use-safe-layout-effect"
+      },
+      {
+        "name": "useSelection",
+        "href": "/use-selection"
       },
       {
         "name": "useSessionStorage",
@@ -100,6 +132,10 @@
         "href": "/use-throttle"
       },
       {
+        "name": "useTimeout",
+        "href": "/use-timeout"
+      },
+      {
         "name": "useTitle",
         "href": "/use-title"
       },
@@ -112,12 +148,24 @@
         "href": "/use-unmount"
       },
       {
+        "name": "useUnsafeOnceEffect",
+        "href": "/use-unsafe-once-effect"
+      },
+      {
+        "name": "useUpdateDeps",
+        "href": "/use-update-deps"
+      },
+      {
         "name": "useUpdate",
         "href": "/use-update"
       },
       {
         "name": "useWindowSize",
         "href": "/use-window-size"
+      },
+      {
+        "name": "useWindow",
+        "href": "/use-window"
       }
     ]
   }
