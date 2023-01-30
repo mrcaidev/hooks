@@ -1,0 +1,17 @@
+---
+import Edit from "icons/edit.astro";
+
+export type Props = {
+  url: string;
+};
+const { url } = Astro.props;
+---
+
+<a
+  href={url}
+  target="_blank"
+  class="flex items-center gap-2 font-medium text-sm text-cyan-11 dark:text-cyandark-11 hover:underline underline-offset-4"
+>
+  <Edit size={14} />
+  Edit this page on GitHub
+</a>

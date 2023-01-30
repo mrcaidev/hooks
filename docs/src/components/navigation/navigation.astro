@@ -1,0 +1,35 @@
+---
+import navigation from "data/navigation.json";
+import ChevronRight from "icons/chevron-right.astro";
+import Link from "./link.astro";
+---
+
+<aside
+  id="navigation"
+  class="fixed top-0 bottom-0 left-0 lg:left-5 right-0 lg:right-auto lg:w-72 pt-16 bg-gray-1 dark:bg-graydark-1 -translate-y-full lg:translate-y-0 transition-transform duration-500 z-20"
+>
+  <nav
+    aria-label="Navigation between pages"
+    class="max-h-full px-10 lg:px-5 pb-10 overflow-scroll overscroll-contain"
+  >
+    {
+      navigation.map(({ section, links }) => (
+        <>
+          <hr class="border-gray-6 dark:border-graydark-6 my-3" />
+          <details open class="group/details space-y-1">
+            <summary class="group/summary flex justify-between items-center p-1 cursor-pointer marker:content-none">
+              <span class="font-bold">{section}</span>
+              <ChevronRight
+                size={16}
+                class="text-gray-11 dark:text-graydark-11 group-hover/summary:text-gray-12 dark:group-hover/summary:text-graydark-12 group-open/details:rotate-90 transition"
+              />
+            </summary>
+            {links.map((link) => (
+              <Link {...link} />
+            ))}
+          </details>
+        </>
+      ))
+    }
+  </nav>
+</aside>

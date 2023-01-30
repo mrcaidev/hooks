@@ -1,0 +1,22 @@
+---
+import Logo from "./logo.astro";
+import NavigationToggler from "./navigation-toggler.astro";
+import SourceCodeLink from "./source-code-link.astro";
+import ThemeToggler from "./theme-toggler.astro";
+
+export type Props = {
+  hasNavigation?: boolean;
+};
+const { hasNavigation = false } = Astro.props;
+---
+
+<header
+  class="flex justify-between items-center fixed top-0 left-0 right-0 px-8 py-4 bg-gray-1 dark:bg-graydark-1 z-30"
+>
+  <Logo />
+  <div class="flex gap-3">
+    <SourceCodeLink />
+    <ThemeToggler />
+    {hasNavigation && <NavigationToggler />}
+  </div>
+</header>

@@ -1,0 +1,20 @@
+---
+import Header from "components/header";
+import Layout from "./layout.astro";
+
+export type Props = {
+  title: string;
+  description: string;
+};
+const { title, description } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="og-type">
+    <meta property="og:type" content="website" />
+  </Fragment>
+  <Fragment slot="body">
+    <Header />
+    <slot />
+  </Fragment>
+</Layout>

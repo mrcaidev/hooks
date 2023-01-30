@@ -1,0 +1,47 @@
+---
+import type { MarkdownLayoutProps } from "astro";
+import DocFooter from "components/doc-footer";
+import Header from "components/header";
+import Navigation from "components/navigation";
+import OnThisPage from "components/on-this-page";
+import Layout from "./layout.astro";
+
+export type Props = MarkdownLayoutProps<Frontmatter>;
+const {
+  frontmatter: { title, description, createdAt, updatedAt = createdAt },
+  headings,
+} = Astro.props;
+
+const createdAtIso = new Date(createdAt).toISOString();
+const updatedAtIso = new Date(updatedAt).toISOString();
+const anchors = headings.filter((heading) => [1, 2].includes(heading.depth));
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="og-type">
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content={createdAtIso} />
+    <meta property="article:modified_time" content={updatedAtIso} />
+    <meta property="article:author" content="https://mrcai.dev" />
+    <meta property="article:section" content="Technology" />
+    <meta property="article:tag" content="Web development" />
+    <meta property="article:tag" content="Library" />
+    <meta property="article:tag" content="React" />
+    <meta property="article:tag" content="TypeScript" />
+  </Fragment>
+  <Fragment slot="body">
+    <Header hasNavigation />
+    <Navigation />
+    <div class="px-8 py-20 lg:ml-80 xl:mr-80">
+      <div class="max-w-3xl mx-auto">
+        <main>
+          <article class="max-w-none typography">
+            <slot />
+          </article>
+        </main>
+        <DocFooter {...Astro.props} />
+      </div>
+    </div>
+    <OnThisPage anchors={anchors} />
+  </Fragment>
+</Layout>

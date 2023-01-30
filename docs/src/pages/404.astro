@@ -1,14 +1,25 @@
 ---
-import BaseLayout from "layouts/BaseLayout.astro";
+import NormalLayout from "layouts/normal-layout.astro";
 ---
 
-<BaseLayout>
-  <div
-    class="absolute top-1/2 left-1/2 text-center -translate-x-1/2 -translate-y-1/2"
+<NormalLayout title="Page Not Found" description="This page does not exist.">
+  <main
+    class="flex flex-col justify-center items-center gap-2 min-h-screen p-8 text-center"
   >
-    <h1 class="py-4 font-bold text-xl">This page does not exist.</h1>
-    <a href="/" class="hover:text-highlight underline underline-offset-4"
-      >Back to home</a
+    <img
+      src="/favicon.svg"
+      alt="Logo"
+      width="64"
+      height="64"
+      class="w-16 h-16"
+    />
+    <h1 class="my-1 font-bold text-2xl">Page Not Found</h1>
+    <p>This page does not exist.</p>
+    <a
+      href="/"
+      class="hover:text-cyan-11 dark:hover:text-cyandark-11 underline underline-offset-4"
     >
-  </div>
-</BaseLayout>
+      Back to homepage
+    </a>
+  </main>
+</NormalLayout>

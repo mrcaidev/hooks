@@ -1,0 +1,23 @@
+---
+export type Props = {
+  date: string;
+};
+const { date } = Astro.props;
+
+const isoDate = new Date(date).toISOString();
+---
+
+<small class="font-medium text-sm text-gray-11 dark:text-graydark-11">
+  Last updated:
+  <time datetime={isoDate} id="last-updated-at">...</time>
+</small>
+
+<script>
+  const lastUpdatedAt = document.querySelector(
+    "#last-updated-at"
+  ) as HTMLTimeElement;
+
+  lastUpdatedAt.textContent = new Date(
+    lastUpdatedAt.dateTime
+  ).toLocaleDateString();
+</script>

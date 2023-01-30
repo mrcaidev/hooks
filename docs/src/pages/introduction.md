@@ -3,8 +3,9 @@ title: Introduction
 description: An introduction to @mrcaidev/hooks.
 createdAt: 2022/9/23
 updatedAt: 2022/9/26
-layout: layouts/DocLayout.astro
 ---
+
+# Introdution
 
 **@mrcaidev/hooks** is a collection of useful React hooks.
 
