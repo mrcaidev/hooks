@@ -19,9 +19,9 @@
     "dist"
   ],
   "type": "module",
-  "main": "./dist/index.umd.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -34,10 +34,10 @@
     "directory": "packages/hooks"
   },
   "scripts": {
-    "dev": "vite",
     "build": "vite build && node scripts/remove-redundant-dts.js",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",

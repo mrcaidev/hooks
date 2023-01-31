@@ -7,11 +7,12 @@
     "build": "turbo run build",
     "build:package": "turbo run build --filter @mrcaidev/hooks",
     "build:docs": "turbo run build --filter docs",
-    "dev": "turbo run dev --parallel",
-    "lint": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
-    "format": "prettier . --write --cache --plugin-search-dir=.",
-    "publish": "pnpm publish --filter @mrcaidev/hooks",
-    "docs:nav": "node scripts/generate-navigation-json.js > docs/src/data/navigation.json",
+    "build:docs:nav": "node scripts/generate-navigation-json.js > docs/src/data/navigation.json",
+    "test": "turbo run test",
+    "lint": "turbo run lint:script",
+    "lint:script": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
+    "format": "turbo run format:script",
+    "format:script": "prettier . --write --cache --plugin-search-dir=.",
     "prepare": "husky install"
   },
   "devDependencies": {
