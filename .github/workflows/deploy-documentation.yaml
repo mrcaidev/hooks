@@ -1,10 +1,12 @@
-name: Deploy documentation
+name: Deploy Documentation
 
 on:
-  workflow_dispatch:
   push:
+    branches:
+      - master
     paths:
       - "docs/**"
+  workflow_dispatch:
 
 jobs:
   deploy:

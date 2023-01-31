@@ -1,13 +1,17 @@
-name: Publish on Release
+name: Publish Package
 
 on:
-  workflow_dispatch:
   release:
-    types: [created]
+    types:
+      - published
+  workflow_dispatch:
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
