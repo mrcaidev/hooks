@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/introduction"
+    }
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "master": false
+    }
+  },
+  "github": {
+    "silent": true
+  }
+}
