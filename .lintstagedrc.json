@@ -1,4 +1,7 @@
 {
-  "*.{ts,tsx,astro}": ["pnpm lint", "pnpm format"],
-  "*.{css,json,md}": "pnpm format"
+  "*.{ts,tsx,astro}": [
+    "eslint --fix --cache --cache-location ./node_modules/.cache/eslint/.eslintcache",
+    "prettier --write --cache --plugin-search-dir=."
+  ],
+  "*.{css,json,md}": "prettier --write --cache --plugin-search-dir=."
 }
