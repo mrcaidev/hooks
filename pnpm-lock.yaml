@@ -31,8 +31,10 @@ importers:
       '@astrojs/tailwind': ^3.0.0
       '@fontsource/inter': ^4.5.15
       '@tailwindcss/typography': ^0.5.9
+      '@types/cross-spawn': ^6.0.2
       '@types/node': ^18.11.18
       astro: ^2.0.2
+      cross-spawn: ^7.0.3
       hastscript: ^7.2.0
       rehype-autolink-headings: ^6.1.1
       tailwindcss: ^3.2.4
@@ -46,11 +48,13 @@ importers:
       '@fontsource/inter': 4.5.15
       '@tailwindcss/typography': 0.5.9_tailwindcss@3.2.4
       astro: 2.0.2_@types+node@18.11.18
+      cross-spawn: 7.0.3
       hastscript: 7.2.0
       rehype-autolink-headings: 6.1.1
       tailwindcss: 3.2.4
       tailwindcss-radix-colors: 0.2.0_tailwindcss@3.2.4
     devDependencies:
+      '@types/cross-spawn': 6.0.2
       '@types/node': 18.11.18
       typescript: 4.9.4
       typescript-config-custom: link:../packages/typescript-config-custom
@@ -1183,6 +1187,12 @@ packages:
 
   /@types/chai/4.3.4:
     resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
+    dev: true
+
+  /@types/cross-spawn/6.0.2:
+    resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
+    dependencies:
+      '@types/node': 18.11.18
     dev: true
 
   /@types/debug/4.1.7:

@@ -1,8 +1,6 @@
 ---
 title: useBoolean
 description: Use a boolean value.
-createdAt: 2022/9/27
-updatedAt: 2022/9/27
 ---
 
 # useBoolean

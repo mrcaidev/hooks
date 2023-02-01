@@ -4,24 +4,26 @@ import DocFooter from "components/doc-footer";
 import Header from "components/header";
 import Navigation from "components/navigation";
 import OnThisPage from "components/on-this-page";
+import { getGitUpdateDate } from "utils/get-git-update-date";
 import Layout from "./layout.astro";
 
 export type Props = MarkdownLayoutProps<Frontmatter>;
 const {
-  frontmatter: { title, description, createdAt, updatedAt = createdAt },
+  frontmatter: { title, description },
   headings,
+  file,
+  url = "",
 } = Astro.props;
 
-const createdAtIso = new Date(createdAt).toISOString();
-const updatedAtIso = new Date(updatedAt).toISOString();
+const updateDate = await getGitUpdateDate(file);
+const updateIso = updateDate.toISOString();
 const anchors = headings.filter((heading) => [1, 2].includes(heading.depth));
 ---
 
 <Layout title={title} description={description}>
   <Fragment slot="og-type">
     <meta property="og:type" content="article" />
-    <meta property="article:published_time" content={createdAtIso} />
-    <meta property="article:modified_time" content={updatedAtIso} />
+    <meta property="article:modified_time" content={updateIso} />
     <meta property="article:author" content="https://mrcai.dev" />
     <meta property="article:section" content="Technology" />
     <meta property="article:tag" content="Web development" />
@@ -39,7 +41,7 @@ const anchors = headings.filter((heading) => [1, 2].includes(heading.depth));
             <slot />
           </article>
         </main>
-        <DocFooter {...Astro.props} />
+        <DocFooter updateIso={updateIso} url={url} />
       </div>
     </div>
     <OnThisPage anchors={anchors} />
