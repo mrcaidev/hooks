@@ -7,6 +7,9 @@ export type UseClipboardTextOptions = {
   readOnMount?: boolean;
 };
 
+/**
+ * Manage text on clipboard.
+ */
 export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const { readOnMount = true } = options;
 

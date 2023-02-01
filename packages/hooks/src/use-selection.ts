@@ -6,6 +6,9 @@ export type UseSelectionOptions = {
   sticky?: boolean;
 };
 
+/**
+ * Responds to user's text selection changes.
+ */
 export function useSelection(options: UseSelectionOptions = {}) {
   const { sticky = false } = options;
 

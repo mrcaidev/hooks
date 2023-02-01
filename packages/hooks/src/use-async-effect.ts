@@ -4,6 +4,9 @@ import { useLatest } from "./use-latest";
 
 export type AsyncEffectCallback = Async<EffectCallback>;
 
+/**
+ * The same as `useEffect`, but for async functions.
+ */
 export function useAsyncEffect(
   effect: AsyncEffectCallback,
   deps?: DependencyList

@@ -1,5 +1,8 @@
 import { useEffect, useState, type RefObject } from "react";
 
+/**
+ * Use the size of an element.
+ */
 export function useElementSize(ref: RefObject<HTMLElement>) {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
