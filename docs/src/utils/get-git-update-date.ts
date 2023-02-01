@@ -10,7 +10,7 @@ export async function getGitUpdateDate(file: string) {
     });
 
     child.on("close", () => {
-      resolve(new Date(stdout));
+      resolve(stdout ? new Date(stdout) : new Date());
     });
 
     child.on("error", reject);
