@@ -1,5 +1,4 @@
 ---
-title: Installation
 description: Install the package @mrcaidev/hooks in your project, and start to use it.
 ---
 

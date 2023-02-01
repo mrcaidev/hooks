@@ -7,14 +7,20 @@ import OnThisPage from "components/on-this-page";
 import { getGitUpdateDate } from "utils/get-git-update-date";
 import Layout from "./layout.astro";
 
+type Frontmatter = {
+  description: string;
+};
+
 export type Props = MarkdownLayoutProps<Frontmatter>;
 const {
-  frontmatter: { title, description },
+  frontmatter: { description },
   headings,
   file,
   url = "",
 } = Astro.props;
 
+const title =
+  headings.find((heading) => heading.depth === 1)?.text || "@mrcaidev/hooks";
 const updateDate = await getGitUpdateDate(file);
 const updateIso = updateDate.toISOString();
 const anchors = headings.filter((heading) => [1, 2].includes(heading.depth));

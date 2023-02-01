@@ -1,5 +1,4 @@
 ---
-title: Introduction
 description: The package @mrcaidev/hooks is a collection of React utility hooks, which is easy to use, fully typed, server ready and lightweight.
 ---
 

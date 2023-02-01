@@ -1,5 +1,4 @@
 ---
-title: useBoolean
 description: Use a boolean value.
 ---
 
