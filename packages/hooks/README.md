@@ -7,11 +7,11 @@ A collection of React utility hooks.
 - **Server ready:** SSG/SSR support out of the box.
 - **Lightweight:** <3KB gzipped. Tree-shaking supported.
 
-## 🚀 Getting started
+## Getting started
 
 Please follow the [documentation](https://hooks.mrcai.dev) to get started with `@mrcaidev/hooks`.
 
-## 🧰 Built with
+## Built with
 
 [![TypeScript](https://img.shields.io/badge/typescript-3178c6?style=for-the-badge&logo=typescript&logoColor=ffffff)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/react-23272f?style=for-the-badge&logo=react)](https://reactjs.org/)
@@ -29,12 +29,12 @@ Please follow the [documentation](https://hooks.mrcai.dev) to get started with `
 [![Husky](https://shields.io/badge/husky-42b983?style=for-the-badge&logo=git&logoColor=ffffff)](https://typicode.github.io/husky/)
 [![Lint staged](https://shields.io/badge/lint%20staged-f54d27?style=for-the-badge&logo=git&logoColor=ffffff)](https://github.com/okonet/lint-staged)
 
-## 🤝 Contributing
+## Contributing
 
 Please read the [contributing guide](https://github.com/mrcaidev/hooks/tree/master/.github/CONTRIBUTING.md) before any contribution.
 
 > Currently this is really just a personal project. I'm trying to build a library that can make me proud of, while also learning React and Web APIs. But if you decide to help out, I believe it will definitely make this project better, and we can surely learn a lot from each other.
 
-## 📜 License
+## License
 
 [MIT](https://github.com/mrcaidev/hooks/tree/master/LICENSE)
