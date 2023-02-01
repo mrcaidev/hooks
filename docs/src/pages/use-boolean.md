@@ -6,26 +6,58 @@ description: Use a boolean value.
 
 Use a boolean value.
 
-Useful when managing states of modals, drawer, etc.
+Useful when managing the opening and closing of modals, drawers, etc.
 
 ## Signature
 
 ```ts
-const { value, set, toggle, on, off } = useBoolean(initialValue?: boolean)
+useBoolean(defaultValue?: boolean): {
+  value: boolean;
+  set: (value: boolean) => void;
+  toggle: () => void;
+  on: () => void;
+  off: () => void;
+};
 ```
 
 ## Parameters
 
-|   Property   |   Type    | Default |      Description       |
-| :----------: | :-------: | :-----: | :--------------------: |
-| initialValue | `boolean` | `false` | Initial boolean value. |
+### defaultValue
 
-## Result
+The initial boolean value.
 
-| Property |            Type            |       Description       |
-| :------: | :------------------------: | :---------------------: |
-|  value   |         `boolean`          |   The boolean value.    |
-|   set    | `(value: boolean) => void` | Set to arbitrary value. |
-|  toggle  |        `() => void`        |      Toggle value.      |
-|    on    |        `() => void`        |      Set to true.       |
-|   off    |        `() => void`        |      Set to false.      |
+Default: `false`
+
+## Returns
+
+### value
+
+The stateful boolean value.
+
+### set
+
+Set value to either `true` or `false`.
+
+### toggle
+
+Toggle value between `true` and `false`.
+
+### on
+
+Set value to `true`.
+
+### off
+
+Set value to `false`.
+
+### Example
+
+```tsx
+import { useBoolean } from "@mrcaidev/hooks";
+
+export function Component() {
+  const { value, toggle } = useBoolean();
+
+  return <button onClick={toggle}>{value ? "On" : "Off"}</button>;
+}
+```
