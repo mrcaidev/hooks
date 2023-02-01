@@ -1,36 +1,35 @@
 ---
 title: Introduction
-description: An introduction to @mrcaidev/hooks.
+description: The package @mrcaidev/hooks is a collection of React utility hooks, which is easy to use, fully typed, server ready and lightweight.
 createdAt: 2022/9/23
-updatedAt: 2022/9/26
+updatedAt: 2023/2/1
 ---
 
 # Introdution
 
-**@mrcaidev/hooks** is a collection of useful React hooks.
+`@mrcaidev/hooks` is a collection of React utility hooks.
 
 ## Features
 
-- **Highly customizable:** Good defaults, with easy customization.
-- **100% in TypeScript:** Unleash the full power of type system.
-- **Ready for SSR:** You love SSG/SSR. We've got your back.
+- **Easy to use:** Good defaults, while highly customizable.
+- **Fully typed:** Enjoy 100% type safety with TypeScript.
+- **Server ready:** SSG/SSR support out of the box.
+- **Lightweight:** <3KB gzipped. Tree-shaking supported.
+
+## Try it Out
+
+> Interested, but too lazy to create another repository for it?
+
+No worries, we have prepared a [playground](https://codesandbox.io/p/sandbox/thirsty-chaum-9oplqq) for you to try out the hooks right in the browser.
+
+This is also the official CodeSandbox template to create a minimal reproducible example.
 
 ## Contributing
 
-All contributions are welcome and greatly appreciated.
+Please read the [contributing guide](https://github.com/mrcaidev/hooks/blob/master/.github/CONTRIBUTING.md) before any contribution.
 
-### Bug Report
-
-If something goes wrong, please [file a bug report](https://github.com/mrcaidev/hooks/issues), with a description of the problem and your expectations, as well as a minimal example for reproduction.
-
-### Feature Request
-
-If you have an idea of a new feature, please fork this repository and [submit a pull request](https://github.com/mrcaidev/hooks/pulls).
-
-### Other Feedback
-
-You can always [open an issue](https://github.com/mrcaidev/hooks/issues), or contact the author directly via [mrcaidev@gmail.com](mailto:mrcaidev@gmail.com).
+> Currently this is really just a personal project. I'm trying to build a library that can make me proud of, while also learning React and Web APIs. But if you decide to help out, I believe it will definitely make this project better, and we can surely learn a lot from each other.
 
 ## License
 
-[MIT](https://github.com/mrcaidev/hooks/tree/master/LICENSE)
+[MIT](https://github.com/mrcaidev/hooks/blob/master/LICENSE)
