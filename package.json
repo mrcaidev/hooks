@@ -18,12 +18,12 @@
   "devDependencies": {
     "commitlint": "^17.4.2",
     "commitlint-config-custom": "workspace:^0.0.0",
-    "eslint": "^8.32.0",
+    "eslint": "^8.33.0",
     "eslint-config-custom": "workspace:^0.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.3",
     "prettier-config-custom": "workspace:^0.0.0",
-    "turbo": "^1.7.0"
+    "turbo": "^1.7.3"
   }
 }

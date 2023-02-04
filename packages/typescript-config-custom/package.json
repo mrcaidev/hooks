@@ -6,7 +6,7 @@
     "base.json"
   ],
   "devDependencies": {
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "typescript": "^4.9.4"
