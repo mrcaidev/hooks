@@ -3,12 +3,14 @@
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { removeRedundantDts } from "./plugins/remove-redundant-dts";
 
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
     dts({
       rollupTypes: true,
+      afterBuild: removeRedundantDts,
     }),
   ],
   build: {
