@@ -7,7 +7,7 @@ it("defaults to false", () => {
   expect(result.current.value).toEqual(false);
 });
 
-it("can customize default value", () => {
+it("can customize initial value", () => {
   const { result } = renderHook(() => useBoolean(true));
 
   expect(result.current.value).toEqual(true);
@@ -27,7 +27,7 @@ it("can set value", () => {
   expect(result.current.value).toEqual(false);
 });
 
-it("can set to true", () => {
+it("can set value to true", () => {
   const { result } = renderHook(() => useBoolean());
 
   expect(result.current.value).toEqual(false);
@@ -37,7 +37,7 @@ it("can set to true", () => {
   expect(result.current.value).toEqual(true);
 });
 
-it("can set to false", () => {
+it("can set value to false", () => {
   const { result } = renderHook(() => useBoolean(true));
 
   expect(result.current.value).toEqual(true);
