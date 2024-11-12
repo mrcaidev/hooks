@@ -6,12 +6,15 @@ export type UseEventListenerOptions = AddEventListenerOptions & {
 };
 
 /**
- * Listen for any events.
+ * Listen to any events.
  */
-export function useEventListener<T extends EventTarget, K extends EventType<T>>(
-  ref: RefObject<T>,
-  type: K,
-  callback: (e: EventMap<T>[K]) => void,
+export function useEventListener<
+  Target extends EventTarget,
+  Type extends EventType<Target>,
+>(
+  ref: RefObject<Target>,
+  type: Type,
+  callback: (event: EventMap<Target>[Type], target: Target) => void,
   options: UseEventListenerOptions = {},
 ) {
   const {
@@ -25,11 +28,13 @@ export function useEventListener<T extends EventTarget, K extends EventType<T>>(
 
   useEffect(() => {
     const target = ref.current;
+
     if (!target) {
       return;
     }
 
-    const listener = callbackRef.current as EventListener;
+    const listener: EventListener = (event) =>
+      callbackRef.current(event as EventMap<Target>[Type], target);
 
     target.addEventListener(type, listener, { capture, once, passive });
     return () => target.removeEventListener(type, listener);
