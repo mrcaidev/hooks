@@ -11,47 +11,55 @@ beforeAll(() => {
   `;
 });
 
-it("responds to clicks outside", () => {
-  const container = screen.getByTestId("container");
+it("listens to click events outside", () => {
   const outside = screen.getByTestId("outside");
+  const container = screen.getByTestId("container");
+  const inside = screen.getByTestId("inside");
   const callback = vi.fn();
 
   renderHook(() => useClickOutside({ current: container }, callback));
+
   expect(callback).toHaveBeenCalledTimes(0);
 
   fireEvent.mouseDown(outside);
+
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.mouseDown(outside);
-  expect(callback).toHaveBeenCalledTimes(2);
+  fireEvent.mouseDown(inside);
+
+  expect(callback).toHaveBeenCalledTimes(1);
 });
 
-it("does not respond to clicks inside", () => {
+it("responds to dynamic `ref`", () => {
+  const outside = screen.getByTestId("outside");
   const container = screen.getByTestId("container");
   const inside = screen.getByTestId("inside");
   const callback = vi.fn();
 
-  renderHook(() => useClickOutside({ current: container }, callback));
+  const { rerender } = renderHook(
+    (element) => useClickOutside({ current: element }, callback),
+    { initialProps: null as Element | null },
+  );
+
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.mouseDown(inside);
+  fireEvent.mouseDown(container);
+
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.mouseDown(inside);
-  expect(callback).toHaveBeenCalledTimes(0);
-});
+  rerender(inside);
 
-it("does not throw with null ref", () => {
-  const outside = screen.getByTestId("outside");
-  const inside = screen.getByTestId("inside");
-  const callback = vi.fn();
-
-  renderHook(() => useClickOutside({ current: null }, callback));
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.mouseDown(inside);
-  expect(callback).toHaveBeenCalledTimes(0);
+  fireEvent.mouseDown(container);
 
-  fireEvent.mouseDown(outside);
-  expect(callback).toHaveBeenCalledTimes(0);
+  expect(callback).toHaveBeenCalledTimes(1);
+
+  rerender(outside);
+
+  expect(callback).toHaveBeenCalledTimes(1);
+
+  fireEvent.mouseDown(container);
+
+  expect(callback).toHaveBeenCalledTimes(1);
 });
