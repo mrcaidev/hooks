@@ -12,6 +12,7 @@ export function useDebounce<T>(value: T, options: UseDebounceOptions = {}) {
   const { timeout = 500, onMount = false } = options;
 
   const [debouncedValue, setDebouncedValue] = useState(value);
+
   const shouldSkipRef = useRef(true);
 
   useEffect(() => {
