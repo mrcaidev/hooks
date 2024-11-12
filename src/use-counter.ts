@@ -3,14 +3,14 @@ import { useState } from "react";
 /**
  * Use a counter.
  */
-export function useCounter(defaultValue = 0) {
-  const [count, setCount] = useState(defaultValue);
+export function useCounter(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
 
   const increment = () => setCount((count) => count + 1);
   const decrement = () => setCount((count) => count - 1);
-  const incrementBy = (value: number) => setCount((count) => count + value);
-  const decrementBy = (value: number) => setCount((count) => count - value);
-  const reset = () => setCount(defaultValue);
+  const incrementBy = (delta: number) => setCount((count) => count + delta);
+  const decrementBy = (delta: number) => setCount((count) => count - delta);
+  const reset = () => setCount(initialValue);
 
   return {
     count,
