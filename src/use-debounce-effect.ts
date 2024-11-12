@@ -22,6 +22,7 @@ export function useDebounceEffect(
   const { timeout = 500, onMount = false } = options;
 
   const effectRef = useLatest(effect);
+
   const shouldSkipRef = useRef(true);
 
   useEffect(() => {
@@ -34,5 +35,5 @@ export function useDebounceEffect(
     return () => clearTimeout(timer);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [effectRef, ...deps, timeout, onMount]);
+  }, [...deps, timeout, onMount]);
 }
