@@ -7,7 +7,7 @@ export type UseClipboardTextOptions = {
 };
 
 /**
- * Manage text on clipboard.
+ * Use the text on user's clipboard.
  */
 export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const { readOnMount = true } = options;
@@ -17,31 +17,31 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
 
   const read = async () => {
     try {
-      setError(undefined);
       const text = await navigator.clipboard.readText();
       setText(text);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err);
+      setError(undefined);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error);
         return;
       }
 
-      setError(new Error("Failed to read from clipboard", { cause: err }));
+      setError(new Error("Failed to read from clipboard", { cause: error }));
     }
   };
 
   const write = async (text: string) => {
     try {
-      setError(undefined);
       await navigator.clipboard.writeText(text);
       setText(text);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err);
+      setError(undefined);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error);
         return;
       }
 
-      setError(new Error("Failed to write to clipboard", { cause: err }));
+      setError(new Error("Failed to write to clipboard", { cause: error }));
     }
   };
 
@@ -49,6 +49,7 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
     if (!readOnMount) {
       return;
     }
+
     read();
   }, [readOnMount]);
 
