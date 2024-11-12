@@ -1,4 +1,3 @@
-export type { EventMap, EventType } from "./types/events";
 export { useAsyncEffect, type AsyncEffectCallback } from "./use-async-effect";
 export { useBoolean } from "./use-boolean";
 export { useClickOutside } from "./use-click-outside";
