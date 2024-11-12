@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDocument } from "./use-document";
 import { useEventListener } from "./use-event-listener";
-import { toError } from "./utils";
 
 export type UseClipboardTextOptions = {
   readOnMount?: boolean;
@@ -22,7 +21,12 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
       const text = await navigator.clipboard.readText();
       setText(text);
     } catch (err) {
-      setError(toError(err));
+      if (err instanceof Error) {
+        setError(err);
+        return;
+      }
+
+      setError(new Error("Failed to read from clipboard", { cause: err }));
     }
   };
 
@@ -32,7 +36,12 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
       await navigator.clipboard.writeText(text);
       setText(text);
     } catch (err) {
-      setError(toError(err));
+      if (err instanceof Error) {
+        setError(err);
+        return;
+      }
+
+      setError(new Error("Failed to write to clipboard", { cause: err }));
     }
   };
 
