@@ -3,3 +3,6 @@ dist
 node_modules
 *.tgz
 *.tsbuildinfo
+
+docs/.vitepress/cache
+docs/.vitepress/dist

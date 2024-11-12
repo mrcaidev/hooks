@@ -10,5 +10,12 @@ export default ts.config(
   ...ts.configs.recommended,
   ...flatCompat.extends("plugin:react-hooks/recommended"),
   prettier,
-  { ignores: ["coverage", "dist"] },
+  {
+    ignores: [
+      "coverage",
+      "dist",
+      "docs/.vitepress/cache",
+      "docs/.vitepress/dist",
+    ],
+  },
 );
