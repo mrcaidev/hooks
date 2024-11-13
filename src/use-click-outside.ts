@@ -8,25 +8,25 @@ import { useLatest } from "./use-latest";
  */
 export function useClickOutside(
   ref: RefObject<Element>,
-  callback: (e: MouseEvent) => void,
+  callback: (event: MouseEvent) => void,
 ) {
   const callbackRef = useLatest(callback);
 
   const documentRef = useDocument();
 
-  useEventListener(documentRef, "mousedown", (e) => {
+  useEventListener(documentRef, "mousedown", (event) => {
     const container = ref.current;
 
     if (!container) {
       return;
     }
 
-    const isClickInside = container.contains(e.target as Node);
+    const isClickInside = container.contains(event.target as Node);
 
     if (isClickInside) {
       return;
     }
 
-    callbackRef.current(e);
+    callbackRef.current(event);
   });
 }
