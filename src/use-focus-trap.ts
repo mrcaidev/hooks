@@ -2,39 +2,41 @@ import type { RefObject } from "react";
 import { useEventListener } from "./use-event-listener";
 
 /**
- * Trap tab focus between two elements.
+ * Trap tab focus between two HTML elements.
  */
 export function useFocusTrap(
   firstRef: RefObject<HTMLElement>,
   lastRef: RefObject<HTMLElement>,
 ) {
-  useEventListener(firstRef, "keydown", (e) => {
+  useEventListener(firstRef, "keydown", (event) => {
     const first = firstRef.current;
     const last = lastRef.current;
+
     if (!first || !last) {
       return;
     }
 
-    if (e.code !== "Tab" || !e.shiftKey) {
+    if (!event.shiftKey || event.code !== "Tab") {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
     last.focus();
   });
 
-  useEventListener(lastRef, "keydown", (e) => {
+  useEventListener(lastRef, "keydown", (event) => {
     const first = firstRef.current;
     const last = lastRef.current;
+
     if (!first || !last) {
       return;
     }
 
-    if (e.code !== "Tab" || e.shiftKey) {
+    if (event.shiftKey || event.code !== "Tab") {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
     first.focus();
   });
 }
