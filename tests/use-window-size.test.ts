@@ -1,25 +1,19 @@
 import { fireEvent, renderHook } from "@testing-library/react";
 import { useWindowSize } from "src";
 
-beforeEach(() => {
-  window.innerWidth = 1024;
-  window.innerHeight = 768;
-});
+it("returns window size", () => {
+  window.innerWidth = 200;
+  window.innerHeight = 100;
 
-it("reads window size", () => {
   const { result } = renderHook(() => useWindowSize());
-  expect(result.current.width).toEqual(1024);
-  expect(result.current.height).toEqual(768);
-});
 
-it("responds to window resize events", () => {
-  const { result } = renderHook(() => useWindowSize());
-  expect(result.current.width).toEqual(1024);
-  expect(result.current.height).toEqual(768);
+  expect(result.current.width).toEqual(200);
+  expect(result.current.height).toEqual(100);
 
-  window.innerWidth = 500;
-  window.innerHeight = 200;
+  window.innerWidth = 400;
+  window.innerHeight = 300;
   fireEvent.resize(window);
-  expect(result.current.width).toEqual(500);
-  expect(result.current.height).toEqual(200);
+
+  expect(result.current.width).toEqual(400);
+  expect(result.current.height).toEqual(300);
 });
