@@ -11,9 +11,11 @@ export type UseThrottleOptions = {
 export function useThrottle<T>(value: T, options: UseThrottleOptions = {}) {
   const { timeout = 500, onMount = false } = options;
 
-  const shouldSkipRef = useRef(true);
-  const isCoolingDownRef = useRef(false);
   const [throttledValue, setThrottledValue] = useState(value);
+
+  const shouldSkipRef = useRef(true);
+
+  const isCoolingDownRef = useRef(false);
 
   useEffect(() => {
     if (!onMount && shouldSkipRef.current) {
