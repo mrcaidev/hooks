@@ -13,8 +13,13 @@ beforeAll(() => {
   vi.stubGlobal("matchMedia", mockMatchMedia);
 });
 
+afterEach(() => {
+  vi.clearAllMocks();
+});
+
 afterAll(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 it("returns `true` if matched", () => {
