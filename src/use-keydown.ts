@@ -10,33 +10,35 @@ export type ModifierKeys = {
 };
 
 /**
- * Listen for keydown events.
+ * Listen to keydown events.
  */
 export function useKeydown(
-  code: string,
-  callback: (e: KeyboardEvent) => void,
+  key: string,
+  callback: (event: KeyboardEvent) => void,
   modifier: ModifierKeys = {},
 ) {
   const { ctrl = false, shift = false, alt = false, meta = false } = modifier;
 
   const callbackRef = useLatest(callback);
+
   const documentRef = useDocument();
 
   useEventListener(
     documentRef,
     "keydown",
-    (e) => {
+    (event) => {
       if (
-        e.code !== code ||
-        e.ctrlKey !== ctrl ||
-        e.shiftKey !== shift ||
-        e.altKey !== alt ||
-        e.metaKey !== meta
+        event.key !== key ||
+        event.ctrlKey !== ctrl ||
+        event.shiftKey !== shift ||
+        event.altKey !== alt ||
+        event.metaKey !== meta
       ) {
         return;
       }
-      callbackRef.current(e);
+
+      callbackRef.current(event);
     },
-    { extraDeps: [code, ctrl, shift, alt, meta] },
+    { extraDeps: [key, ctrl, shift, alt, meta] },
   );
 }

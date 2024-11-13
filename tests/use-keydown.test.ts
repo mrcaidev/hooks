@@ -1,95 +1,121 @@
-import { fireEvent, renderHook } from "@testing-library/react";
+import { renderHook } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { useKeydown } from "src";
 
-it("responds to target keydown", () => {
-  const callback = vi.fn();
+it("listens to keydown events", async () => {
+  const user = userEvent.setup();
+  const fn = vi.fn();
 
-  renderHook(() => useKeydown("Tab", callback));
-  expect(callback).toHaveBeenCalledTimes(0);
+  renderHook(() => useKeydown("Enter", fn));
 
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(fn).toHaveBeenCalledTimes(0);
 
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(2);
+  await user.keyboard("[Enter]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[Tab]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
 });
 
-it("does not respond to irrelevant keydown", () => {
-  const callback = vi.fn();
+it("can customize modifier keys", async () => {
+  const user = userEvent.setup();
+  const fn = vi.fn();
 
-  renderHook(() => useKeydown("Tab", callback));
-  expect(callback).toHaveBeenCalledTimes(0);
+  renderHook(() => useKeydown("Enter", fn, { ctrl: true, shift: true }));
 
-  fireEvent.keyDown(document.body, { code: "Enter" });
-  expect(callback).toHaveBeenCalledTimes(0);
+  expect(fn).toHaveBeenCalledTimes(0);
 
-  fireEvent.keyDown(document.body, { code: "Escape" });
-  expect(callback).toHaveBeenCalledTimes(0);
-});
+  await user.keyboard("[Enter]");
 
-it("responds to stateful key code", () => {
-  const callback = vi.fn();
+  expect(fn).toHaveBeenCalledTimes(0);
 
-  const { rerender } = renderHook((code) => useKeydown(code, callback), {
-    initialProps: "Tab",
-  });
-  expect(callback).toHaveBeenCalledTimes(0);
+  await user.keyboard("[ControlLeft>][Enter][/ControlLeft]");
 
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(fn).toHaveBeenCalledTimes(0);
 
-  rerender("Enter");
-  fireEvent.keyDown(document.body, { code: "Enter" });
-  expect(callback).toHaveBeenCalledTimes(2);
+  await user.keyboard("[ShiftLeft>][Enter][/ShiftLeft]");
 
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(2);
-});
+  expect(fn).toHaveBeenCalledTimes(0);
 
-it("requires pressed modifier keys to be exactly the same", () => {
-  const callback = vi.fn();
-
-  renderHook(() => useKeydown("Tab", callback, { ctrl: true, shift: true }));
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  fireEvent.keyDown(document.body, { code: "Tab", ctrlKey: true });
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  fireEvent.keyDown(document.body, {
-    code: "Tab",
-    ctrlKey: true,
-    shiftKey: true,
-  });
-  expect(callback).toHaveBeenCalledTimes(1);
-
-  fireEvent.keyDown(document.body, {
-    code: "Tab",
-    ctrlKey: true,
-    shiftKey: true,
-    altKey: true,
-  });
-  expect(callback).toHaveBeenCalledTimes(1);
-});
-
-it("responds to stateful modifier keys", () => {
-  const callback = vi.fn();
-
-  const { rerender } = renderHook(
-    (ctrl) => useKeydown("Tab", callback, { ctrl }),
-    { initialProps: false },
+  await user.keyboard(
+    "[ControlLeft>][ShiftLeft>][Enter][/ShiftLeft][/ControlLeft]",
   );
-  expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(1);
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard(
+    "[ControlRight>][ShiftRight>][Enter][/ShiftRight][/ControlRight]",
+  );
+
+  expect(fn).toHaveBeenCalledTimes(2);
+
+  await user.keyboard(
+    "[ControlLeft>][ShiftLeft>][AltLeft>][Enter][/AltLeft][/ShiftLeft][/ControlLeft]",
+  );
+
+  expect(fn).toHaveBeenCalledTimes(2);
+});
+
+it("responds to dynamic `key`", async () => {
+  const user = userEvent.setup();
+  const fn = vi.fn();
+
+  const { rerender } = renderHook((code) => useKeydown(code, fn), {
+    initialProps: "Enter",
+  });
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  await user.keyboard("[Enter]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[Tab]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  rerender("Tab");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[Enter]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[Tab]");
+
+  expect(fn).toHaveBeenCalledTimes(2);
+});
+
+it("responds to dynamic `modifierKeys`", async () => {
+  const user = userEvent.setup();
+  const fn = vi.fn();
+
+  const { rerender } = renderHook((ctrl) => useKeydown("Enter", fn, { ctrl }), {
+    initialProps: false,
+  });
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  await user.keyboard("[Enter]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[ControlLeft>][Enter][/ControlLeft]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
 
   rerender(true);
-  fireEvent.keyDown(document.body, { code: "Tab", ctrlKey: true });
-  expect(callback).toHaveBeenCalledTimes(2);
 
-  fireEvent.keyDown(document.body, { code: "Tab" });
-  expect(callback).toHaveBeenCalledTimes(2);
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[Enter]");
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  await user.keyboard("[ControlLeft>][Enter][/ControlLeft]");
+
+  expect(fn).toHaveBeenCalledTimes(2);
 });
