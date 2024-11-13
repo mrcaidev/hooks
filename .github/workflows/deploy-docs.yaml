@@ -1,0 +1,14 @@
+name: Deploy Documentation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call deploy hook
+        run: curl -X POST ${{ secrets.DEPLOY_HOOK }}
