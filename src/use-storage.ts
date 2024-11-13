@@ -5,23 +5,21 @@ export type StorageType = "local" | "session";
 
 export type UseStorageOptions<T> = {
   type: StorageType;
-  defaultValue?: T | undefined;
   serializer?: (value: T) => string;
   deserializer?: (value: string) => T;
 };
 
 /**
- * Manage storage.
+ * Use storage.
  */
 export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
   const {
     type,
-    defaultValue = undefined,
     serializer = JSON.stringify,
     deserializer = JSON.parse,
   } = options;
 
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState<T | null>(null);
 
   const deserializerRef = useLatest(deserializer);
 
@@ -32,7 +30,7 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
       const value = storage.getItem(key);
 
       if (value === null) {
-        setValue(defaultValue);
+        setValue(null);
         return;
       }
 
@@ -40,9 +38,9 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
 
       setValue(storedValue);
     } catch {
-      setValue(defaultValue);
+      setValue(null);
     }
-  }, [key, type, defaultValue, deserializerRef]);
+  }, [key, type, deserializerRef]);
 
   const set: typeof setValue = (action) => {
     try {
@@ -50,15 +48,11 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
 
       const newValue = action instanceof Function ? action(value) : action;
 
-      if (newValue === undefined) {
+      if (newValue === null) {
         storage.removeItem(key);
-
-        setValue(defaultValue);
-
-        return;
+      } else {
+        storage.setItem(key, serializer(newValue));
       }
-
-      storage.setItem(key, serializer(newValue));
 
       setValue(newValue);
     } catch {
@@ -66,7 +60,7 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
     }
   };
 
-  const remove = () => set(undefined);
+  const remove = () => set(null);
 
   return { value, set, remove };
 }

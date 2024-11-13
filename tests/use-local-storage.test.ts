@@ -14,10 +14,10 @@ afterAll(() => {
   vi.restoreAllMocks();
 });
 
-it("returns `undefined` if there is no stored value", () => {
+it("returns `null` if there is no stored value", () => {
   const { result } = renderHook(() => useLocalStorage("test"));
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 });
 
@@ -42,14 +42,14 @@ it("responds to dynamic `key`", () => {
 
   rerender("test2");
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test2")).toEqual(null);
 });
 
 it("can set value with a value", () => {
   const { result } = renderHook(() => useLocalStorage("test"));
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 
   act(() => result.current.set(1));
@@ -66,7 +66,7 @@ it("can set value with a value", () => {
 it("can set value with a function", () => {
   const { result } = renderHook(() => useLocalStorage("test"));
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 
   act(() => result.current.set((prev: number) => (prev ?? 0) + 1));
@@ -90,60 +90,12 @@ it("can remove value", () => {
 
   act(() => result.current.remove());
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 
   act(() => result.current.remove());
 
-  expect(result.current.value).toEqual(undefined);
-  expect(localStorage.getItem("test")).toEqual(null);
-});
-
-it("returns `defaultValue` if there is no stored value", () => {
-  const { result, rerender } = renderHook(
-    (defaultValue) => useLocalStorage("test", { defaultValue }),
-    { initialProps: 1 },
-  );
-
-  expect(result.current.value).toEqual(1);
-  expect(localStorage.getItem("test")).toEqual(null);
-
-  rerender(2);
-
-  expect(result.current.value).toEqual(2);
-  expect(localStorage.getItem("test")).toEqual(null);
-});
-
-it("ignores `defaultValue` if there is stored value", () => {
-  localStorage.setItem("test", "3");
-
-  const { result, rerender } = renderHook(
-    (defaultValue) => useLocalStorage("test", { defaultValue }),
-    { initialProps: 1 },
-  );
-
-  expect(result.current.value).toEqual(3);
-  expect(localStorage.getItem("test")).toEqual("3");
-
-  rerender(2);
-
-  expect(result.current.value).toEqual(3);
-  expect(localStorage.getItem("test")).toEqual("3");
-});
-
-it("returns `defaultValue` after removing value", () => {
-  localStorage.setItem("test", "3");
-
-  const { result } = renderHook(() =>
-    useLocalStorage("test", { defaultValue: 1 }),
-  );
-
-  expect(result.current.value).toEqual(3);
-  expect(localStorage.getItem("test")).toEqual("3");
-
-  act(() => result.current.remove());
-
-  expect(result.current.value).toEqual(1);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 });
 
@@ -155,7 +107,7 @@ it("can customize `serializer` and `deserializer`", () => {
     }),
   );
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 
   act(() => result.current.set(1));
@@ -169,7 +121,7 @@ it("can customize `serializer` and `deserializer`", () => {
   expect(localStorage.getItem("test")).toEqual("3");
 });
 
-it("returns `undefined` if `localStorage.getItem` throws an error", () => {
+it("returns `null` if `localStorage.getItem` throws an error", () => {
   localStorage.setItem("test", "1");
   mockGetItem.mockImplementationOnce(() => {
     throw new Error("test");
@@ -177,7 +129,7 @@ it("returns `undefined` if `localStorage.getItem` throws an error", () => {
 
   const { result } = renderHook(() => useLocalStorage("test"));
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual("1");
 });
 
@@ -188,12 +140,12 @@ it("does not set value if `localStorage.setItem` throws an error", () => {
 
   const { result } = renderHook(() => useLocalStorage("test"));
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 
   act(() => result.current.set(1));
 
-  expect(result.current.value).toEqual(undefined);
+  expect(result.current.value).toEqual(null);
   expect(localStorage.getItem("test")).toEqual(null);
 });
 
