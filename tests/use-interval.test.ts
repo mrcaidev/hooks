@@ -4,47 +4,89 @@ import { useInterval } from "src";
 beforeAll(() => {
   vi.useFakeTimers();
 });
-afterAll(() => {
-  vi.useRealTimers();
-});
+
 afterEach(() => {
   vi.clearAllTimers();
 });
 
-it("triggers effect after every timeout", () => {
-  const effect = vi.fn();
+afterAll(() => {
+  vi.useRealTimers();
+});
 
-  renderHook(() => useInterval(effect));
-  expect(effect).toHaveBeenCalledTimes(0);
+it("runs function after every interval", () => {
+  const fn = vi.fn();
+
+  renderHook(() => useInterval(fn));
+
+  expect(fn).toHaveBeenCalledTimes(0);
 
   vi.advanceTimersByTime(499);
-  expect(effect).toHaveBeenCalledTimes(0);
+
+  expect(fn).toHaveBeenCalledTimes(0);
 
   vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
+
+  expect(fn).toHaveBeenCalledTimes(1);
 
   vi.advanceTimersByTime(499);
-  expect(effect).toHaveBeenCalledTimes(1);
+
+  expect(fn).toHaveBeenCalledTimes(1);
 
   vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(2);
+
+  expect(fn).toHaveBeenCalledTimes(2);
 });
 
 it("can customize timeout", () => {
-  const effect = vi.fn();
+  const fn = vi.fn();
 
-  renderHook(() => useInterval(effect, 100));
-  expect(effect).toHaveBeenCalledTimes(0);
+  renderHook(() => useInterval(fn, 100));
 
-  vi.advanceTimersByTime(99);
-  expect(effect).toHaveBeenCalledTimes(0);
-
-  vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
+  expect(fn).toHaveBeenCalledTimes(0);
 
   vi.advanceTimersByTime(99);
-  expect(effect).toHaveBeenCalledTimes(1);
+
+  expect(fn).toHaveBeenCalledTimes(0);
 
   vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(2);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(99);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(1);
+
+  expect(fn).toHaveBeenCalledTimes(2);
+});
+
+it("responds to dynamic `timeout`", () => {
+  const fn = vi.fn();
+
+  const { rerender } = renderHook((timeout) => useInterval(fn, timeout), {
+    initialProps: 100,
+  });
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(99);
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(1);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  rerender(200);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(199);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(1);
+
+  expect(fn).toHaveBeenCalledTimes(2);
 });
