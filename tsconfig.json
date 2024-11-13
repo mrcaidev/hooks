@@ -38,5 +38,6 @@
     "target": "ESNext",
     "incremental": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["dist"]
 }
