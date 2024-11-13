@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { useEventListener } from "./use-event-listener";
 
 /**
- * Manage the result of a media query.
+ * Use the result of a media query.
  */
 export function useMediaQuery(query: string) {
   const [isMatched, setIsMatched] = useState(false);
+
   const mediaQueryListRef = useRef<MediaQueryList | null>(null);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export function useMediaQuery(query: string) {
   useEventListener(
     mediaQueryListRef,
     "change",
-    (e) => setIsMatched(e.matches),
+    (event) => setIsMatched(event.matches),
     { extraDeps: [query] },
   );
 
