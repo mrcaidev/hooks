@@ -1,12 +1,14 @@
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { useTitle } from "src";
 
-it("responds to stateful title", () => {
-  const { rerender } = renderHook((title) => useTitle(title), {
-    initialProps: "1",
-  });
-  expect(document.title).toEqual("1");
+it("returns title", async () => {
+  await act(async () => (document.title = "hello"));
 
-  rerender("2");
-  expect(document.title).toEqual("2");
+  const { result } = renderHook(() => useTitle());
+
+  expect(result.current).toEqual("hello");
+
+  await act(async () => (document.title = "world"));
+
+  expect(result.current).toEqual("world");
 });

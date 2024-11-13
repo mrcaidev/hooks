@@ -1,10 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
- * Manage page title.
+ * Use page title.
  */
-export function useTitle(title: string) {
+export function useTitle() {
+  const [title, setTitle] = useState("");
+
   useEffect(() => {
-    document.title = title;
-  }, [title]);
+    setTitle(document.title);
+
+    const observer = new MutationObserver((mutations) => {
+      setTitle(mutations[0]?.target.textContent ?? "");
+    });
+
+    observer.observe(document.querySelector("title")!, {
+      subtree: true,
+      characterData: true,
+      childList: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return title;
 }
