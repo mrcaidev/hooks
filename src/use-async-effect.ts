@@ -19,7 +19,5 @@ export function useAsyncEffect(
 
   useEffect(() => {
     effectRef.current();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 }

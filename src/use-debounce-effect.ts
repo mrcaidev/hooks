@@ -33,7 +33,5 @@ export function useDebounceEffect(
 
     const timer = setTimeout(effectRef.current, timeout);
     return () => clearTimeout(timer);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, timeout, onMount]);
 }

@@ -22,8 +22,6 @@ export function useUpdate(effect: EffectCallback, deps?: DependencyList) {
     }
 
     return effectRef.current();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
   useUnmount(() => {

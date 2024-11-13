@@ -38,8 +38,6 @@ export function useEventListener<
 
     target.addEventListener(type, listener, { capture, once, passive });
     return () => target.removeEventListener(type, listener);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, type, callbackRef, capture, once, passive, ...extraDeps]);
 }
 

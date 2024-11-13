@@ -43,7 +43,5 @@ export function useThrottleEffect(
     setTimeout(() => {
       isCoolingDownRef.current = false;
     }, timeout);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, timeout, onMount]);
 }
