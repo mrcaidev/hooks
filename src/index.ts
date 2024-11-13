@@ -14,6 +14,7 @@ export {
   type UseDebounceEffectOptions,
 } from "./use-debounce-effect";
 export { useDocument } from "./use-document";
+export { useDocumentEventListener } from "./use-document-event-listener";
 export { useElementSize } from "./use-element-size";
 export {
   useEventListener,

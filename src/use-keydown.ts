@@ -1,5 +1,4 @@
-import { useDocument } from "./use-document";
-import { useEventListener } from "./use-event-listener";
+import { useDocumentEventListener } from "./use-document-event-listener";
 import { useLatest } from "./use-latest";
 
 export type ModifierKeys = {
@@ -21,10 +20,7 @@ export function useKeydown(
 
   const callbackRef = useLatest(callback);
 
-  const documentRef = useDocument();
-
-  useEventListener(
-    documentRef,
+  useDocumentEventListener(
     "keydown",
     (event) => {
       if (

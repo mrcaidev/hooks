@@ -1,6 +1,5 @@
 import type { RefObject } from "react";
-import { useDocument } from "./use-document";
-import { useEventListener } from "./use-event-listener";
+import { useDocumentEventListener } from "./use-document-event-listener";
 import { useLatest } from "./use-latest";
 
 /**
@@ -12,9 +11,7 @@ export function useClickOutside(
 ) {
   const callbackRef = useLatest(callback);
 
-  const documentRef = useDocument();
-
-  useEventListener(documentRef, "mousedown", (event) => {
+  useDocumentEventListener("mousedown", (event) => {
     const container = ref.current;
 
     if (!container) {

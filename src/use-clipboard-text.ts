@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDocument } from "./use-document";
-import { useEventListener } from "./use-event-listener";
+import { useDocumentEventListener } from "./use-document-event-listener";
 
 export type UseClipboardTextOptions = {
   readOnMount?: boolean;
@@ -53,9 +52,8 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
     read();
   }, [readOnMount]);
 
-  const documentRef = useDocument();
-  useEventListener(documentRef, "cut", read);
-  useEventListener(documentRef, "copy", read);
+  useDocumentEventListener("cut", read);
+  useDocumentEventListener("copy", read);
 
   return { text, error, read, write };
 }
