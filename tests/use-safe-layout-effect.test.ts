@@ -3,11 +3,11 @@ import { useSafeLayoutEffect } from "src";
 
 beforeAll(() => {
   document.body.innerHTML = `
-    <div data-testid="target"></div>
+    <div data-testid="target" />
   `;
 });
 
-it("runs exactly as useLayoutEffect", () => {
+it("is exactly same as `useLayoutEffect`", () => {
   const target = screen.getByTestId("target");
 
   renderHook(() =>
@@ -15,5 +15,6 @@ it("runs exactly as useLayoutEffect", () => {
       target.innerHTML = "foo";
     }),
   );
+
   expect(target.innerHTML).toEqual("foo");
 });
