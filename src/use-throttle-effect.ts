@@ -22,7 +22,9 @@ export function useThrottleEffect(
   const { timeout = 500, onMount = false } = options;
 
   const effectRef = useLatest(effect);
+
   const shouldSkipRef = useRef(true);
+
   const isCoolingDownRef = useRef(false);
 
   useEffect(() => {
@@ -43,5 +45,5 @@ export function useThrottleEffect(
     }, timeout);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [effectRef, ...deps, timeout, onMount]);
+  }, [...deps, timeout, onMount]);
 }
