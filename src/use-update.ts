@@ -1,12 +1,18 @@
-import { type EffectCallback, useEffect, useRef } from "react";
+import {
+  type DependencyList,
+  type EffectCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { useLatest } from "./use-latest";
 import { useUnmount } from "./use-unmount";
 
 /**
- * Trigger effect after the component is updated.
+ * Trigger an effect only after component or dependency updates.
  */
-export function useUpdate(effect: EffectCallback) {
+export function useUpdate(effect: EffectCallback, deps?: DependencyList) {
   const effectRef = useLatest(effect);
+
   const shouldSkipRef = useRef(true);
 
   useEffect(() => {
@@ -16,7 +22,9 @@ export function useUpdate(effect: EffectCallback) {
     }
 
     return effectRef.current();
-  });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 
   useUnmount(() => {
     shouldSkipRef.current = true;
