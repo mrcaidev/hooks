@@ -28,6 +28,7 @@ export function useEventListener<
 
   useEffect(() => {
     const target = ref.current;
+    console.log("target", target);
 
     if (!target) {
       return;
@@ -38,7 +39,7 @@ export function useEventListener<
 
     target.addEventListener(type, listener, { capture, once, passive });
     return () => target.removeEventListener(type, listener);
-  }, [ref, type, callbackRef, capture, once, passive, ...extraDeps]);
+  }, [type, capture, once, passive, ...extraDeps]);
 }
 
 export type EventMap<Target extends EventTarget> =

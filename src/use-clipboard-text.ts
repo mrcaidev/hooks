@@ -12,13 +12,14 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const { readOnMount = true } = options;
 
   const [text, setText] = useState("");
-  const [error, setError] = useState<Error | undefined>(undefined);
+
+  const [error, setError] = useState<Error | null>(null);
 
   const read = async () => {
     try {
       const text = await navigator.clipboard.readText();
       setText(text);
-      setError(undefined);
+      setError(null);
     } catch (error) {
       if (error instanceof Error) {
         setError(error);
@@ -33,7 +34,7 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
     try {
       await navigator.clipboard.writeText(text);
       setText(text);
-      setError(undefined);
+      setError(null);
     } catch (error) {
       if (error instanceof Error) {
         setError(error);
@@ -55,5 +56,7 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
   useDocumentEventListener("cut", read);
   useDocumentEventListener("copy", read);
 
-  return { text, error, read, write };
+  // TODO: Visibility change event listener
+
+  return { text, error, write };
 }

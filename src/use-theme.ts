@@ -9,7 +9,7 @@ export type UseThemeOptions = {
 };
 
 /**
- * Use light/dark theme.
+ * Use light/dark/system theme.
  */
 export function useTheme(options: UseThemeOptions = {}) {
   const { defaultTheme, storageKey = "theme" } = options;

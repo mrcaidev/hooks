@@ -3,27 +3,27 @@ import { useDocumentEventListener } from "./use-document-event-listener";
 import { useLatest } from "./use-latest";
 
 /**
- * Listen to click events outside of an element.
+ * Listen to click events outside of a node.
  */
-export function useClickOutside(
-  ref: RefObject<Element>,
-  callback: (event: MouseEvent) => void,
+export function useClickOutside<Target extends Node>(
+  ref: RefObject<Target>,
+  callback: (event: MouseEvent, target: Target) => void,
 ) {
   const callbackRef = useLatest(callback);
 
   useDocumentEventListener("mousedown", (event) => {
-    const container = ref.current;
+    const target = ref.current;
 
-    if (!container) {
+    if (!target) {
       return;
     }
 
-    const isClickInside = container.contains(event.target as Node);
+    const isClickInside = target.contains(event.target as Node);
 
     if (isClickInside) {
       return;
     }
 
-    callbackRef.current(event);
+    callbackRef.current(event, target);
   });
 }

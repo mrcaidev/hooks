@@ -13,7 +13,7 @@ export type ModifierKeys = {
  */
 export function useKeydown(
   key: string,
-  callback: (event: KeyboardEvent) => void,
+  callback: (event: KeyboardEvent, document: Document) => void,
   modifier: ModifierKeys = {},
 ) {
   const { ctrl = false, shift = false, alt = false, meta = false } = modifier;
@@ -22,7 +22,7 @@ export function useKeydown(
 
   useDocumentEventListener(
     "keydown",
-    (event) => {
+    (event, document) => {
       if (
         event.key !== key ||
         event.ctrlKey !== ctrl ||
@@ -33,7 +33,7 @@ export function useKeydown(
         return;
       }
 
-      callbackRef.current(event);
+      callbackRef.current(event, document);
     },
     { extraDeps: [key, ctrl, shift, alt, meta] },
   );

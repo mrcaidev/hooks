@@ -28,7 +28,7 @@ it("reads clipboard on mount by default", async () => {
   const { result } = renderHook(() => useClipboardText());
 
   await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(1);
 });
 
@@ -36,7 +36,7 @@ it("can disable read on mount", async () => {
   const { result } = renderHook(() => useClipboardText({ readOnMount: false }));
 
   expect(result.current.text).toEqual("");
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(0);
 });
 
@@ -49,39 +49,13 @@ it("responds to dynamic `readOnMount`", async () => {
   );
 
   expect(result.current.text).toEqual("");
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(0);
 
   rerender(true);
 
   await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
-  expect(mockReadText).toHaveBeenCalledTimes(1);
-});
-
-it("provides `read` function to manually read", async () => {
-  mockReadText.mockResolvedValueOnce("hello").mockResolvedValueOnce("world");
-
-  const { result } = renderHook(() => useClipboardText());
-
-  await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
-  expect(mockReadText).toHaveBeenCalledTimes(1);
-
-  await act(async () => await result.current.read());
-
-  await waitFor(() => expect(result.current.text).toEqual("world"));
-  expect(result.current.error).toEqual(undefined);
-  expect(mockReadText).toHaveBeenCalledTimes(2);
-});
-
-it("returns error if `read` fails", async () => {
-  mockReadText.mockRejectedValueOnce(new Error("test"));
-
-  const { result } = renderHook(() => useClipboardText());
-
-  await waitFor(() => expect(result.current.error).toEqual(new Error("test")));
-  expect(result.current.text).toEqual("");
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(1);
 });
 
@@ -92,13 +66,13 @@ it("provides `write` function to manually write", async () => {
   const { result } = renderHook(() => useClipboardText());
 
   await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockWriteText).toHaveBeenCalledTimes(0);
 
   await act(async () => await result.current.write("world"));
 
   await waitFor(() => expect(result.current.text).toEqual("world"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockWriteText).toHaveBeenCalledTimes(1);
 });
 
@@ -109,7 +83,7 @@ it("returns error if `write` fails", async () => {
   const { result } = renderHook(() => useClipboardText());
 
   await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockWriteText).toHaveBeenCalledTimes(0);
 
   await act(async () => await result.current.write("world"));
@@ -125,13 +99,13 @@ it("listens to cut events", async () => {
   const { result } = renderHook(() => useClipboardText());
 
   await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(1);
 
   fireEvent.cut(document);
 
   await waitFor(() => expect(result.current.text).toEqual("world"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(2);
 });
 
@@ -141,13 +115,13 @@ it("listens to copy events", async () => {
   const { result } = renderHook(() => useClipboardText());
 
   await waitFor(() => expect(result.current.text).toEqual("hello"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(1);
 
   fireEvent.copy(document);
 
   await waitFor(() => expect(result.current.text).toEqual("world"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
   expect(mockReadText).toHaveBeenCalledTimes(2);
 });
 
@@ -160,10 +134,10 @@ it("recovers from error after any successful read", async () => {
 
   await waitFor(() => expect(result.current.error).toEqual(new Error("error")));
 
-  await act(async () => await result.current.read());
+  fireEvent.copy(document);
 
   await waitFor(() => expect(result.current.text).toEqual("world"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
 });
 
 it("recovers from error after any successful write", async () => {
@@ -177,5 +151,5 @@ it("recovers from error after any successful write", async () => {
   await act(async () => await result.current.write("world"));
 
   await waitFor(() => expect(result.current.text).toEqual("world"));
-  expect(result.current.error).toEqual(undefined);
+  expect(result.current.error).toEqual(null);
 });

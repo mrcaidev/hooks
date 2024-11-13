@@ -17,5 +17,5 @@ export function useUnsafeOnceEffect(effect: EffectCallback) {
     shouldSkipRef.current = true;
 
     return effectRef.current();
-  }, [effectRef]);
+  }, []);
 }

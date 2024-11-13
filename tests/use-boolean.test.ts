@@ -32,7 +32,11 @@ it("can set value to true", () => {
 
   expect(result.current.value).toEqual(false);
 
-  act(() => result.current.on());
+  act(() => result.current.setTrue());
+
+  expect(result.current.value).toEqual(true);
+
+  act(() => result.current.setTrue());
 
   expect(result.current.value).toEqual(true);
 });
@@ -42,7 +46,11 @@ it("can set value to false", () => {
 
   expect(result.current.value).toEqual(true);
 
-  act(() => result.current.off());
+  act(() => result.current.setFalse());
+
+  expect(result.current.value).toEqual(false);
+
+  act(() => result.current.setFalse());
 
   expect(result.current.value).toEqual(false);
 });

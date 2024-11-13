@@ -9,14 +9,15 @@ export function useFocusTrap(
   lastRef: RefObject<HTMLElement>,
 ) {
   useEventListener(firstRef, "keydown", (event) => {
-    const first = firstRef.current;
     const last = lastRef.current;
 
-    if (!first || !last) {
+    if (!last) {
       return;
     }
 
-    if (!event.shiftKey || event.code !== "Tab") {
+    const isShiftTab = event.shiftKey && event.code === "Tab";
+
+    if (!isShiftTab) {
       return;
     }
 
@@ -26,13 +27,14 @@ export function useFocusTrap(
 
   useEventListener(lastRef, "keydown", (event) => {
     const first = firstRef.current;
-    const last = lastRef.current;
 
-    if (!first || !last) {
+    if (!first) {
       return;
     }
 
-    if (event.shiftKey || event.code !== "Tab") {
+    const isTab = !event.shiftKey && event.code === "Tab";
+
+    if (!isTab) {
       return;
     }
 

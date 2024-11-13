@@ -6,7 +6,7 @@ it("returns previous state", () => {
     initialProps: 0,
   });
 
-  expect(result.current).toEqual(undefined);
+  expect(result.current).toEqual(null);
 
   rerender(1);
 
@@ -23,13 +23,13 @@ it("can customize `equalFn`", () => {
     { initialProps: 0 },
   );
 
-  expect(result.current).toEqual(undefined);
+  expect(result.current).toEqual(null);
 
   rerender(1);
 
-  expect(result.current).toEqual(undefined);
+  expect(result.current).toEqual(null);
 
   rerender(2);
 
-  expect(result.current).toEqual(undefined);
+  expect(result.current).toEqual(null);
 });

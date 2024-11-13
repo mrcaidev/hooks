@@ -47,45 +47,6 @@ it("listens to document events", async () => {
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), document);
 });
 
-it("responds to dynamic `ref`", async () => {
-  const user = userEvent.setup();
-  const target = screen.getByTestId("target");
-  const callback = vi.fn();
-
-  const { rerender } = renderHook(
-    (node) => useEventListener({ current: node }, "click", callback),
-    { initialProps: null as Node | null },
-  );
-
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  await user.click(document.body);
-
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  rerender(document);
-
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  await user.click(document.body);
-
-  expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), document);
-
-  rerender(target);
-
-  expect(callback).toHaveBeenCalledTimes(1);
-
-  await user.click(document.body);
-
-  expect(callback).toHaveBeenCalledTimes(1);
-
-  await user.click(target);
-
-  expect(callback).toHaveBeenCalledTimes(2);
-  expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), target);
-});
-
 it("responds to dynamic `type`", async () => {
   const user = userEvent.setup();
   const callback = vi.fn();

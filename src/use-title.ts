@@ -18,7 +18,6 @@ export function useTitle() {
       characterData: true,
       childList: true,
     });
-
     return () => observer.disconnect();
   }, []);
 

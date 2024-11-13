@@ -6,10 +6,10 @@ import { useState } from "react";
 export function useBoolean(initialValue = false) {
   const [value, setValue] = useState(initialValue);
 
-  const on = () => setValue(true);
-  const off = () => setValue(false);
+  const setTrue = () => setValue(true);
+  const setFalse = () => setValue(false);
   const toggle = () => setValue((value) => !value);
   const reset = () => setValue(initialValue);
 
-  return { value, set: setValue, on, off, toggle, reset };
+  return { value, set: setValue, setTrue, setFalse, toggle, reset };
 }

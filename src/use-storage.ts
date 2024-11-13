@@ -40,7 +40,7 @@ export function useStorage<T>(key: string, options: UseStorageOptions<T>) {
     } catch {
       setValue(null);
     }
-  }, [key, type, deserializerRef]);
+  }, [key, type]);
 
   const set: typeof setValue = (action) => {
     try {

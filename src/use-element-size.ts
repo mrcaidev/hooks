@@ -29,7 +29,7 @@ export function useElementSize(ref: RefObject<Element>) {
 
     observer.observe(target);
     return () => observer.disconnect();
-  }, [ref]);
+  }, []);
 
   return { width, height };
 }
