@@ -5,6 +5,7 @@ import { useRef } from "react";
  */
 export function usePrevious<T>(value: T, equalFn = (a: T, b: T) => a === b) {
   const previousRef = useRef<T | undefined>(undefined);
+
   const currentRef = useRef(value);
 
   if (!equalFn(currentRef.current, value)) {
