@@ -1,34 +1,58 @@
-import { fireEvent, renderHook, screen } from "@testing-library/react";
+import { renderHook, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { useHover } from "src";
 
 beforeAll(() => {
   document.body.innerHTML = `
-    <div data-testid="target">
+    <div data-testid="target" />
   `;
 });
 
-it("responds to hover events", () => {
+it("listens to hover events", async () => {
+  const user = userEvent.setup();
   const target = screen.getByTestId("target");
 
   const { result } = renderHook(() => useHover({ current: target }));
+
   expect(result.current).toEqual(false);
 
-  fireEvent.mouseEnter(target);
+  await user.hover(target);
+
   expect(result.current).toEqual(true);
 
-  fireEvent.mouseLeave(target);
+  await user.unhover(target);
+
   expect(result.current).toEqual(false);
 });
 
-it("does not throw with null ref", () => {
+it("responds to dynamic `ref`", async () => {
+  const user = userEvent.setup();
   const target = screen.getByTestId("target");
 
-  const { result } = renderHook(() => useHover({ current: null }));
+  const { result, rerender } = renderHook(
+    (element) => useHover({ current: element }),
+    { initialProps: null as HTMLElement | null },
+  );
+
   expect(result.current).toEqual(false);
 
-  fireEvent.mouseEnter(target);
+  await user.hover(target);
+
   expect(result.current).toEqual(false);
 
-  fireEvent.mouseLeave(target);
+  await user.unhover(target);
+
+  expect(result.current).toEqual(false);
+
+  rerender(target);
+
+  expect(result.current).toEqual(false);
+
+  await user.hover(target);
+
+  expect(result.current).toEqual(true);
+
+  await user.unhover(target);
+
   expect(result.current).toEqual(false);
 });
