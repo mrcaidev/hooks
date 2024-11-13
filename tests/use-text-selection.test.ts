@@ -7,6 +7,10 @@ beforeAll(() => {
   `;
 });
 
+afterEach(() => {
+  cancelSelection();
+});
+
 function selectOneLetter() {
   const text = screen.getByTestId("target").firstChild as Text;
   document.getSelection()?.setBaseAndExtent(text, 0, text, 1);
