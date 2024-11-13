@@ -1,5 +1,5 @@
 import { renderHook, screen } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { useFocusTrap } from "src";
 
 beforeAll(() => {

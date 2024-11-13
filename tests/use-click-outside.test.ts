@@ -1,4 +1,5 @@
-import { fireEvent, renderHook, screen } from "@testing-library/react";
+import { renderHook, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { useClickOutside } from "src";
 
 beforeAll(() => {
@@ -11,7 +12,8 @@ beforeAll(() => {
   `;
 });
 
-it("listens to click events outside", () => {
+it("listens to click events outside", async () => {
+  const user = userEvent.setup();
   const outside = screen.getByTestId("outside");
   const container = screen.getByTestId("container");
   const inside = screen.getByTestId("inside");
@@ -21,16 +23,17 @@ it("listens to click events outside", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.mouseDown(outside);
+  await user.click(outside);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.mouseDown(inside);
+  await user.click(inside);
 
   expect(callback).toHaveBeenCalledTimes(1);
 });
 
-it("responds to dynamic `ref`", () => {
+it("responds to dynamic `ref`", async () => {
+  const user = userEvent.setup();
   const outside = screen.getByTestId("outside");
   const container = screen.getByTestId("container");
   const inside = screen.getByTestId("inside");
@@ -43,7 +46,7 @@ it("responds to dynamic `ref`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.mouseDown(container);
+  await user.click(container);
 
   expect(callback).toHaveBeenCalledTimes(0);
 
@@ -51,7 +54,7 @@ it("responds to dynamic `ref`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.mouseDown(container);
+  await user.click(container);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
@@ -59,7 +62,7 @@ it("responds to dynamic `ref`", () => {
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.mouseDown(container);
+  await user.click(container);
 
   expect(callback).toHaveBeenCalledTimes(1);
 });

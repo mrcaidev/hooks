@@ -7,12 +7,10 @@ beforeAll(() => {
 
 afterEach(() => {
   vi.clearAllTimers();
-  vi.clearAllMocks();
 });
 
 afterAll(() => {
   vi.useRealTimers();
-  vi.restoreAllMocks();
 });
 
 it("updates value only once after multiple updates", () => {

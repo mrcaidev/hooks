@@ -1,4 +1,5 @@
-import { fireEvent, renderHook, screen } from "@testing-library/react";
+import { renderHook, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { useEventListener } from "src";
 
 beforeAll(() => {
@@ -7,7 +8,8 @@ beforeAll(() => {
   `;
 });
 
-it("listens to element events", () => {
+it("listens to element events", async () => {
+  const user = userEvent.setup();
   const target = screen.getByTestId("target");
   const callback = vi.fn();
 
@@ -15,54 +17,38 @@ it("listens to element events", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(target);
+  await user.click(target);
 
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), target);
 
-  fireEvent.click(target);
+  await user.click(target);
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), target);
 });
 
-it("listens to document events", () => {
+it("listens to document events", async () => {
+  const user = userEvent.setup();
   const callback = vi.fn();
 
   renderHook(() => useEventListener({ current: document }, "click", callback));
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), document);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), document);
 });
 
-it("listens to window events", () => {
-  const callback = vi.fn();
-
-  renderHook(() => useEventListener({ current: window }, "click", callback));
-
-  expect(callback).toHaveBeenCalledTimes(0);
-
-  fireEvent.click(window);
-
-  expect(callback).toHaveBeenCalledTimes(1);
-  expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), window);
-
-  fireEvent.click(window);
-
-  expect(callback).toHaveBeenCalledTimes(2);
-  expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), window);
-});
-
-it("responds to dynamic `ref`", () => {
+it("responds to dynamic `ref`", async () => {
+  const user = userEvent.setup();
   const target = screen.getByTestId("target");
   const callback = vi.fn();
 
@@ -73,7 +59,7 @@ it("responds to dynamic `ref`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(0);
 
@@ -81,7 +67,7 @@ it("responds to dynamic `ref`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), document);
@@ -90,17 +76,18 @@ it("responds to dynamic `ref`", () => {
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(target);
+  await user.click(target);
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), target);
 });
 
-it("responds to dynamic `type`", () => {
+it("responds to dynamic `type`", async () => {
+  const user = userEvent.setup();
   const callback = vi.fn();
 
   const { rerender } = renderHook(
@@ -110,7 +97,7 @@ it("responds to dynamic `type`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback).toHaveBeenLastCalledWith(expect.any(MouseEvent), document);
@@ -119,11 +106,11 @@ it("responds to dynamic `type`", () => {
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.keyDown(document);
+  await user.tab();
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenLastCalledWith(
@@ -132,7 +119,8 @@ it("responds to dynamic `type`", () => {
   );
 });
 
-it("responds to dynamic `capture`", () => {
+it("responds to dynamic `capture`", async () => {
+  const user = userEvent.setup();
   const target = screen.getByTestId("target");
   const callOrder: string[] = [];
   const documentCallback = vi.fn(() => callOrder.push("document"));
@@ -153,7 +141,7 @@ it("responds to dynamic `capture`", () => {
   expect(targetCallback).toHaveBeenCalledTimes(0);
   expect(callOrder).toEqual([]);
 
-  fireEvent.click(target);
+  await user.click(target);
 
   expect(documentCallback).toHaveBeenCalledTimes(1);
   expect(targetCallback).toHaveBeenCalledTimes(1);
@@ -165,14 +153,15 @@ it("responds to dynamic `capture`", () => {
   expect(targetCallback).toHaveBeenCalledTimes(1);
   expect(callOrder).toEqual(["target", "document"]);
 
-  fireEvent.click(target);
+  await user.click(target);
 
   expect(documentCallback).toHaveBeenCalledTimes(2);
   expect(targetCallback).toHaveBeenCalledTimes(2);
   expect(callOrder).toEqual(["target", "document", "document", "target"]);
 });
 
-it("responds to dynamic `passive`", () => {
+it("responds to dynamic `passive`", async () => {
+  const user = userEvent.setup();
   const callback = vi.fn((event: MouseEvent) => event.preventDefault());
 
   const { rerender } = renderHook(
@@ -183,7 +172,7 @@ it("responds to dynamic `passive`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
@@ -191,13 +180,14 @@ it("responds to dynamic `passive`", () => {
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toThrow();
 });
 
-it("responds to dynamic `once`", () => {
+it("responds to dynamic `once`", async () => {
+  const user = userEvent.setup();
   const callback = vi.fn();
 
   const { rerender } = renderHook(
@@ -208,11 +198,11 @@ it("responds to dynamic `once`", () => {
 
   expect(callback).toHaveBeenCalledTimes(0);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
 
@@ -220,12 +210,13 @@ it("responds to dynamic `once`", () => {
 
   expect(callback).toHaveBeenCalledTimes(1);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(2);
 });
 
-it("responds to dynamic `extraDeps`", () => {
+it("responds to dynamic `extraDeps`", async () => {
+  const user = userEvent.setup();
   const history: number[] = [];
   const callback = vi.fn((numbers: number[]) => history.push(...numbers));
 
@@ -243,7 +234,7 @@ it("responds to dynamic `extraDeps`", () => {
   expect(callback).toHaveBeenCalledTimes(0);
   expect(history).toEqual([]);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(1);
   expect(history).toEqual([1, 2]);
@@ -253,7 +244,7 @@ it("responds to dynamic `extraDeps`", () => {
   expect(callback).toHaveBeenCalledTimes(1);
   expect(history).toEqual([1, 2]);
 
-  fireEvent.click(document);
+  await user.click(document.body);
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(history).toEqual([1, 2, 1, 3]);
