@@ -4,35 +4,71 @@ import { useTimeout } from "src";
 beforeAll(() => {
   vi.useFakeTimers();
 });
-afterAll(() => {
-  vi.useRealTimers();
-});
+
 afterEach(() => {
   vi.clearAllTimers();
 });
 
-it("triggers effect after timeout", () => {
-  const effect = vi.fn();
-
-  renderHook(() => useTimeout(effect));
-  expect(effect).toHaveBeenCalledTimes(0);
-
-  vi.advanceTimersByTime(499);
-  expect(effect).toHaveBeenCalledTimes(0);
-
-  vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
+afterAll(() => {
+  vi.useRealTimers();
 });
 
-it("can customize timeout", () => {
-  const effect = vi.fn();
+it("runs function after timeout", () => {
+  const fn = vi.fn();
 
-  renderHook(() => useTimeout(effect, 100));
-  expect(effect).toHaveBeenCalledTimes(0);
+  renderHook(() => useTimeout(fn));
 
-  vi.advanceTimersByTime(99);
-  expect(effect).toHaveBeenCalledTimes(0);
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(499);
+
+  expect(fn).toHaveBeenCalledTimes(0);
 
   vi.advanceTimersByTime(1);
-  expect(effect).toHaveBeenCalledTimes(1);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+});
+
+it("can customize `timeout`", () => {
+  const fn = vi.fn();
+
+  renderHook(() => useTimeout(fn, 100));
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(99);
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(1);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+});
+
+it("responds to dynamic `timeout`", () => {
+  const fn = vi.fn();
+
+  const { rerender } = renderHook((timeout) => useTimeout(fn, timeout), {
+    initialProps: 100,
+  });
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(99);
+
+  expect(fn).toHaveBeenCalledTimes(0);
+
+  vi.advanceTimersByTime(1);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  rerender(200);
+
+  vi.advanceTimersByTime(199);
+
+  expect(fn).toHaveBeenCalledTimes(1);
+
+  vi.advanceTimersByTime(1);
+
+  expect(fn).toHaveBeenCalledTimes(2);
 });

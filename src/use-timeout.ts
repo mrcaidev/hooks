@@ -1,14 +1,17 @@
-import { useEffect, type EffectCallback } from "react";
+import { useEffect } from "react";
 import { useLatest } from "./use-latest";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Fn = (...args: any[]) => any;
+
 /**
- * Run an effect after a timeout.
+ * Run a function after a timeout.
  */
-export function useTimeout(effect: EffectCallback, timeout = 500) {
-  const effectRef = useLatest(effect);
+export function useTimeout(fn: Fn, timeout = 500) {
+  const callbackRef = useLatest(fn);
 
   useEffect(() => {
-    const timer = setTimeout(effectRef.current, timeout);
+    const timer = setTimeout(callbackRef.current, timeout);
     return () => clearTimeout(timer);
-  }, [effectRef, timeout]);
+  }, [callbackRef, timeout]);
 }
