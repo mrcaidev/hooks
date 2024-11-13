@@ -5,7 +5,6 @@ import {
   useRef,
 } from "react";
 import { useLatest } from "./use-latest";
-import { useUnmount } from "./use-unmount";
 
 /**
  * Trigger an effect only after component or dependency updates.
@@ -23,8 +22,4 @@ export function useUpdate(effect: EffectCallback, deps?: DependencyList) {
 
     return effectRef.current();
   }, deps);
-
-  useUnmount(() => {
-    shouldSkipRef.current = true;
-  });
 }
