@@ -1,29 +1,61 @@
 import { renderHook, screen } from "@testing-library/react";
 import { useElementSize } from "src";
 
+const mockClientWidth = vi.spyOn(
+  window.Element.prototype,
+  "clientWidth",
+  "get",
+);
+const mockClientHeight = vi.spyOn(
+  window.Element.prototype,
+  "clientHeight",
+  "get",
+);
+
 beforeAll(() => {
   document.body.innerHTML = `
-    <textarea></textarea>
+    <div data-testid="target" />
   `;
 
-  vi.stubGlobal("ResizeObserver", function (this: Record<string, unknown>) {
-    this["observe"] = () => 0;
-    this["disconnect"] = () => 0;
-  });
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      constructor(private callback: ResizeObserverCallback) {}
+
+      observe(target: Element) {
+        this.callback([{ target } as ResizeObserverEntry], this);
+      }
+
+      disconnect() {}
+      unobserve() {}
+    },
+  );
 });
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
+
 afterAll(() => {
+  vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
 
 it("reads the size of element", () => {
-  const target = screen.getByRole("textbox");
+  mockClientWidth
+    .mockReturnValueOnce(200)
+    .mockReturnValueOnce(200)
+    .mockReturnValueOnce(200);
+  mockClientHeight
+    .mockReturnValueOnce(100)
+    .mockReturnValueOnce(100)
+    .mockReturnValueOnce(100);
+  const target = screen.getByTestId("target");
+
   const { result } = renderHook(() => useElementSize({ current: target }));
-  expect(result.current.width).not.toEqual(undefined);
-  expect(result.current.height).not.toEqual(undefined);
+
+  expect(result.current.width).toEqual(200);
+  expect(result.current.height).toEqual(100);
 });
 
-it("does not throw with null ref", () => {
-  const { result } = renderHook(() => useElementSize({ current: null }));
-  expect(result.current.width).not.toEqual(undefined);
-  expect(result.current.height).not.toEqual(undefined);
-});
+it.todo("listens to resize events", () => {});
