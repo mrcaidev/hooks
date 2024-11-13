@@ -1,17 +1,14 @@
 import { useState } from "react";
 
-// TODO: Add `const` modifier on `L` and `R`.
-// See: https://github.com/microsoft/TypeScript/pull/51865
-
 /**
  * Use an either-or value.
  */
-export function useToggle<L, R>(left: L, right: R) {
+export function useToggle<const L, const R>(left: L, right: R) {
   const [value, setValue] = useState<L | R>(left);
 
-  const toggle = () => setValue((value) => (value === left ? right : left));
   const setLeft = () => setValue(left);
   const setRight = () => setValue(right);
+  const toggle = () => setValue((value) => (value === left ? right : left));
 
-  return { value, set: setValue, toggle, setLeft, setRight };
+  return { value, set: setValue, setLeft, setRight, toggle };
 }
