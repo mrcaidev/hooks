@@ -5,6 +5,7 @@ import { useState } from "react";
  */
 export function useRerender() {
   const [, setState] = useState({});
+
   const rerender = () => setState({});
 
   return rerender;
