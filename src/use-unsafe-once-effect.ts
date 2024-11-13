@@ -8,14 +8,13 @@ import { useMount } from "./use-mount";
 export function useUnsafeOnceEffect(effect: EffectCallback) {
   const effectRef = useLatest(effect);
 
-  const shouldSkipRef = useRef(false);
+  const isFirstRenderRef = useRef(true);
 
   useMount(() => {
-    if (shouldSkipRef.current) {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
       return;
     }
-
-    shouldSkipRef.current = true;
 
     return effectRef.current();
   });

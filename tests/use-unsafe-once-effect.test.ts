@@ -1,5 +1,7 @@
-import { renderHook } from "@testing-library/react";
+import { configure, renderHook } from "@testing-library/react";
 import { useUnsafeOnceEffect } from "src";
+
+configure({ reactStrictMode: true });
 
 it("runs exactly once", () => {
   const cleanup = vi.fn();
