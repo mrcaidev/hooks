@@ -9,23 +9,29 @@ export type UseThemeOptions = {
 };
 
 /**
- * Use current theme.
+ * Use light/dark theme.
  */
 export function useTheme(options: UseThemeOptions = {}) {
   const { defaultTheme, storageKey = "theme" } = options;
 
-  const isDarkOs = useMediaQuery("(prefers-color-scheme: dark)");
-  const osTheme = isDarkOs ? "dark" : "light";
+  const isDarkDevice = useMediaQuery("(prefers-color-scheme: dark)");
+  const deviceTheme = isDarkDevice ? "dark" : "light";
 
-  const { value: theme, set } = useLocalStorage<Theme>(storageKey, {
-    defaultValue: defaultTheme ?? osTheme,
+  const {
+    value: storedTheme,
+    set: setStoredTheme,
+    remove: removeStoredTheme,
+  } = useLocalStorage<Theme>(storageKey, {
     serializer: (value) => value,
     deserializer: (value) => value as Theme,
   });
 
-  const toggle = () => set((theme) => (theme === "dark" ? "light" : "dark"));
-  const setLight = () => set("light");
-  const setDark = () => set("dark");
+  const theme = storedTheme ?? defaultTheme ?? deviceTheme;
 
-  return { theme: theme!, set, toggle, setLight, setDark };
+  const setLight = () => setStoredTheme("light");
+  const setDark = () => setStoredTheme("dark");
+  const toggle = () => setStoredTheme(theme === "dark" ? "light" : "dark");
+  const reset = () => removeStoredTheme();
+
+  return { theme, set: setStoredTheme, setLight, setDark, toggle, reset };
 }
