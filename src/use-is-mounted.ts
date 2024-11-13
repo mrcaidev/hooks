@@ -8,6 +8,7 @@ export function useIsMounted() {
 
   useEffect(() => {
     isMountedRef.current = true;
+
     return () => {
       isMountedRef.current = false;
     };
