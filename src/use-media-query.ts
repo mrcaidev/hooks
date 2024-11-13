@@ -11,7 +11,9 @@ export function useMediaQuery(query: string) {
 
   useEffect(() => {
     const mediaQueryList = matchMedia(query);
+
     mediaQueryListRef.current = mediaQueryList;
+
     setIsMatched(mediaQueryList.matches);
   }, [query]);
 

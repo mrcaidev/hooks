@@ -10,6 +10,7 @@ export function useTimeout(fn: Fn, timeout = 500) {
 
   useEffect(() => {
     const timer = setTimeout(fnRef.current, timeout);
+
     return () => clearTimeout(timer);
   }, [timeout]);
 }

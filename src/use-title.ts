@@ -9,15 +9,22 @@ export function useTitle() {
   useEffect(() => {
     setTitle(document.title);
 
-    const observer = new MutationObserver((mutations) => {
-      setTitle(mutations[0]?.target.textContent ?? "");
+    const titleElement = document.querySelector("title");
+
+    if (!titleElement) {
+      return;
+    }
+
+    const observer = new MutationObserver(([mutation]) => {
+      setTitle(mutation?.target.textContent ?? "");
     });
 
-    observer.observe(document.querySelector("title")!, {
+    observer.observe(titleElement, {
       subtree: true,
       characterData: true,
       childList: true,
     });
+
     return () => observer.disconnect();
   }, []);
 

@@ -18,6 +18,7 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const read = async () => {
     try {
       const text = await navigator.clipboard.readText();
+
       setText(text);
       setError(null);
     } catch (error) {
@@ -33,6 +34,7 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const write = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
+
       setText(text);
       setError(null);
     } catch (error) {

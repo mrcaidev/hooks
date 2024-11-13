@@ -40,6 +40,7 @@ export function useThrottleEffect(
     effectRef.current();
 
     isCoolingDownRef.current = true;
+
     setTimeout(() => {
       isCoolingDownRef.current = false;
     }, timeout);

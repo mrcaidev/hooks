@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { useDebounceEffect } from "./use-debounce-effect";
 
 export type UseDebounceOptions = {
   timeout?: number;
@@ -9,21 +10,9 @@ export type UseDebounceOptions = {
  * Debounce a value.
  */
 export function useDebounce<T>(value: T, options: UseDebounceOptions = {}) {
-  const { timeout = 500, onMount = false } = options;
-
   const [debouncedValue, setDebouncedValue] = useState(value);
 
-  const shouldSkipRef = useRef(true);
-
-  useEffect(() => {
-    if (!onMount && shouldSkipRef.current) {
-      shouldSkipRef.current = false;
-      return;
-    }
-
-    const timer = setTimeout(() => setDebouncedValue(value), timeout);
-    return () => clearTimeout(timer);
-  }, [value, timeout, onMount]);
+  useDebounceEffect(() => setDebouncedValue(value), [value], options);
 
   return debouncedValue;
 }

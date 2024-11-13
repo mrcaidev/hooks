@@ -22,7 +22,7 @@ export function useTextSelection(options: UseTextSelectionOptions = {}) {
     () => {
       const selection = document.getSelection()?.toString() ?? "";
 
-      if (sticky && !selection) {
+      if (!selection && sticky) {
         return;
       }
 

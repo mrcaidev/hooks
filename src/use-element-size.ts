@@ -28,6 +28,7 @@ export function useElementSize(ref: RefObject<Element>) {
     });
 
     observer.observe(target);
+
     return () => observer.disconnect();
   }, []);
 
