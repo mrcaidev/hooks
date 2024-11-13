@@ -34,11 +34,14 @@ export { useMount } from "./use-mount";
 export { usePrevious } from "./use-previous";
 export { useRerender } from "./use-rerender";
 export { useSafeLayoutEffect } from "./use-safe-layout-effect";
-export { useSelection, type UseSelectionOptions } from "./use-selection";
 export {
   useSessionStorage,
   type UseSessionStorageOptions,
 } from "./use-session-storage";
+export {
+  useTextSelection,
+  type UseTextSelectionOptions,
+} from "./use-text-selection";
 export { useTheme, type Theme, type UseThemeOptions } from "./use-theme";
 export { useThrottle, type UseThrottleOptions } from "./use-throttle";
 export {

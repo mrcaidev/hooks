@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDocument } from "./use-document";
 import { useEventListener } from "./use-event-listener";
 
-export type UseSelectionOptions = {
+export type UseTextSelectionOptions = {
   sticky?: boolean;
 };
 
 /**
- * Responds to user's text selection changes.
+ * Use user's text selection.
  */
-export function useSelection(options: UseSelectionOptions = {}) {
+export function useTextSelection(options: UseTextSelectionOptions = {}) {
   const { sticky = false } = options;
 
   const [selection, setSelection] = useState("");
+
+  useEffect(() => {
+    setSelection(document.getSelection()?.toString() ?? "");
+  }, []);
+
   const documentRef = useDocument();
 
   useEventListener(
@@ -20,9 +25,11 @@ export function useSelection(options: UseSelectionOptions = {}) {
     "mouseup",
     () => {
       const selection = document.getSelection()?.toString() ?? "";
+
       if (sticky && !selection) {
         return;
       }
+
       setSelection(selection);
     },
     { extraDeps: [sticky] },
