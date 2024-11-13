@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDocumentEventListener } from "./use-document-event-listener";
+import { useMount } from "./use-mount";
 
 export type UseTextSelectionOptions = {
   sticky?: boolean;
@@ -13,9 +14,9 @@ export function useTextSelection(options: UseTextSelectionOptions = {}) {
 
   const [selection, setSelection] = useState("");
 
-  useEffect(() => {
+  useMount(() => {
     setSelection(document.getSelection()?.toString() ?? "");
-  }, []);
+  });
 
   useDocumentEventListener(
     "mouseup",

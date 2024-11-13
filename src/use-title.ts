@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useMount } from "./use-mount";
 
 /**
  * Use page title.
@@ -6,12 +7,14 @@ import { useEffect, useState } from "react";
 export function useTitle() {
   const [title, setTitle] = useState("");
 
-  useEffect(() => {
+  useMount(() => {
     setTitle(document.title);
+  });
 
-    const titleElement = document.querySelector("title");
+  useMount(() => {
+    const title = document.querySelector("title");
 
-    if (!titleElement) {
+    if (!title) {
       return;
     }
 
@@ -19,14 +22,14 @@ export function useTitle() {
       setTitle(mutation?.target.textContent ?? "");
     });
 
-    observer.observe(titleElement, {
+    observer.observe(title, {
       subtree: true,
       characterData: true,
       childList: true,
     });
 
     return () => observer.disconnect();
-  }, []);
+  });
 
   return title;
 }

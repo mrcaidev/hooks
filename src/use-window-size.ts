@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useEventListener } from "./use-event-listener";
+import { useMount } from "./use-mount";
 import { useWindow } from "./use-window";
 
 /**
@@ -11,10 +12,10 @@ export function useWindowSize() {
 
   const windowRef = useWindow();
 
-  useEffect(() => {
+  useMount(() => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
-  }, []);
+  });
 
   useEventListener(windowRef, "resize", () => {
     setWidth(window.innerWidth);

@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useMount } from "./use-mount";
 
 /**
  * Trigger an effect just before the component is unmounted.
  */
 export function useUnmount(cleanup: () => void) {
-  useEffect(() => cleanup, []);
+  useMount(() => cleanup);
 }

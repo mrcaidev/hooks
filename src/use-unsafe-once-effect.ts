@@ -1,5 +1,6 @@
-import { useEffect, useRef, type EffectCallback } from "react";
+import { useRef, type EffectCallback } from "react";
 import { useLatest } from "./use-latest";
+import { useMount } from "./use-mount";
 
 /**
  * Trigger an effect exactly once.
@@ -9,7 +10,7 @@ export function useUnsafeOnceEffect(effect: EffectCallback) {
 
   const shouldSkipRef = useRef(false);
 
-  useEffect(() => {
+  useMount(() => {
     if (shouldSkipRef.current) {
       return;
     }
@@ -17,5 +18,5 @@ export function useUnsafeOnceEffect(effect: EffectCallback) {
     shouldSkipRef.current = true;
 
     return effectRef.current();
-  }, []);
+  });
 }

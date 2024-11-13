@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { useMount } from "./use-mount";
 
 /**
  * Use `document` object.
@@ -6,9 +7,9 @@ import { useEffect, useRef } from "react";
 export function useDocument() {
   const ref = useRef<Document | null>(null);
 
-  useEffect(() => {
+  useMount(() => {
     ref.current = document;
-  }, []);
+  });
 
   return ref;
 }

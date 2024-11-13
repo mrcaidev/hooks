@@ -1,4 +1,5 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useState, type RefObject } from "react";
+import { useMount } from "./use-mount";
 
 /**
  * Use the size of an element.
@@ -7,7 +8,7 @@ export function useElementSize(ref: RefObject<Element>) {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
-  useEffect(() => {
+  useMount(() => {
     const target = ref.current;
 
     if (!target) {
@@ -30,7 +31,7 @@ export function useElementSize(ref: RefObject<Element>) {
     observer.observe(target);
 
     return () => observer.disconnect();
-  }, []);
+  });
 
   return { width, height };
 }
