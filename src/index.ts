@@ -18,6 +18,8 @@ export { useDocumentEventListener } from "./use-document-event-listener";
 export { useElementSize } from "./use-element-size";
 export {
   useEventListener,
+  type EventMap,
+  type EventType,
   type UseEventListenerOptions,
 } from "./use-event-listener";
 export { useFocusTrap } from "./use-focus-trap";
