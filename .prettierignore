@@ -1,3 +1,6 @@
 coverage
 dist
 pnpm-lock.yaml
+
+docs/.vitepress/cache
+docs/.vitepress/dist

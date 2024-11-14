@@ -1,9 +1,0 @@
-{
-  "extends": "typescript-config-custom/base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "rootDir": ".",
-    "types": ["node", "react", "react-dom", "vitest/globals"]
-  },
-  "include": ["src", "tests"]
-}
