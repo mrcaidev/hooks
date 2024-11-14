@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useMount } from "./use-mount";
+import { useUnmount } from "./use-unmount";
 
 /**
  * Check if the component is mounted.
@@ -9,10 +10,10 @@ export function useIsMounted() {
 
   useMount(() => {
     isMountedRef.current = true;
+  });
 
-    return () => {
-      isMountedRef.current = false;
-    };
+  useUnmount(() => {
+    isMountedRef.current = false;
   });
 
   return isMountedRef;
