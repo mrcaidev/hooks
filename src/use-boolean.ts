@@ -7,6 +7,8 @@ import { useState } from "react";
  *
  * @returns An object containing the current value of the boolean and functions
  * to update it.
+ *
+ * @see https://hooks.mrcai.dev/hooks/use-boolean
  */
 export function useBoolean(initialValue = false) {
   const [value, setValue] = useState(initialValue);

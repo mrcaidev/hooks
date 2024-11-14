@@ -26,6 +26,8 @@ export type UseClipboardTextOptions = {
  *
  * @returns An object containing the text on the user's clipboard, the error
  * occurred, and a function to write text to the clipboard.
+ *
+ * @see https://hooks.mrcai.dev/hooks/use-clipboard-text
  */
 export function useClipboardText(options: UseClipboardTextOptions = {}) {
   const { readOnMount = true } = options;

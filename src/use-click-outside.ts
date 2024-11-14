@@ -9,6 +9,8 @@ import { useLatest } from "./use-latest";
  * @param callback The function to call when a click event occurs outside of
  * the node. The first argument is the click event, and the second argument is
  * the target node contained inside the `ref`.
+ *
+ * @see https://hooks.mrcai.dev/hooks/use-click-outside
  */
 export function useClickOutside<Target extends Node>(
   ref: RefObject<Target>,

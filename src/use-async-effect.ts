@@ -18,6 +18,8 @@ export type AsyncEffectCallback = (
  * @note
  * Destructor is not yet supported. The cleanup function returned by the
  * effect will be ignored and discarded.
+ *
+ * @see https://hooks.mrcai.dev/hooks/use-async-effect
  */
 export function useAsyncEffect(
   effect: AsyncEffectCallback,
