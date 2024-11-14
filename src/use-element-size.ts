@@ -15,9 +15,7 @@ export function useElementSize(ref: RefObject<Element>) {
       return;
     }
 
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-
+    const observer = new ResizeObserver(([entry]) => {
       if (!entry) {
         return;
       }
