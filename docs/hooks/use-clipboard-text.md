@@ -19,7 +19,7 @@ The options to configure the hook.
 
 ### readOnMount
 
-- Type: boolean
+- Type: `boolean`
 - Default: `true`
 
 Whether to immediately read the user's clipboard when the hook is mounted.
