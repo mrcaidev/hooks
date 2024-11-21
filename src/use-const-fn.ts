@@ -7,6 +7,8 @@ import type { Fn } from "./types";
  * @param fn The function to memoize.
  *
  * @returns Exactly the same function.
+ *
+ * @see https://hooks.mrcai.dev/hooks/use-const-fn
  */
 export function useConstFn<T extends Fn>(fn: T) {
   return useCallback(fn, []);
