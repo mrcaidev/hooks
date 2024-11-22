@@ -79,7 +79,11 @@ export function useClipboardText(options: UseClipboardTextOptions = {}) {
   useDocumentEventListener("cut", read);
   useDocumentEventListener("copy", read);
 
-  // TODO: Visibility change event listener
+  useDocumentEventListener("visibilitychange", (_, document) => {
+    if (document.visibilityState === "visible") {
+      read();
+    }
+  });
 
   return {
     /**
